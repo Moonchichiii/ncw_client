@@ -4,25 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nordic Code Works</title>
     
-    <!-- Theme initialization script - prevents flash of wrong theme -->
-    <script>
-      (function() {
-        try {
-          const theme = localStorage.getItem('theme') || 
-                        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {
-          // Fallback for environments where localStorage might not be available
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-          }
-        }
-      })();
-    </script>
+    <!-- PERFORMANCE: Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- PERFORMANCE: Optimized font loading with display=swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- SEO & ACCESSIBILITY -->
+    <meta name="description" content="Nordic Code Works - Digital experiences with Nordic precision. Expert web development and design services.">
+    <meta name="keywords" content="web development, react, typescript, design, nordic, code works">
+    <meta name="author" content="Nordic Code Works">
+    
+    <!-- SOCIAL MEDIA -->
+    <meta property="og:title" content="Nordic Code Works">
+    <meta property="og:description" content="Digital experiences with Nordic precision">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nordiccodeworks.com">
+    
+    <!-- THEME COLOR -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#60a5fa" media="(prefers-color-scheme: dark)">
+    
+    <!-- PERFORMANCE: DNS prefetch for potential external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    
+    <title>Nordic Code Works - Digital Experiences with Nordic Precision</title>
   </head>
   <body>
     <div id="root"></div>
