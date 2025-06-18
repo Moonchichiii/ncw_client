@@ -203,7 +203,7 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
         </div>
 
         {/* Shared Footer */}
-        <Footer variant="overlay" />
+        <Footer overlay />
       </div>
     </div>
   )

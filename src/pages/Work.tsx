@@ -6,6 +6,7 @@ interface Repo {
   description: string | null
   html_url: string
   homepage: string | null
+  fork: boolean  // Added this property
 }
 
 const Work = memo(() => {
@@ -23,8 +24,8 @@ const Work = memo(() => {
           .filter(r => !r.fork && r.homepage)
           .sort((a, b) => a.name.localeCompare(b.name))
         setRepos(deployed)
-      } catch (e: any) {
-        setError(e.message || 'Unknown error')
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'Unknown error')
       } finally {
         setLoading(false)
       }
@@ -47,7 +48,7 @@ const Work = memo(() => {
             Deployed Projects
           </h2>
           <p className="text-xl lg:text-2xl text-text-secondary max-w-3xl mx-auto">
-            Live applications I've built and deployed
+            Live applications I&apos;ve built and deployed
           </p>
         </div>
 
@@ -71,7 +72,7 @@ const Work = memo(() => {
                 )}
                 <div className="flex flex-wrap gap-4">
                   <a
-                    href={repo.homepage!}
+                    href={repo.homepage ?? '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 bg-interactive-primary hover:bg-interactive-hover text-text-inverse rounded-lg transition-colors duration-200"
