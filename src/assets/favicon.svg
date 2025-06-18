@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    width="100"
+    height="100"
+    role="img"
+    aria-label="Nordic Code Works logo"
+    shape-rendering="geometricPrecision"
+    text-rendering="geometricPrecision"
+    preserveAspectRatio="xMidYMid meet">
+  <style>
+    .main { fill: #111; }
+    .accent { fill: #007aff; }
+    @media (prefers-color-scheme: dark) {
+     .main   { fill: #f0f0f0; }
+     .accent { fill: #66b1ff; }
+    }
+  </style>
+  <rect class="main" x="12" y="10" width="10" height="80" rx="2" />
+  <path d="M25 10 L75 90 L85 90 L35 10 Z" class="main"/>
+  <path d="M35 10 L75 68 L75 90 L35 10 Z" class="accent"/>
+  <!-- right bar -->
+  <rect class="main" x="75" y="10" width="10" height="80"/>
+</svg>

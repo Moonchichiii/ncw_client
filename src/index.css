@@ -1,216 +1,230 @@
-/* Google Fonts: Archivo Black, Inter, Space Grotesk (display: swap) */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
-/* Tailwind CSS */
 @import 'tailwindcss';
-
-/* Tailwind v4 Dark Variant */
 @variant dark (&:where(.dark, .dark *));
 
-/* Semantic Color System (Light Mode) - WCAG AAA Compliant */
+/* =================================================================
+   MENU OVERLAY ANIMATIONS - HIGH PERFORMANCE
+   ================================================================= */
+
+.menu-opening {
+  animation: menuFadeIn 0.3s ease-out forwards;
+}
+
+.menu-closing {
+  animation: menuFadeOut 0.3s ease-in forwards;
+}
+
+.menu-opening .menu-item {
+  animation: menuItemSlideIn 0.4s ease-out forwards;
+}
+
+.menu-opening .menu-item:nth-child(1) { animation-delay: 0.1s; }
+.menu-opening .menu-item:nth-child(2) { animation-delay: 0.15s; }
+.menu-opening .menu-item:nth-child(3) { animation-delay: 0.2s; }
+
+.menu-opening .menu-footer {
+  animation: menuFooterSlideIn 0.3s ease-out 0.2s forwards;
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes menuFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes menuItemSlideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes menuFooterSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Optimize for hardware acceleration */
+.menu-item,
+.menu-footer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reset will-change after animations */
+.menu-closing .menu-item,
+.menu-closing .menu-footer {
+  will-change: auto;
+}
+
+/* =================================================================
+   SEMANTIC COLOR SYSTEM - WCAG AAA COMPLIANT
+   ================================================================= */
+
 @theme {
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #f8fafc;
   --color-bg-tertiary: #f1f5f9;
   --color-bg-elevated: #ffffff;
   --color-bg-overlay: rgba(255, 255, 255, 0.98);
-  
+ 
   --color-text-primary: #0f172a;
   --color-text-secondary: #1e293b;
   --color-text-tertiary: #334155;
   --color-text-inverse: #ffffff;
-  
+ 
   --color-interactive-primary: #1d4ed8;
   --color-interactive-secondary: #e2e8f0;
   --color-interactive-hover: #1e40af;
-  
+ 
   --color-border-primary: #cbd5e1;
   --color-border-secondary: #94a3b8;
   --color-border-focus: #1d4ed8;
-  
+ 
   --color-success: #059669;
   --color-warning: #d97706;
   --color-error: #dc2626;
   --color-info: #1d4ed8;
+  
+  /* Performance: Dynamic transition duration control */
+  --theme-transition-duration: 0s;
 }
 
-/* Root Variables: Light Mode (Legacy Compatibility) */
-:root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-elevated: #ffffff;
-  --bg-overlay: rgba(255, 255, 255, 0.98);
-  
-  --text-primary: #0f172a;
-  --text-secondary: #1e293b;
-  --text-tertiary: #334155;
-  --text-inverse: #ffffff;
-  
-  --interactive-primary: #1d4ed8;
-  --interactive-secondary: #e2e8f0;
-  --interactive-hover: #1e40af;
-  
-  --border-primary: #cbd5e1;
-  --border-secondary: #94a3b8;
-  --border-focus: #1d4ed8;
-  
-  --success: #059669;
-  --warning: #d97706;
-  --error: #dc2626;
-  --info: #1d4ed8;
-}
-
-/* Dark Mode Variables & Semantic Color Overrides - WCAG AAA Compliant */
 .dark {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-elevated: #1e293b;
-  --bg-overlay: rgba(15, 23, 42, 0.98);
-  
-  --text-primary: #f8fafc;
-  --text-secondary: #e2e8f0;
-  --text-tertiary: #cbd5e1;
-  --text-inverse: #0f172a;
-  
-  --interactive-primary: #3b82f6;
-  --interactive-secondary: #334155;
-  --interactive-hover: #60a5fa;
-  
-  --border-primary: #475569;
-  --border-secondary: #64748b;
-  --border-focus: #3b82f6;
-  
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #f87171;
-  --info: #3b82f6;
-
-  /* Semantic color overrides for dark mode */
   --color-bg-primary: #0f172a;
   --color-bg-secondary: #1e293b;
   --color-bg-tertiary: #334155;
   --color-bg-elevated: #1e293b;
   --color-bg-overlay: rgba(15, 23, 42, 0.98);
-  
+ 
   --color-text-primary: #f8fafc;
   --color-text-secondary: #e2e8f0;
   --color-text-tertiary: #cbd5e1;
   --color-text-inverse: #0f172a;
-  
+ 
   --color-interactive-primary: #3b82f6;
   --color-interactive-secondary: #334155;
   --color-interactive-hover: #60a5fa;
-  
+ 
   --color-border-primary: #475569;
   --color-border-secondary: #64748b;
   --color-border-focus: #3b82f6;
-  
+ 
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #f87171;
   --color-info: #3b82f6;
 }
 
-/* Base HTML Styles */
+/* =================================================================
+   BASE STYLES - OPTIMIZED FOR PERFORMANCE
+   ================================================================= */
+
 html {
   scroll-behavior: smooth;
   font-family: theme(fontFamily.sans);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color-scheme: light dark;
-  /* Responsive & Accessible Font Size */
   font-size: clamp(16px, 1vw + 14px, 18px);
+  
+  /* Performance: Reduce layout recalculations */
+  contain: layout style;
 }
 
-/* Base Body Styles */
 body {
   margin: 0;
-  line-height: 1.6; /* Readability */
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height */
+  min-height: 100dvh;
+  
+  /* Performance: Optimize paint operations */
+  contain: layout style;
+  
+  /* Performance: Optimize theme transitions */
+  transition: 
+    background-color var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease;
 }
 
-/* Animation Performance: Hardware Acceleration */
-.animate-float,
-.animate-bounce,
-.animate-spin {
-  will-change: transform;
-  transform: translateZ(0);
+/* =================================================================
+   OPTIMIZED THEME TRANSITIONS
+   ================================================================= */
+
+/* Target only elements that actually need theme transitions */
+[class*="bg-"]:not(.no-transition),
+[class*="text-"]:not(.no-transition),
+[class*="border-"]:not(.no-transition) {
+  transition: 
+    background-color var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease;
 }
 
-/* Accessibility: Focus Styles */
+/* Optimize gradient text performance */
+.bg-clip-text {
+  /* Performance: Use transform3d for hardware acceleration */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  contain: layout style paint;
+  
+  /* Transition only when necessary */
+  transition: background-image var(--theme-transition-duration) ease;
+}
+
+/* Performance: Prevent unnecessary transitions on page load */
+.preload * {
+  transition: none !important;
+}
+
+/* =================================================================
+   ACCESSIBILITY - OPTIMIZED
+   ================================================================= */
+
 :focus-visible {
-  outline: 3px solid var(--border-focus) !important;
+  outline: 3px solid var(--color-border-focus) !important;
   outline-offset: 3px !important;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3) !important; /* Ensure visibility */
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3) !important;
+  
+  /* Performance: Faster focus transitions */
+  transition: outline-color 0.1s ease, box-shadow 0.1s ease;
 }
 
-/* Accessibility: Focus for Interactive Elements */
 button:focus-visible,
 a:focus-visible,
 [role="button"]:focus-visible {
-  outline: 3px solid var(--border-focus) !important;
+  outline: 3px solid var(--color-border-focus) !important;
   outline-offset: 2px !important;
   box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3) !important;
 }
 
-/* Accessibility: Skip Links */
 .skip-link {
   position: absolute;
   top: -40px;
   left: 6px;
-  background: var(--interactive-primary);
-  color: var(--text-inverse);
+  background: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
   padding: 8px;
   text-decoration: none;
   border-radius: 4px;
   z-index: 9999;
   font-weight: bold;
-  transition: top 0.3s;
+  transition: top 0.2s ease;
 }
 
 .skip-link:focus {
   top: 6px;
 }
 
-/* Text Selection Styles */
-::selection {
-  background-color: var(--interactive-primary);
-  color: var(--text-inverse);
-  text-shadow: none; /* Ensure visibility */
-}
-
-/* Custom Scrollbar Styles */
-::-webkit-scrollbar {
-  width: clamp(8px, 1vw, 16px);
-  height: clamp(8px, 1vw, 16px);
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--border-secondary);
-  border-radius: 8px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--interactive-primary);
-}
-
-/* Accessibility Utility: Screen Reader Only */
 .sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -223,7 +237,6 @@ a:focus-visible,
   border: 0 !important;
 }
 
-/* Accessibility Utility: Focusable Screen Reader Only */
 .sr-only-focusable:focus,
 .sr-only-focusable:active {
   position: static !important;
@@ -236,7 +249,148 @@ a:focus-visible,
   white-space: inherit !important;
 }
 
-/* Accessibility: Reduced Motion */
+/* =================================================================
+   SELECTIONS & SCROLLBARS - OPTIMIZED
+   ================================================================= */
+
+::selection {
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
+  text-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: clamp(8px, 1vw, 16px);
+  height: clamp(8px, 1vw, 16px);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-secondary);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  
+  /* Performance: Optimize scrollbar transitions */
+  transition: background-color 0.1s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-interactive-primary);
+}
+
+/* =================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================================================= */
+
+/* Critical content optimization */
+#hero-title {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+  
+  /* Performance: Optimize for LCP */
+  will-change: auto;
+}
+
+#hero-description {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100px;
+}
+
+/* Animation performance */
+.animate-float,
+.animate-bounce,
+.animate-spin {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  
+  /* Performance: Contain animation effects */
+  contain: layout style paint;
+}
+
+/* Button interaction optimization */
+button {
+  contain: layout style;
+  
+  /* Performance: Optimized button transitions */
+  transition: 
+    background-color 0.1s ease,
+    border-color 0.1s ease,
+    color 0.1s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+    
+  will-change: auto;
+}
+
+button:hover {
+  /* Performance: Only enable expensive operations on hover */
+  will-change: transform, box-shadow;
+}
+
+button:not(:hover) {
+  will-change: auto;
+}
+
+/* Performance: Optimize expensive hover effects */
+@media (hover: hover) {
+  .expensive-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    
+    /* Performance: Use hardware acceleration */
+    will-change: transform, box-shadow;
+  }
+  
+  .expensive-hover:not(:hover) {
+    will-change: auto;
+  }
+}
+
+@media (hover: none) {
+  .expensive-hover {
+    transform: none;
+    transition: background-color 0.1s ease-out;
+  }
+}
+
+/* Performance: Optimize layout for different screen sizes */
+@media (max-width: 640px) {
+  html {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+  
+  body {
+    line-height: 1.7;
+  }
+  
+  /* Performance: Optimize touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    
+    /* Performance: Reduce paint operations on mobile */
+    contain: layout style;
+  }
+}
+
+@media (max-width: 480px) {
+  button, a, [role="button"] {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px;
+  }
+}
+
+/* =================================================================
+   ACCESSIBILITY PREFERENCES - OPTIMIZED
+   ================================================================= */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -251,79 +405,72 @@ a:focus-visible,
     scroll-behavior: auto !important;
   }
   
-  /* Preserve essential focus transitions */
+  /* Performance: Remove will-change for reduced motion */
+  .animate-float,
+  .animate-bounce,
+  .animate-spin {
+    will-change: auto !important;
+    transform: none !important;
+  }
+  
   :focus-visible {
     transition: none !important;
   }
 }
 
-/* Accessibility: High Contrast Mode */
 @media (prefers-contrast: high) {
   :root {
-    --text-primary: #000000 !important;
-    --bg-primary: #ffffff !important;
-    --border-primary: #000000 !important;
-    --border-focus: #000000 !important;
-    --interactive-primary: #0000ff !important;
+    --color-text-primary: #000000 !important;
+    --color-bg-primary: #ffffff !important;
+    --color-border-primary: #000000 !important;
+    --color-border-focus: #000000 !important;
+    --color-interactive-primary: #0000ff !important;
   }
   
   .dark {
-    --text-primary: #ffffff !important;
-    --bg-primary: #000000 !important;
-    --border-primary: #ffffff !important;
-    --border-focus: #ffffff !important;
-    --interactive-primary: #00ff00 !important;
+    --color-text-primary: #ffffff !important;
+    --color-bg-primary: #000000 !important;
+    --color-border-primary: #ffffff !important;
+    --color-border-focus: #ffffff !important;
+    --color-interactive-primary: #00ff00 !important;
   }
   
-  /* Ensure interactive elements are clearly visible */
   button, a, [role="button"] {
     border: 2px solid currentColor !important;
   }
 }
 
-/* Responsive: Small Screens (max-width: 640px) */
-@media (max-width: 640px) {
-  html {
-    font-size: clamp(14px, 4vw, 16px);
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid ButtonText;
+    outline-offset: 2px;
   }
   
-  body {
-    line-height: 1.7;
-  }
-  
-  /* Larger touch targets */
-  button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
+  button {
+    border: 1px solid ButtonText;
   }
 }
 
-/* Responsive: Extra Small Screens (max-width: 480px) */
-@media (max-width: 480px) {
-  html {
-    font-size: clamp(14px, 4vw, 16px); /* Consistent with 640px, adjust if needed */
-  }
-  
-  /* Enhanced touch targets */
-  button, a, [role="button"] {
-    min-height: 48px;
-    min-width: 48px;
-    padding: 12px;
-  }
-}
+/* =================================================================
+   PRINT STYLES
+   ================================================================= */
 
-/* Print Optimization Styles */
 @media print {
   * {
     background: white !important;
     color: black !important;
     text-shadow: none !important;
     box-shadow: none !important;
+    
+    /* Performance: Disable animations for print */
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
   }
   
   nav,
   button,
-  .no-print { /* Class to hide elements from print */
+  .no-print {
     display: none !important;
   }
   
@@ -341,14 +488,123 @@ a:focus-visible,
   }
 }
 
-/* Accessibility: Forced Colors Mode */
-@media (forced-colors: active) {
-  :focus-visible {
-    outline: 2px solid ButtonText; /* System color */
-    outline-offset: 2px;
+/* =================================================================
+   PERFORMANCE UTILITIES
+   ================================================================= */
+
+/* Utility class to disable transitions during page load */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* Utility class for hardware acceleration */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Utility class to contain layout operations */
+.contain-layout {
+  contain: layout;
+}
+
+/* Utility class to contain paint operations */
+.contain-paint {
+  contain: paint;
+}
+
+/* Utility class for full containment */
+.contain-strict {
+  contain: strict;
+}
+
+/* Performance: Optimize font loading */
+@font-face {
+  font-display: swap;
+}
+
+
+/* =================================================================
+   COOKIE CONSENT ANIMATIONS - HIGH PERFORMANCE
+   ================================================================= */
+
+.cookie-banner {
+  animation: cookieBannerSlideUp 0.4s ease-out forwards;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.cookie-modal {
+  animation: cookieModalFadeIn 0.3s ease-out forwards;
+}
+
+.cookie-modal > div {
+  animation: cookieModalSlideIn 0.4s ease-out forwards;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+@keyframes cookieBannerSlideUp {
+  from { 
+    opacity: 0; 
+    transform: translate3d(0, 100%, 0); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translate3d(0, 0, 0); 
+  }
+}
+
+@keyframes cookieModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cookieModalSlideIn {
+  from { 
+    opacity: 0; 
+    transform: translate3d(0, 30px, 0) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translate3d(0, 0, 0) scale(1); 
+  }
+}
+
+/* Optimize cookie consent for hardware acceleration */
+.cookie-banner,
+.cookie-modal {
+  contain: layout style paint;
+}
+
+/* Cookie toggle switch animation */
+.cookie-toggle {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  will-change: background-color;
+}
+
+.cookie-toggle:hover {
+  will-change: background-color, transform;
+}
+
+.cookie-toggle:not(:hover) {
+  will-change: auto;
+}
+
+/* Reset will-change after animations */
+@media (prefers-reduced-motion: reduce) {
+  .cookie-banner,
+  .cookie-modal > div {
+    animation: none !important;
+    will-change: auto !important;
+    transform: none !important;
   }
   
-  button {
-    border: 1px solid ButtonText; /* System color */
+  .cookie-toggle {
+    transition: none !important;
   }
 }

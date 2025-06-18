@@ -2,35 +2,197 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- PERFORMANCE: Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- PERFORMANCE: Optimized font loading with display=swap -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- SEO & ACCESSIBILITY -->
     <meta name="description" content="Nordic Code Works - Digital experiences with Nordic precision. Expert web development and design services.">
     <meta name="keywords" content="web development, react, typescript, design, nordic, code works">
     <meta name="author" content="Nordic Code Works">
-    
-    <!-- SOCIAL MEDIA -->
     <meta property="og:title" content="Nordic Code Works">
     <meta property="og:description" content="Digital experiences with Nordic precision">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nordiccodeworks.com">
-    
-    <!-- THEME COLOR -->
     <meta name="theme-color" content="#3b82f6">
     <meta name="theme-color" content="#60a5fa" media="(prefers-color-scheme: dark)">
-    
-    <!-- PERFORMANCE: DNS prefetch for potential external resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    
+     
+    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
+  
+    <!-- <link rel="alternate icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64"> -->
+
     <title>Nordic Code Works - Digital Experiences with Nordic Precision</title>
+    <script>
+      (function() {
+        'use strict';
+
+        function initializeTheme() {
+          const root = document.documentElement;
+          const savedTheme = localStorage.getItem('theme');
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          const initialTheme = savedTheme || systemTheme;
+          if (initialTheme === 'dark') root.classList.add('dark');
+          root.classList.add('preload');
+        }
+
+        function removePreloadClass() {
+          const root = document.documentElement;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              root.classList.remove('preload');
+            });
+          });
+        }
+
+        function setupPerformanceMonitoring() {
+          if ('LayoutShiftAttribution' in window) {
+            const observer = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                if (entry.value > 0.1) {
+                  console.warn('Large layout shift detected:', entry.value, entry.sources);
+                }
+              }
+            });
+            try { observer.observe({ entryTypes: ['layout-shift'] }); } catch (e) {}
+          }
+          if ('PerformanceLongTaskTiming' in window) {
+            const observer = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                if (entry.duration > 50) {
+                  console.warn('Long task detected:', entry.duration + 'ms', entry);
+                }
+              }
+            });
+            try { observer.observe({ entryTypes: ['longtask'] }); } catch (e) {}
+          }
+        }
+
+        function optimizeFontLoading() {
+          const fontPreloads = [
+            'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2',
+            'https://fonts.gstatic.com/s/archivoblack/v17/HTxqL289NzCGg4MzN6KJ7eW6OYuP_qcraqDJ6W8.woff2'
+          ];
+          fontPreloads.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'font';
+            link.type = 'font/woff2';
+            link.crossOrigin = 'anonymous';
+            link.href = url;
+            document.head.appendChild(link);
+          });
+        }
+
+        function setupInteractionOptimizations() {
+          let interactionTimeout;
+          const debouncedInteractionHandler = () => {
+            clearTimeout(interactionTimeout);
+            interactionTimeout = setTimeout(() => {
+              const elementsWithWillChange = document.querySelectorAll('[style*="will-change"]');
+              elementsWithWillChange.forEach(el => {
+                if (el.style.willChange && el.style.willChange !== 'auto') {
+                  setTimeout(() => { el.style.willChange = 'auto'; }, 300);
+                }
+              });
+            }, 500);
+          };
+          ['mousedown', 'touchstart', 'keydown'].forEach(eventType => {
+            document.addEventListener(eventType, debouncedInteractionHandler, { passive: true });
+          });
+        }
+
+        function addResourceHints() {
+          const dnsPrefetches = [
+            'https://fonts.googleapis.com',
+            'https://fonts.gstatic.com'
+          ];
+          dnsPrefetches.forEach(domain => {
+            const link = document.createElement('link');
+            link.rel = 'dns-prefetch';
+            link.href = domain;
+            document.head.appendChild(link);
+          });
+          const preconnects = [
+            'https://fonts.googleapis.com',
+            'https://fonts.gstatic.com'
+          ];
+          preconnects.forEach(origin => {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = origin;
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+          });
+        }
+
+        function initialize() {
+          initializeTheme();
+          addResourceHints();
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+              removePreloadClass();
+              optimizeFontLoading();
+              setupInteractionOptimizations();
+              if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                setupPerformanceMonitoring();
+              }
+            });
+          } else {
+            removePreloadClass();
+            optimizeFontLoading();
+            setupInteractionOptimizations();
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+              setupPerformanceMonitoring();
+            }
+          }
+        }
+
+        if (!('scheduler' in window) || !('postTask' in window.scheduler)) {
+          window.scheduler = window.scheduler || {};
+          window.scheduler.postTask = function(callback, options = {}) {
+            const priority = options.priority || 'user-visible';
+            const delay = priority === 'user-blocking' ? 0 : 
+                         priority === 'user-visible' ? 5 : 10;
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(callback());
+              }, delay);
+            });
+          };
+        }
+
+        initialize();
+
+        window.__performanceUtils = {
+          measureInteractionDelay: function() {
+            let interactionStart;
+            const measureStart = () => { interactionStart = performance.now(); };
+            const measureEnd = () => {
+              if (interactionStart) {
+                const delay = performance.now() - interactionStart;
+                console.log('Interaction delay:', delay + 'ms');
+                interactionStart = null;
+              }
+            };
+            document.addEventListener('pointerdown', measureStart);
+            document.addEventListener('click', measureEnd);
+            console.log('Interaction delay measurement enabled. Click elements to measure.');
+          },
+          togglePerformanceMode: function(enable = true) {
+            const root = document.documentElement;
+            if (enable) {
+              root.style.setProperty('--theme-transition-duration', '0s');
+              root.classList.add('preload');
+              console.log('Performance mode enabled - transitions disabled');
+            } else {
+              root.style.removeProperty('--theme-transition-duration');
+              root.classList.remove('preload');
+              console.log('Performance mode disabled - transitions restored');
+            }
+          }
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
