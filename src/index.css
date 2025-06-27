@@ -120,7 +120,7 @@
 }
 
 /* =================================================================
-   BASE STYLES - OPTIMIZED FOR PERFORMANCE
+   BASE STYLES - FIXED FOR NAVBAR
    ================================================================= */
 
 html {
@@ -130,9 +130,8 @@ html {
   text-size-adjust: 100%;
   color-scheme: light dark;
   font-size: clamp(16px, 1vw + 14px, 18px);
-  
-  /* Performance: Reduce layout recalculations */
-  contain: layout style;
+ 
+  /* REMOVED: contain: layout style; - This was breaking position: fixed! */
 }
 
 body {
@@ -145,12 +144,11 @@ body {
   color: var(--color-text-primary);
   min-height: 100vh;
   min-height: 100dvh;
-  
-  /* Performance: Optimize paint operations */
-  contain: layout style;
-  
+ 
+  /* REMOVED: contain: layout style; - This was breaking position: fixed! */
+ 
   /* Performance: Optimize theme transitions */
-  transition: 
+  transition:
     background-color var(--theme-transition-duration) ease,
     color var(--theme-transition-duration) ease;
 }
@@ -163,7 +161,7 @@ body {
 [class*="bg-"]:not(.no-transition),
 [class*="text-"]:not(.no-transition),
 [class*="border-"]:not(.no-transition) {
-  transition: 
+  transition:
     background-color var(--theme-transition-duration) ease,
     color var(--theme-transition-duration) ease,
     border-color var(--theme-transition-duration) ease;
@@ -175,7 +173,7 @@ body {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   contain: layout style paint;
-  
+ 
   /* Transition only when necessary */
   transition: background-image var(--theme-transition-duration) ease;
 }
@@ -194,7 +192,7 @@ body {
   outline-offset: 3px !important;
   border-radius: 0.5rem;
   box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3) !important;
-  
+ 
   /* Performance: Faster focus transitions */
   transition: outline-color 0.1s ease, box-shadow 0.1s ease;
 }
@@ -271,9 +269,9 @@ a:focus-visible,
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-border-secondary);
   border-radius: 8px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   background-clip: content-box;
-  
+ 
   /* Performance: Optimize scrollbar transitions */
   transition: background-color 0.1s ease;
 }
@@ -283,15 +281,15 @@ a:focus-visible,
 }
 
 /* =================================================================
-   PERFORMANCE OPTIMIZATIONS
+   PERFORMANCE OPTIMIZATIONS - SELECTIVE CONTAINMENT
    ================================================================= */
 
-/* Critical content optimization */
+/* Critical content optimization - but NOT on sections that need fixed positioning */
 #hero-title {
   contain: layout style paint;
   content-visibility: auto;
   contain-intrinsic-size: auto 200px;
-  
+ 
   /* Performance: Optimize for LCP */
   will-change: auto;
 }
@@ -308,23 +306,23 @@ a:focus-visible,
 .animate-spin {
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  
+ 
   /* Performance: Contain animation effects */
   contain: layout style paint;
 }
 
-/* Button interaction optimization */
+/* Button interaction optimization - but NOT contain layout */
 button {
-  contain: layout style;
-  
+  contain: style; /* Only style, not layout */
+ 
   /* Performance: Optimized button transitions */
-  transition: 
+  transition:
     background-color 0.1s ease,
     border-color 0.1s ease,
     color 0.1s ease,
     transform 0.1s ease,
     box-shadow 0.1s ease;
-    
+   
   will-change: auto;
 }
 
@@ -342,11 +340,11 @@ button:not(:hover) {
   .expensive-hover:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    
+   
     /* Performance: Use hardware acceleration */
     will-change: transform, box-shadow;
   }
-  
+ 
   .expensive-hover:not(:hover) {
     will-change: auto;
   }
@@ -364,18 +362,18 @@ button:not(:hover) {
   html {
     font-size: clamp(14px, 4vw, 16px);
   }
-  
+ 
   body {
     line-height: 1.7;
   }
-  
-  /* Performance: Optimize touch targets */
+ 
+  /* Performance: Optimize touch targets - but NOT contain layout */
   button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
-    
-    /* Performance: Reduce paint operations on mobile */
-    contain: layout style;
+   
+    /* Only style containment */
+    contain: style;
   }
 }
 
@@ -400,11 +398,12 @@ button:not(:hover) {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+ 
   html {
     scroll-behavior: auto !important;
+    scroll-padding-top: 5rem;
   }
-  
+ 
   /* Performance: Remove will-change for reduced motion */
   .animate-float,
   .animate-bounce,
@@ -412,7 +411,7 @@ button:not(:hover) {
     will-change: auto !important;
     transform: none !important;
   }
-  
+ 
   :focus-visible {
     transition: none !important;
   }
@@ -426,7 +425,7 @@ button:not(:hover) {
     --color-border-focus: #000000 !important;
     --color-interactive-primary: #0000ff !important;
   }
-  
+ 
   .dark {
     --color-text-primary: #ffffff !important;
     --color-bg-primary: #000000 !important;
@@ -434,7 +433,7 @@ button:not(:hover) {
     --color-border-focus: #ffffff !important;
     --color-interactive-primary: #00ff00 !important;
   }
-  
+ 
   button, a, [role="button"] {
     border: 2px solid currentColor !important;
   }
@@ -445,7 +444,7 @@ button:not(:hover) {
     outline: 2px solid ButtonText;
     outline-offset: 2px;
   }
-  
+ 
   button {
     border: 1px solid ButtonText;
   }
@@ -461,28 +460,28 @@ button:not(:hover) {
     color: black !important;
     text-shadow: none !important;
     box-shadow: none !important;
-    
+   
     /* Performance: Disable animations for print */
     animation: none !important;
     transition: none !important;
     will-change: auto !important;
   }
-  
+ 
   nav,
   button,
   .no-print {
     display: none !important;
   }
-  
+ 
   h1, h2, h3 {
     page-break-after: avoid;
     page-break-inside: avoid;
   }
-  
+ 
   a[href]:after {
     content: " (" attr(href) ")";
   }
-  
+ 
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
@@ -505,7 +504,7 @@ button:not(:hover) {
   will-change: transform;
 }
 
-/* Utility class to contain layout operations */
+/* Utility class to contain layout operations - use carefully! */
 .contain-layout {
   contain: layout;
 }
@@ -515,7 +514,7 @@ button:not(:hover) {
   contain: paint;
 }
 
-/* Utility class for full containment */
+/* Utility class for full containment - AVOID on pages with fixed elements */
 .contain-strict {
   contain: strict;
 }
@@ -524,7 +523,6 @@ button:not(:hover) {
 @font-face {
   font-display: swap;
 }
-
 
 /* =================================================================
    COOKIE CONSENT ANIMATIONS - HIGH PERFORMANCE
@@ -549,13 +547,13 @@ button:not(:hover) {
 }
 
 @keyframes cookieBannerSlideUp {
-  from { 
-    opacity: 0; 
-    transform: translate3d(0, 100%, 0); 
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
   }
-  to { 
-    opacity: 1; 
-    transform: translate3d(0, 0, 0); 
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -565,13 +563,13 @@ button:not(:hover) {
 }
 
 @keyframes cookieModalSlideIn {
-  from { 
-    opacity: 0; 
-    transform: translate3d(0, 30px, 0) scale(0.95); 
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.95);
   }
-  to { 
-    opacity: 1; 
-    transform: translate3d(0, 0, 0) scale(1); 
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -603,8 +601,21 @@ button:not(:hover) {
     will-change: auto !important;
     transform: none !important;
   }
-  
+ 
   .cookie-toggle {
     transition: none !important;
   }
+}
+
+/* =================================================================
+   SECTIONS SPACING 
+   ================================================================= */
+
+section:not(#hero) {
+  padding-top: 5rem !important; 
+}
+
+/* Smooth scroll offset for anchor links */
+html {
+  scroll-padding-top: 5rem !important;
 }

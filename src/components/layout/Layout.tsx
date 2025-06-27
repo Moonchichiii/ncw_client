@@ -1,5 +1,4 @@
 import { memo, type ReactNode } from 'react'
-import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieConsent from '@/components/cookies/CookieConsent'
 
@@ -20,15 +19,12 @@ const Layout = memo<LayoutProps>(({ children }) => {
         Skip to main content
       </a>
 
-      <Navbar />
-
-      {/* Main page content */}
-      <main id="main-content" className="pt-16">
+      <CookieConsent />
+      
+      {/* Main page content - NO navbar here anymore */}
+      <main id="main-content">
         {children}
       </main>
-
-      {/* Always-mounted banner, after <main> but before the footer */}
-      <CookieConsent />
 
       <Footer />
     </div>

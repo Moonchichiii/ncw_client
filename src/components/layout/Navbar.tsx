@@ -105,16 +105,43 @@ const Navbar = memo(() => {
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center h-16">
             <button
-              onClick={scrollToTop}
-              className="group flex items-center gap-2 text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
-              aria-label="Nordic Code Works - Return to top of page"
-              type="button"
-            >
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center text-text-inverse font-bold text-sm transition-transform duration-300 group-hover:scale-110">
-                NCW
-              </div>
-              <span className="font-heading text-lg tracking-tight">Nordic Code Works</span>
-            </button>
+  onClick={scrollToTop}
+  className="group flex items-center gap-2 text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
+  aria-label="NCW - Return to top of page"
+  type="button"
+>
+  {/* gradient container with your SVG logo inside */}
+  <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-6 h-6 text-black dark:text-white"
+      aria-hidden="true"
+    >
+      <path
+        d="M6 4L10 28M10 4L16 28M16 4L22 28M22 4L26 28"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <rect
+        x="4"
+        y="4"
+        width="24"
+        height="24"
+        stroke="currentColor"
+        strokeWidth="2"
+        rx="3"
+      />
+    </svg>
+  </div>
+
+  {/* the “NCW” text */}
+  <span className="font-black text-lg tracking-tight">NCW</span>
+</button>
 
             <div className="hidden md:flex items-center gap-4">
               <ThemeToggle />

@@ -1,6 +1,7 @@
 import { memo, Suspense, lazy } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import Layout from '@/components/layout/Layout'
+import Navbar from '@/components/layout/Navbar'
 import Hero from '@/pages/Hero'
 import { ErrorFallback } from '@/components/common/ErrorFallback'
 
@@ -22,6 +23,9 @@ SectionLoader.displayName = 'SectionLoader'
 const App = memo(() => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
+      
+      <Navbar />
+      
       <Layout>        
         <Hero />        
         <Suspense fallback={<SectionLoader />}>
@@ -33,9 +37,7 @@ const App = memo(() => {
         <Suspense fallback={<SectionLoader />}>
           <Contact />
         </Suspense>
-        
       </Layout>
-      
     </ErrorBoundary>
   )
 })

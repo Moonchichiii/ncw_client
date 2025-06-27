@@ -22,9 +22,9 @@ const VARIANT_CLASSES = {
 } as const
 
 const SIZE_CLASSES = {
-    sm: 'px-3 py-2 text-sm rounded-lg sm:px-4 sm:py-2.5',
-    md: 'px-4 py-2.5 text-base rounded-xl sm:px-6 sm:py-3 sm:text-lg',
-    lg: 'px-5 py-3 text-lg rounded-xl sm:px-8 sm:py-4 sm:text-xl'
+    sm: 'px-3 py-2 text-sm rounded-2xl sm:px-4 sm:py-2.5',
+    md: 'px-4 py-2.5 text-base rounded-2xl sm:px-6 sm:py-3 sm:text-lg',
+    lg: 'px-5 py-3 text-lg rounded-3xl sm:px-8 sm:py-4 sm:text-xl'
 } as const
 
 const BASE_CLASSES = 'inline-flex items-center justify-center gap-2 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed'
@@ -81,7 +81,7 @@ interface ButtonClassOptions {
 
 const buildButtonClasses = ({ variant, size, fullWidth, isDisabled, className }: ButtonClassOptions): string => {
     const hasHoverEffects = shouldApplyHoverEffects(variant, isDisabled)
-    
+   
     return clsx(
         BASE_CLASSES,
         VARIANT_CLASSES[variant],
@@ -105,12 +105,12 @@ const Button = memo<ButtonProps>(({
     ...props
 }) => {
     const isDisabled = disabled ?? isLoading
-    const buttonClasses = buildButtonClasses({ 
-        variant, 
-        size, 
-        fullWidth, 
-        isDisabled, 
-        className 
+    const buttonClasses = buildButtonClasses({
+        variant,
+        size,
+        fullWidth,
+        isDisabled,
+        className
     })
 
     return (
