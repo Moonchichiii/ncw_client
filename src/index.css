@@ -1,6 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 @variant dark (&:where(.dark, .dark *));
+
+/* =================================================================
+   FONT PERFORMANCE OPTIMIZATIONS 
+   ================================================================= */
+
+/* Optimize font loading with proper fallbacks */
+@font-face {
+  font-display: swap; /* CRITICAL: Prevents invisible text during font load */
+}
+
+/* Define font families with proper fallbacks to prevent layout shift */
+.font-heading {
+  font-family: 'Archivo Black', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-display: swap;
+}
+
+.font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-display: swap;
+}
+
+.font-mono {
+  font-family: 'Space Grotesk', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-display: swap;
+}
 
 /* =================================================================
    MENU OVERLAY ANIMATIONS - HIGH PERFORMANCE
@@ -125,12 +149,12 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: theme(fontFamily.sans);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color-scheme: light dark;
   font-size: clamp(16px, 1vw + 14px, 18px);
- 
+  
   /* REMOVED: contain: layout style; - This was breaking position: fixed! */
 }
 
@@ -519,11 +543,6 @@ button:not(:hover) {
   contain: strict;
 }
 
-/* Performance: Optimize font loading */
-@font-face {
-  font-display: swap;
-}
-
 /* =================================================================
    COOKIE CONSENT ANIMATIONS - HIGH PERFORMANCE
    ================================================================= */
@@ -606,6 +625,50 @@ button:not(:hover) {
     transition: none !important;
   }
 }
+
+/* =================================================================
+   HERO BACKGROUND IMAGES (CSS-based for better performance)
+   ================================================================= */
+
+.hero-background {
+  background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
+  position: relative;
+}
+
+.hero-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* Mobile background image */
+@media (max-width: 1023px) {
+  .hero-background::before {
+    background-image: url('/src/assets/images/hero-bg-mobile.webp');
+  }
+}
+
+/* Desktop background image */
+@media (min-width: 1024px) {
+  .hero-background::before {
+    background-image: url('/src/assets/images/hero-bg-desktop.webp');
+  }
+}
+
+/* Dark mode adjustments */
+.dark .hero-background::before {
+  opacity: 0.2;
+}
+
 
 /* =================================================================
    SECTIONS SPACING 

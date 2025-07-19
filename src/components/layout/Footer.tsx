@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Github, Dribbble, Linkedin, Twitter } from 'lucide-react'
+import { Github, Dribbble, Linkedin, Twitter } from '@/components/icons'
 import clsx from 'clsx'
 
 const socialLinks = [
@@ -10,7 +10,6 @@ const socialLinks = [
 ]
 
 interface FooterProps {
-  /** when true, uses the dark/overlay style (for MenuOverlay) */
   overlay?: boolean
 }
 

@@ -1,135 +1,193 @@
-import { memo, useEffect, useRef, useCallback, useState } from 'react'
-import { ArrowDown } from 'lucide-react'
-
-import heroDesktopImage from '/src/assets/images/hero-bg-desktop.jpg'
-import heroMobileImage from '/src/assets/images/hero-bg-mobile.jpg'
-
-const preloadImages = async (): Promise<void> => {
-  const promises = [
-    new Promise<void>((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => resolve()
-      img.onerror = reject
-      img.src = heroDesktopImage
-    }),
-    new Promise<void>((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => resolve()
-      img.onerror = reject
-      img.src = heroMobileImage
-    })
-  ]
-  await Promise.allSettled(promises)
-}
+import { memo, useCallback, useState } from 'react'
+import { ArrowDown } from '@/components/icons/index'
+import Button from '@/components/common/Button'
 
 const Hero = memo(() => {
-  const [imagesLoaded, setImagesLoaded] = useState(false)
-  const [reducedMotion, setReducedMotion] = useState(false)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const subtitleRef = useRef<HTMLParagraphElement>(null)
-  const buttonsRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReducedMotion(motionQuery.matches)
-    const handleMotionChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches)
-    motionQuery.addEventListener('change', handleMotionChange)
-    return () => motionQuery.removeEventListener('change', handleMotionChange)
-  }, [])
-
-  useEffect(() => {
-    const timer = setTimeout(async () => {
-      await preloadImages()
-      setImagesLoaded(true)
-    }, 300)
-    return () => clearTimeout(timer)
-  }, [])
+  const [isPreloading, setIsPreloading] = useState(false)
+  const SCROLL_OFFSET = 55
 
   const scrollToWork = useCallback(() => {
-    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
+    const workSection = document.getElementById('work')
+    if (workSection) {
+      const elementTop = workSection.offsetTop
+      const offsetPosition = elementTop + SCROLL_OFFSET
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
   }, [])
 
   const scrollToContact = useCallback(() => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      const elementTop = contactSection.offsetTop
+      const offsetPosition = elementTop + SCROLL_OFFSET
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }, [])
+
+  // Preload Work section on hover
+  const preloadWorkSection = useCallback(() => {
+    if (isPreloading) {return}
+
+    setIsPreloading(true)
+    import('@/pages/Work').then(() => {
+      setIsPreloading(false)
+    }).catch(() => {
+      setIsPreloading(false)
+    })
+  }, [isPreloading])
+
+  const scrollToNextSection = useCallback(() => {
+    const workSection = document.getElementById('work')
+    if (workSection) {
+      const elementTop = workSection.offsetTop
+      const offsetPosition = elementTop + SCROLL_OFFSET
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      return
+    }
+
+    // Fallback: force scroll to trigger lazy loading
+    const heroHeight = window.innerHeight
+    const targetPosition = heroHeight + 100
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    })
+
+    setTimeout(() => {
+      const workSection = document.getElementById('work')
+      if (workSection) {
+        const elementTop = workSection.offsetTop
+        const offsetPosition = elementTop + SCROLL_OFFSET
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      } else {
+        const aboutSection = document.getElementById('about')
+        if (aboutSection) {
+          const elementTop = aboutSection.offsetTop
+          const offsetPosition = elementTop + SCROLL_OFFSET
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        }
+      }
+    }, 500)
   }, [])
 
   return (
     <section
       id="hero"
-      role="banner"
-      aria-labelledby="hero-title"
-      aria-describedby="hero-description"
-      className="relative overflow-hidden bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-tertiary min-h-screen"
+      className="hero-background relative min-h-screen flex items-center"
     >
-      {/* Fixed background image - more visible in light mode */}
-      {imagesLoaded && (
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 dark:opacity-20 pointer-events-none"
-          style={{
-            backgroundImage: `url('${heroDesktopImage}')`,
-            mixBlendMode: 'multiply',
-            filter: 'brightness(1.1) contrast(1.1) saturate(0.9)'
-          }}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Full screen content  */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between max-w-6xl mx-auto">
-          {/* Logo Text */}
-          <h1
-            ref={titleRef}
-            id="hero-title"
-            className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-black tracking-tight text-text-primary leading-none"
-            style={{ opacity: reducedMotion ? 1 : 1 }}
-          >
-            <span className="block">NORDIC</span>
-            <span className="block bg-gradient-to-r from-interactive-primary via-interactive-hover to-interactive-primary bg-clip-text text-transparent">
-              CODE
-            </span>
-            <span className="block">WORKS</span>
-          </h1>
-
-          {/* Buttons */}
-          <div
-            ref={buttonsRef}
-            className="mt-6 lg:mt-0 flex gap-4"
-            style={{ opacity: reducedMotion ? 1 : 1 }}
-          >
-            <button
-              onClick={scrollToWork}
-              className="px-8 py-4 text-lg font-semibold rounded-3xl bg-gradient-to-r from-interactive-primary to-interactive-hover text-text-inverse shadow-lg hover:shadow-xl hover:shadow-interactive-primary/25 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2"
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Mobile */}
+          <div className="block lg:hidden text-center">
+            <h1
+              id="hero-title"
+              className="font-heading font-black text-6xl sm:text-7xl md:text-8xl text-text-primary leading-tight mb-8"
             >
-              See Our Work
-            </button>
-            <button
-              onClick={scrollToContact}
-              className="px-8 py-4 text-lg font-semibold rounded-3xl bg-bg-overlay/80 hover:bg-bg-elevated backdrop-blur-sm border border-border-primary text-text-primary shadow hover:shadow-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2"
-            >
-              Start Project
-            </button>
+              <span className="block">NORDIC</span>
+              <span className="block text-gradient-brand">CODE</span>
+              <span className="block">WORKS</span>
+            </h1>
+
+            <p className="text-lg sm:text-xl md:text-2xl font-medium text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
+              Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
+              Crafting tomorrow&#39;s web, today
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                onClick={scrollToWork}
+                onMouseEnter={preloadWorkSection}
+                variant="primary"
+                size="lg"
+                fullWidth
+                className="sm:w-auto"
+              >
+                See Our Work
+              </Button>
+              <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth className="sm:w-auto">
+                Start Project
+              </Button>
+            </div>
+          </div>
+
+          {/* Desktop */}
+          <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center">
+            <div className="lg:col-span-7">
+              <h1
+                id="hero-title"
+                className="font-heading font-black text-text-primary leading-none text-left text-7xl xl:text-8xl 2xl:text-9xl"
+              >
+                <span className="block">NORDIC</span>
+                <span className="block text-gradient-brand">CODE</span>
+                <span className="block">WORKS</span>
+              </h1>
+            </div>
+
+            <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
+              <p className="text-xl lg:text-2xl xl:text-3xl font-medium text-text-secondary leading-relaxed text-left">
+                Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
+                Crafting tomorrow&#39;s web, today
+              </p>
+
+              <div className="flex flex-col gap-4">
+                <Button
+                  onClick={scrollToWork}
+                  onMouseEnter={preloadWorkSection}
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                >
+                  See Our Work
+                </Button>
+                <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth>
+                  Start Project
+                </Button>
+              </div>
+
+              <div className="flex justify-start">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                  Available for Projects
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Subtitle under full width */}
-        <p
-          ref={subtitleRef}
-          id="hero-description"
-          className="mt-8 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-text-secondary max-w-3xl mx-auto leading-relaxed"
-          style={{ opacity: reducedMotion ? 1 : 1 }}
-        >
-          Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
-          Crafting tomorrow's web, today
-        </p>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute inset-x-0 flex justify-center bottom-20 md:bottom-16 lg:bottom-12" aria-hidden="true">
-        <div className="w-6 h-10 border-2 border-text-tertiary rounded-full flex justify-center">
-          <ArrowDown size={16} className="text-text-tertiary mt-2 animate-bounce" />
+      <button
+        onClick={scrollToNextSection}
+        onMouseEnter={preloadWorkSection}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-text-tertiary hover:text-interactive-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-interactive-primary rounded-lg p-2"
+        aria-label="Scroll to next section"
+        type="button"
+      >
+        <span className="text-sm font-medium">Scroll to explore</span>
+        <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2">
+          <ArrowDown size={16} className="animate-bounce" />
         </div>
-      </div>
+      </button>
     </section>
   )
 })

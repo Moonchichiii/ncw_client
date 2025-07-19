@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState, useCallback } from 'react'
-import { Cookie, Settings, X, Shield } from 'lucide-react'
+import { Cookie, Settings, X, Shield } from '@/components/icons'
 import clsx from 'clsx'
 import { useCookieConsent, type CookieCategory, type CookiePreferences } from '@/hooks/useCookieConsent'
 import CookieCategoryToggle from '@/components/cookies/CookieCategoryToggle'
@@ -23,7 +23,6 @@ const CookieConsent = memo(() => {
   const modalRef = useRef<HTMLDivElement>(null)
   const firstFocusableRef = useRef<HTMLButtonElement>(null)
 
-  // Animate banner entrance
   useEffect(() => {
     if (showBanner) {
       const timer = setTimeout(() => setIsVisible(true), 100)
@@ -33,32 +32,29 @@ const CookieConsent = memo(() => {
     }
   }, [showBanner])
 
-  // Keep local preferences in sync
   useEffect(() => {
     setLocalPreferences(preferences)
   }, [preferences])
 
-  // ESC to close preferences modal and focus management
   useEffect(() => {
     if (!showPreferences) {return}
-    
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault()
         hideModals()
       }
     }
-    
+
     document.addEventListener('keydown', onKey)
     const timer = setTimeout(() => firstFocusableRef.current?.focus(), 100)
-    
+
     return () => {
       document.removeEventListener('keydown', onKey)
       clearTimeout(timer)
     }
   }, [showPreferences, hideModals])
 
-  // Prevent scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = showPreferences ? 'hidden' : 'unset'
     return () => {
@@ -78,7 +74,6 @@ const CookieConsent = memo(() => {
 
   return (
     <>
-      {/* Cookie Banner - Now positioned at top of viewport for immediate visibility */}
       {showBanner && (
         <div
           ref={bannerRef}
@@ -96,7 +91,6 @@ const CookieConsent = memo(() => {
           aria-describedby="cookie-banner-description"
         >
           <div className="p-6">
-            {/* Header with icon and close button */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-interactive-primary to-interactive-hover rounded-xl flex items-center justify-center">
@@ -121,13 +115,11 @@ const CookieConsent = memo(() => {
               </button>
             </div>
 
-            {/* Content */}
             <p id="cookie-banner-description" className="text-sm text-text-secondary leading-relaxed mb-6">
               We use cookies to enhance your browsing experience and analyze site traffic. 
               Choose your preferences or accept all to continue.
             </p>
 
-            {/* Action buttons */}
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
                 <button
@@ -158,7 +150,6 @@ const CookieConsent = memo(() => {
         </div>
       )}
 
-      {/* Preferences Modal - Enhanced design */}
       {showPreferences && (
         <div
           className="fixed inset-0 z-[200] bg-bg-overlay/90 backdrop-blur-sm"
@@ -171,7 +162,6 @@ const CookieConsent = memo(() => {
               ref={modalRef}
               className="w-full max-w-4xl bg-bg-primary rounded-3xl shadow-2xl border border-border-primary max-h-[90vh] overflow-hidden"
             >
-              {/* Enhanced header */}
               <div className="flex items-center justify-between p-6 border-b border-border-primary bg-gradient-to-r from-interactive-primary/5 to-interactive-hover/5">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-interactive-primary to-interactive-hover rounded-2xl flex items-center justify-center">
@@ -197,11 +187,10 @@ const CookieConsent = memo(() => {
                 </button>
               </div>
 
-              {/* Body with enhanced content */}
               <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
                 <div className="bg-gradient-to-r from-status-info/10 to-interactive-primary/10 rounded-2xl p-5 border border-status-info/20">
                   <p className="text-text-primary leading-relaxed font-medium">
-                    Your privacy matters to us. We're committed to transparency about data collection 
+                    Your privacy matters to us. We&#39;re committed to transparency about data collection 
                     and giving you complete control over your experience.
                   </p>
                 </div>
@@ -218,7 +207,6 @@ const CookieConsent = memo(() => {
                   ))}
                 </div>
 
-                {/* Privacy policy link */}
                 <div className="mt-6 p-5 bg-bg-secondary rounded-2xl border border-border-primary">
                   <p className="text-sm text-text-secondary">
                     <strong className="text-text-primary">Learn More:</strong>{' '}
@@ -236,7 +224,6 @@ const CookieConsent = memo(() => {
                 </div>
               </div>
 
-              {/* Enhanced footer */}
               <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-border-primary bg-bg-secondary/50">
                 <button
                   onClick={rejectAll}

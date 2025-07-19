@@ -1,5 +1,5 @@
 import type { CookieCategory } from '@/hooks/useCookieConsent'
-import { Shield, User, BarChart3, Target } from 'lucide-react'
+import { Shield, User, BarChart3, Target } from '@/components/icons'
 
 export interface CookieCategoryConfig {
   id: CookieCategory

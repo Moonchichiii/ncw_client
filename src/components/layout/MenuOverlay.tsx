@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useCallback, useState } from 'react'
-import { Github, Dribbble, Linkedin, Twitter, X } from 'lucide-react'
+import { Github, Dribbble, Linkedin, Twitter, X } from '@/components/icons'
 import Footer from '@/components/layout/Footer'
 
 interface MenuLink {
@@ -143,7 +143,7 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[1000] backdrop-blur-lg bg-slate-900/95 dark:bg-slate-900/95 menu-overlay"
+      className="fixed inset-0 z-[1000] backdrop-blur-lg bg-bg-overlay menu-overlay"
       id="main-menu"
       role="dialog"
       aria-modal="true"
@@ -151,17 +151,21 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
       style={{ opacity: 0, visibility: 'hidden', contain: 'layout style paint' }}
     >
       <div className="min-h-screen flex flex-col justify-between p-6 pt-24 md:p-12 md:pt-32">
-        {/* Close button */}
         <button
           onClick={onClose}
           disabled={isAnimating}
-          className="fixed top-6 right-6 md:top-8 md:right-8 z-[1020] w-12 h-12 backdrop-blur-lg border rounded-xl flex items-center justify-center transition-colors duration-200 shadow-lg bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="fixed top-6 right-6 md:top-8 md:right-8 z-[1020] w-12 h-12 
+                     bg-bg-elevated/90 backdrop-blur-lg border border-border-primary 
+                     rounded-xl flex items-center justify-center 
+                     transition-all duration-200 shadow-lg 
+                     hover:bg-bg-secondary hover:border-border-secondary hover:scale-105 
+                     text-text-primary hover:text-interactive-primary
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           aria-label="Close menu"
         >
           <X size={24} strokeWidth={2} className="drop-shadow-sm" />
         </button>
 
-        {/* Links */}
         <div className="flex-grow flex items-center">
           <div className="w-full max-w-7xl mx-auto">
             <ul className="space-y-6 md:space-y-8 mb-16 list-none">
@@ -176,7 +180,12 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
                     aria-label={link.description}
-                    className="block font-heading text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none transition-all duration-300 ease-out text-white hover:text-blue-400 hover:translate-x-2 focus-visible:outline-none focus-visible:text-blue-400"
+                    className="block font-heading text-5xl md:text-7xl lg:text-8xl font-black 
+                               uppercase tracking-tighter leading-none 
+                               transition-all duration-300 ease-out 
+                               text-text-primary hover:text-interactive-primary hover:translate-x-2 
+                               focus-visible:outline-none focus-visible:text-interactive-primary
+                               focus-visible:ring-2 focus-visible:ring-border-focus rounded-lg"
                   >
                     {link.title}
                   </a>
@@ -192,7 +201,12 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Visit our ${title} page (opens in new tab)`}
-                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 bg-white/10 text-white hover:bg-blue-600 hover:-translate-y-1 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center 
+                               transition-all duration-200 hover:scale-110 
+                               bg-bg-elevated/80 border border-border-primary 
+                               text-text-primary hover:bg-interactive-primary hover:border-interactive-primary
+                               hover:-translate-y-1 hover:text-text-inverse 
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
                   >
                     <Icon size={20} aria-hidden="true" />
                   </a>
@@ -202,7 +216,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Shared Footer */}
         <Footer overlay />
       </div>
     </div>

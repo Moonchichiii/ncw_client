@@ -54,7 +54,7 @@ export const useCookieConsent = () => {
                     }
                 }
             } catch (_error) {
-                // Silent fail for localStorage issues
+                // ignore localStorage errors
             }
             setState(prev => ({ ...prev, showBanner: true }))
         }
@@ -72,7 +72,7 @@ export const useCookieConsent = () => {
             }
             localStorage.setItem(STORAGE_KEY, JSON.stringify(consentData))
         } catch (_error) {
-            // Silent fail for localStorage issues
+            // ignore localStorage errors
         }
     }, [])
 
@@ -155,7 +155,7 @@ export const useCookieConsent = () => {
                 showPreferences: false,
             })
         } catch (_error) {
-            // Silent fail for localStorage issues
+            // ignore localStorage errors
         }
     }, [])
 

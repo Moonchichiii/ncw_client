@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
-import { Mail, Linkedin, Github, Code2, Database, Server, Globe } from 'lucide-react'
+import { Mail, Linkedin, Github, Code2, Database, Server, Globe } from '@/components/icons/index'
 
 interface ContactLinkProps {
   href: string
@@ -138,7 +138,6 @@ const About = memo(() => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           
-          {/* Header */}
           <header className="mb-16">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
@@ -147,13 +146,13 @@ const About = memo(() => {
               </span>
             </div>
             
-            <h1 
+            <h2 
               id="about-title"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
               style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
             >
               Nordic Code Works
-            </h1>
+            </h2>
             
             <div className="max-w-3xl">
               <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
@@ -166,8 +165,6 @@ const About = memo(() => {
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
-            {/* Contact & Quick Info */}
             <div className="lg:col-span-4">
               <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700 mb-8">
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
@@ -197,9 +194,7 @@ const About = memo(() => {
               </div>
             </div>
 
-            {/* Main Content */}
             <div className="lg:col-span-8">
-              
               <Section title="Profile" id="profile-section">
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                   Seasoned developer with hands‑on experience in React, TypeScript, and Django. 
@@ -238,7 +233,6 @@ const About = memo(() => {
                   </p>
                 </div>
               </Section>
-
             </div>
           </div>
         </div>

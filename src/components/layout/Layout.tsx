@@ -9,7 +9,6 @@ interface LayoutProps {
 const Layout = memo<LayoutProps>(({ children }) => {
   return (
     <div className="min-h-screen bg-bg-primary transition-colors duration-300">
-      {/* skip-link for screen readers */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2
@@ -21,14 +20,13 @@ const Layout = memo<LayoutProps>(({ children }) => {
 
       <CookieConsent />
       
-      {/* Main page content - NO navbar here anymore */}
       <main id="main-content">
         {children}
       </main>
 
       <Footer />
     </div>
-  )
+  ) 
 })
 
 Layout.displayName = 'Layout'

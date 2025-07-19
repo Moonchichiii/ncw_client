@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
-import { Mail, Linkedin, Github, MessageCircle, ArrowRight, Clock, MapPin } from 'lucide-react'
+import { Mail, Linkedin, Github, MessageCircle, ArrowRight, Clock, MapPin } from '@/components/icons/index'
 
 interface ContactMethodProps {
   icon: React.ComponentType<{ size?: number; className?: string }>
@@ -120,8 +120,6 @@ const Contact = memo(() => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          
-          {/* Header */}
           <header className="text-center mb-16">
             <div className="flex items-center justify-center gap-2 mb-6">
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
@@ -131,13 +129,13 @@ const Contact = memo(() => {
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
             </div>
             
-            <h1 
+            <h2 
               id="contact-title"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
               style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
             >
               Let&apos;s work together
-            </h1>
+            </h2>
             
             <div className="max-w-3xl mx-auto">
               <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
@@ -149,14 +147,12 @@ const Contact = memo(() => {
             </div>
           </header>
 
-          {/* Contact Methods */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {contactMethods.map((method) => (
               <ContactMethod key={method.title} {...method} />
             ))}
           </div>
 
-          {/* Additional Info */}
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 text-center">
             <div className="max-w-2xl mx-auto">
               <div className="flex items-center justify-center gap-2 mb-4">

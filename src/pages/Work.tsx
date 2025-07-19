@@ -1,5 +1,5 @@
 import { memo, useEffect, useState, useRef } from 'react'
-import { ExternalLink, Github, Loader2, AlertCircle, Code2 } from 'lucide-react'
+import { ExternalLink, Github, Loader2, AlertCircle, Code2 } from '@/components/icons/index'
 
 interface Repo {
   id: number
@@ -13,6 +13,59 @@ interface Repo {
 interface ProjectCardProps {
   repo: Repo
   index: number
+}
+// Custom hook to manage repository fetching
+const useRepositories = () => {
+  const [repos, setRepos] = useState<Repo[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchRepos = async () => {
+      try {
+        const res = await fetch('https://api.github.com/users/Moonchichiii/repos?per_page=100')
+        if (!res.ok) {
+          throw new Error(`Failed to fetch repositories (${res.status})`)
+        }
+        const data: Repo[] = await res.json()
+        const deployed = data
+          .filter(r => !r.fork && r.homepage)
+          .sort((a, b) => a.name.localeCompare(b.name))
+        setRepos(deployed)
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'Unknown error occurred')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchRepos()
+  }, [])
+
+  return { repos, loading, error }
+}
+// Custom hook for header visibility
+const useHeaderVisibility = () => {
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false)
+  const headerRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsHeaderVisible(true)
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    )
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  return { isHeaderVisible, headerRef }
 }
 
 const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
@@ -36,7 +89,6 @@ const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
     return () => observer.disconnect()
   }, [index])
 
-  // Clean up repository name for display
   const displayName = repo.name
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -45,24 +97,31 @@ const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
   return (
     <article
       ref={cardRef}
-      className={`bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
+      className={`
+        project-card-polish relative
+        bg-bg-elevated border border-border-primary rounded-2xl p-6
+        transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        hover:border-interactive-primary
+        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+      `}
       aria-labelledby={`project-${repo.id}-title`}
     >
+      {/* Enhanced gradient border that appears on hover */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-interactive-primary/10 to-interactive-hover/10 opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10" />
+      
       <div className="flex items-start gap-3 mb-4">
-        <div className="flex-shrink-0 w-10 h-10 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center">
-          <Code2 size={18} className="text-slate-600 dark:text-slate-400" aria-hidden="true" />
+        <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-interactive-primary/10 to-interactive-hover/10 rounded-xl flex items-center justify-center border border-border-primary/50">
+          <Code2 size={20} className="text-interactive-primary" aria-hidden="true" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 
             id={`project-${repo.id}-title`}
-            className="text-lg font-semibold text-slate-900 dark:text-white mb-2 leading-tight"
+            className="text-lg font-semibold text-text-primary mb-2 leading-tight"
           >
             {displayName}
           </h3>
           {repo.description && (
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+            <p className="text-text-secondary text-sm leading-relaxed mb-4">
               {repo.description}
             </p>
           )}
@@ -75,7 +134,7 @@ const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
             href={repo.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+            className="btn-polish micro-bounce inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-interactive-primary to-interactive-hover text-text-inverse rounded-xl font-medium hover:shadow-glow transition-all duration-300 focus-ring-enhanced"
             aria-label={`View live demo of ${displayName} (opens in new tab)`}
           >
             <ExternalLink size={16} aria-hidden="true" />
@@ -86,7 +145,7 @@ const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+          className="glass-enhanced micro-bounce inline-flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border-primary text-text-primary rounded-xl font-medium hover:border-interactive-primary hover:text-interactive-primary transition-all duration-300 focus-ring-enhanced"
           aria-label={`View source code of ${displayName} on GitHub (opens in new tab)`}
         >
           <Github size={16} aria-hidden="true" />
@@ -96,176 +155,146 @@ const ProjectCard = memo<ProjectCardProps>(({ repo, index }) => {
     </article>
   )
 })
-
 const LoadingState = memo(() => (
   <div className="text-center py-12">
     <div className="flex items-center justify-center gap-3 mb-4">
-      <Loader2 size={20} className="animate-spin text-slate-600 dark:text-slate-400" aria-hidden="true" />
-      <span className="text-slate-600 dark:text-slate-400">Loading projects...</span>
+      <Loader2 size={20} className="animate-spin text-interactive-primary" aria-hidden="true" />
+      <span className="text-text-secondary">Loading projects...</span>
     </div>
-    <p className="text-sm text-slate-500 dark:text-slate-500">
+    <p className="text-sm text-text-tertiary">
       Fetching latest projects from GitHub
     </p>
   </div>
 ))
-
 const ErrorState = memo<{ error: string }>(({ error }) => (
   <div className="text-center py-12">
     <div className="flex items-center justify-center gap-3 mb-4">
-      <AlertCircle size={20} className="text-red-500" aria-hidden="true" />
-      <span className="text-slate-900 dark:text-white font-medium">Unable to load projects</span>
+      <AlertCircle size={20} className="text-status-error" aria-hidden="true" />
+      <span className="text-text-primary font-medium">Unable to load projects</span>
     </div>
-    <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+    <p className="text-sm text-text-secondary mb-4">
       {error}
     </p>
     <button
       onClick={() => window.location.reload()}
-      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+      className="btn-polish micro-bounce inline-flex items-center gap-2 px-4 py-2 glass-enhanced border border-border-primary text-text-primary rounded-xl font-medium hover:border-interactive-primary transition-all duration-300"
     >
       Try Again
     </button>
   </div>
 ))
-
 const EmptyState = memo(() => (
   <div className="text-center py-12">
-    <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-      <Code2 size={24} className="text-slate-600 dark:text-slate-400" aria-hidden="true" />
+    <div className="w-16 h-16 bg-gradient-to-br from-interactive-primary/10 to-interactive-hover/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-border-primary/50">
+      <Code2 size={24} className="text-interactive-primary" aria-hidden="true" />
     </div>
-    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+    <h3 className="text-lg font-semibold text-text-primary mb-2">
       Projects coming soon
     </h3>
-    <p className="text-slate-600 dark:text-slate-400">
+    <p className="text-text-secondary">
       Currently working on new projects to showcase here.
     </p>
   </div>
 ))
 
-const Work = memo(() => {
-  const [repos, setRepos] = useState<Repo[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false)
-  const headerRef = useRef<HTMLElement>(null)
+const WorkHeader = memo<{ isVisible: boolean; headerRef: React.RefObject<HTMLElement | null> }>(
+  ({ isVisible, headerRef }) => (
+    <header 
+      ref={headerRef}
+      className={`mb-16 transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}
+    >
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-8 h-px bg-gradient-to-r from-interactive-primary to-transparent" />
+        <span className="badge-polish badge-info">
+          Portfolio
+        </span>
+      </div>
+      
+      <h2 
+        id="work-title"
+        className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-8 leading-tight tracking-tight"
+      >
+        Featured <span className="text-gradient-brand">Projects</span>
+      </h2>
+      
+      <div className="max-w-3xl">
+        <p className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-6">
+          A selection of web applications I&apos;ve built and deployed, showcasing different technologies and approaches.
+        </p>
+        <p className="text-lg text-text-tertiary leading-relaxed">
+          Each project represents a learning opportunity and demonstrates my commitment to writing clean, maintainable code.
+        </p>
+      </div>
+    </header>
+  )
+)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsHeaderVisible(true)
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
+const ProjectGrid = memo<{ repos: Repo[] }>(({ repos }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {repos.map((repo, index) => (
+      <ProjectCard key={repo.id} repo={repo} index={index} />
+    ))}
+  </div>
+))
+
+const GitHubFooter = memo(() => (
+  <div className="text-center mt-12 pt-8 border-t border-border-primary">
+    <p className="text-sm text-text-tertiary">
+      More projects available on{' '}
+      <a 
+        href="https://github.com/Moonchichiii" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="font-medium text-interactive-primary hover:text-interactive-hover underline transition-colors duration-200"
+      >
+        GitHub
+      </a>
+    </p>
+  </div>
+))
+const WorkContent = memo<{ repos: Repo[]; loading: boolean; error: string | null }>(
+  ({ repos, loading, error }) => {
+    if (loading) {return <LoadingState />}
+    if (error) {return <ErrorState error={error} />}
+    if (repos.length === 0) {return <EmptyState />}
+    
+    return (
+      <>
+        <ProjectGrid repos={repos} />
+        <GitHubFooter />
+      </>
     )
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        const res = await fetch('https://api.github.com/users/Moonchichiii/repos?per_page=100')
-        if (!res.ok) {
-          throw new Error(`Failed to fetch repositories (${res.status})`)
-        }
-        const data: Repo[] = await res.json()
-        const deployed = data
-          .filter(r => !r.fork && r.homepage)
-          .sort((a, b) => a.name.localeCompare(b.name))
-        setRepos(deployed)
-      } catch (e: unknown) {
-        setError(e instanceof Error ? e.message : 'Unknown error occurred')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchRepos()
-  }, [])
+  }
+)
+const Work = memo(() => {
+  const { repos, loading, error } = useRepositories()
+  const { isHeaderVisible, headerRef } = useHeaderVisibility()
 
   return (
     <section
       id="work"
-      className="py-16 lg:py-24 bg-slate-50 dark:bg-slate-900"
+      className="py-16 lg:py-24 bg-bg-secondary"
       aria-labelledby="work-title"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />
         
-        {/* Header */}
-        <header 
-          ref={headerRef}
-          className={`mb-16 transition-all duration-700 ${
-            isHeaderVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-        >
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-              Portfolio
-            </span>
-          </div>
-          
-          <h1 
-            id="work-title"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
-            style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
-          >
-            Featured Projects
-          </h1>
-          
-          <div className="max-w-3xl">
-            <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-              A selection of web applications I&apos;ve built and deployed, showcasing different technologies and approaches.
-            </p>
-            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-              Each project represents a learning opportunity and demonstrates my commitment to writing clean, maintainable code.
-            </p>
-          </div>
-        </header>
-
-        {/* Content */}
         <div className="min-h-[400px]">
-          {loading && <LoadingState />}
-          {error && <ErrorState error={error} />}
-          {!loading && !error && repos.length === 0 && <EmptyState />}
-          {!loading && !error && repos.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {repos.map((repo, index) => (
-                <ProjectCard key={repo.id} repo={repo} index={index} />
-              ))}
-            </div>
-          )}
+          <WorkContent repos={repos} loading={loading} error={error} />
         </div>
-
-        {/* Footer Note */}
-        {!loading && !error && repos.length > 0 && (
-          <div className="text-center mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              More projects available on{' '}
-              <a 
-                href="https://github.com/Moonchichiii" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="font-medium text-slate-900 dark:text-white hover:underline"
-              >
-                GitHub
-              </a>
-            </p>
-          </div>
-        )}
-
       </div>
     </section>
   )
 })
-
 ProjectCard.displayName = 'ProjectCard'
 LoadingState.displayName = 'LoadingState'
 ErrorState.displayName = 'ErrorState'
 EmptyState.displayName = 'EmptyState'
+WorkHeader.displayName = 'WorkHeader'
+ProjectGrid.displayName = 'ProjectGrid'
+GitHubFooter.displayName = 'GitHubFooter'
+WorkContent.displayName = 'WorkContent'
 Work.displayName = 'Work'
-
 export default Work

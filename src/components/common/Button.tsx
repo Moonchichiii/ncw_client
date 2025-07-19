@@ -1,8 +1,8 @@
 import { memo, type ReactNode, type ButtonHTMLAttributes } from 'react'
 import clsx from 'clsx'
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost'
-type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success'
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode
@@ -12,82 +12,182 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     leftIcon?: ReactNode
     rightIcon?: ReactNode
     fullWidth?: boolean
+    rounded?: boolean
 }
 
 const VARIANT_CLASSES = {
-    primary: 'bg-interactive-primary hover:bg-interactive-hover text-text-inverse focus:ring-border-focus',
-    secondary: 'bg-bg-elevated hover:bg-bg-secondary border border-border-primary text-text-primary focus:ring-border-focus',
-    outline: 'bg-transparent hover:bg-bg-secondary border border-border-primary text-text-primary focus:ring-border-focus',
-    ghost: 'bg-transparent hover:bg-bg-secondary text-text-primary hover:text-interactive-primary focus:ring-border-focus'
+  primary: `
+    btn-polish micro-bounce hover-glow
+    bg-gradient-to-r from-interactive-primary to-interactive-hover
+    hover:from-interactive-hover hover:to-interactive-primary
+    text-text-inverse font-semibold
+    border border-interactive-primary/20 hover:border-interactive-primary/40
+    shadow-lg hover:shadow-xl hover:shadow-interactive-primary/30
+    backdrop-filter backdrop-blur-md
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `,
+  secondary: `
+    glass-enhanced micro-bounce hover-glow
+    bg-bg-elevated/95 hover:bg-bg-elevated
+    text-text-primary hover:text-interactive-primary font-medium
+    border border-border-primary hover:border-interactive-primary
+    shadow-md hover:shadow-lg hover:shadow-interactive-primary/10
+    backdrop-filter backdrop-blur-md
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `,
+  outline: `
+    micro-bounce
+    bg-transparent hover:bg-interactive-primary/10
+    text-text-primary hover:text-interactive-primary font-medium
+    border-2 border-border-primary hover:border-interactive-primary
+    hover:shadow-md hover:shadow-interactive-primary/10
+    backdrop-filter hover:backdrop-blur-sm
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `,
+  ghost: `
+    micro-bounce
+    bg-transparent hover:glass-enhanced
+    text-text-secondary hover:text-interactive-primary font-medium
+    border border-transparent hover:border-interactive-primary/30
+    hover:shadow-sm hover:backdrop-blur-sm
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `,
+  danger: `
+    btn-polish micro-bounce hover-glow
+    bg-gradient-to-r from-status-error to-red-600
+    hover:from-red-600 hover:to-red-700
+    text-text-inverse font-semibold
+    border border-red-500/20 hover:border-red-500/40
+    shadow-lg hover:shadow-xl hover:shadow-red-500/30
+    backdrop-filter backdrop-blur-md
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `,
+  success: `
+    btn-polish micro-bounce hover-glow
+    bg-gradient-to-r from-status-success to-green-600
+    hover:from-green-600 hover:to-green-700
+    text-text-inverse font-semibold
+    border border-green-500/20 hover:border-green-500/40
+    shadow-lg hover:shadow-xl hover:shadow-green-500/30
+    backdrop-filter backdrop-blur-md
+    transform hover:scale-[1.02] active:scale-[0.98]
+  `
 } as const
 
 const SIZE_CLASSES = {
-    sm: 'px-3 py-2 text-sm rounded-2xl sm:px-4 sm:py-2.5',
-    md: 'px-4 py-2.5 text-base rounded-2xl sm:px-6 sm:py-3 sm:text-lg',
-    lg: 'px-5 py-3 text-lg rounded-3xl sm:px-8 sm:py-4 sm:text-xl'
+    xs: 'px-3 py-1.5 text-xs font-medium rounded-lg min-h-[28px]',
+    sm: 'px-4 py-2 text-sm font-medium rounded-xl min-h-[36px]',
+    md: 'px-6 py-3 text-base font-medium rounded-xl min-h-[44px]',
+    lg: 'px-8 py-4 text-lg font-semibold rounded-2xl min-h-[52px]',
+    xl: 'px-10 py-5 text-xl font-semibold rounded-2xl min-h-[60px]'
 } as const
 
-const BASE_CLASSES = 'inline-flex items-center justify-center gap-2 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed'
+const ROUNDED_CLASSES = {
+    xs: 'rounded-full',
+    sm: 'rounded-full', 
+    md: 'rounded-full',
+    lg: 'rounded-full',
+    xl: 'rounded-full'
+} as const
 
-const HOVER_EFFECTS = 'hover:shadow-md hover:shadow-interactive-primary/20 active:scale-[0.98] transition-all duration-150'
+const BASE_CLASSES = `
+  inline-flex items-center justify-center gap-2
+  transition-all duration-300 cubic-bezier(0.4, 0, 0.2, 1)
+  focus:outline-none focus-ring-enhanced
+  disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none
+  disabled:hover:shadow-none disabled:hover:scale-100
+  relative overflow-hidden
+  select-none user-select-none
+  font-feature-settings 'cv02', 'cv03', 'cv04', 'cv11'
+  will-change-auto
+`
 
-// Helper component for loading state
-const LoadingContent = memo(() => (
+const LoadingContent = memo<{ size: ButtonSize }>(({ size }) => {
+  const spinnerSize = {
+    xs: 'w-3 h-3',
+    sm: 'w-4 h-4', 
+    md: 'w-4 h-4',
+    lg: 'w-5 h-5',
+    xl: 'w-6 h-6'
+  }[size]
+
+  return (
     <>
-        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-        <span>Loading...</span>
+      <div className={`${spinnerSize} border-2 border-current border-t-transparent rounded-full animate-spin`} />
+      <span>Loading...</span>
     </>
-))
+  )
+})
 
 LoadingContent.displayName = 'LoadingContent'
 
-// Helper component for icon wrapper
-const IconWrapper = memo<{ children: ReactNode }>(({ children }) => (
-    <span className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
-        {children}
+const IconWrapper = memo<{ children: ReactNode; size: ButtonSize }>(({ children, size }) => {
+  const iconSize = {
+    xs: 'w-3 h-3',
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5', 
+    lg: 'w-6 h-6',
+    xl: 'w-7 h-7'
+  }[size]
+
+  return (
+    <span className={`${iconSize} flex items-center justify-center flex-shrink-0`}>
+      {children}
     </span>
-))
+  )
+})
 
 IconWrapper.displayName = 'IconWrapper'
 
-// Helper component for button content
 const ButtonContent = memo<{
     leftIcon?: ReactNode
     rightIcon?: ReactNode
     children: ReactNode
-}>(({ leftIcon, rightIcon, children }) => (
+    size: ButtonSize
+}>(({ leftIcon, rightIcon, children, size }) => (
     <>
-        {leftIcon && <IconWrapper>{leftIcon}</IconWrapper>}
-        <span>{children}</span>
-        {rightIcon && <IconWrapper>{rightIcon}</IconWrapper>}
+        {leftIcon && <IconWrapper size={size}>{leftIcon}</IconWrapper>}
+        <span className="truncate">{children}</span>
+        {rightIcon && <IconWrapper size={size}>{rightIcon}</IconWrapper>}
     </>
 ))
 
 ButtonContent.displayName = 'ButtonContent'
 
-// Helper function to determine if hover effects should be applied
-const shouldApplyHoverEffects = (variant: ButtonVariant, isDisabled: boolean): boolean => {
-    return (variant === 'primary' || variant === 'secondary') && !isDisabled
-}
+const ShimmerEffect = memo<{ variant: ButtonVariant }>(({ variant }) => {
+  if (!['primary', 'danger', 'success'].includes(variant)) {return null}
+  
+  return (
+    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+  )
+})
 
-// Helper function to build CSS classes
+ShimmerEffect.displayName = 'ShimmerEffect'
+
 interface ButtonClassOptions {
     variant: ButtonVariant
     size: ButtonSize
     fullWidth: boolean
+    rounded: boolean
     isDisabled: boolean
     className?: string
 }
 
-const buildButtonClasses = ({ variant, size, fullWidth, isDisabled, className }: ButtonClassOptions): string => {
-    const hasHoverEffects = shouldApplyHoverEffects(variant, isDisabled)
-   
+const buildButtonClasses = ({ 
+  variant, 
+  size, 
+  fullWidth, 
+  rounded, 
+  isDisabled, 
+  className 
+}: ButtonClassOptions): string => {
     return clsx(
         BASE_CLASSES,
         VARIANT_CLASSES[variant],
-        SIZE_CLASSES[size],
-        hasHoverEffects && HOVER_EFFECTS,
+        rounded ? ROUNDED_CLASSES[size] : SIZE_CLASSES[size],
         fullWidth && 'w-full',
+        isDisabled && 'pointer-events-none',
+        'group', 
         className
     )
 }
@@ -100,6 +200,7 @@ const Button = memo<ButtonProps>(({
     leftIcon,
     rightIcon,
     fullWidth = false,
+    rounded = false,
     disabled,
     className,
     ...props
@@ -109,6 +210,7 @@ const Button = memo<ButtonProps>(({
         variant,
         size,
         fullWidth,
+        rounded,
         isDisabled,
         className
     })
@@ -119,13 +221,21 @@ const Button = memo<ButtonProps>(({
             disabled={isDisabled}
             {...props}
         >
-            {isLoading ? (
-                <LoadingContent />
-            ) : (
-                <ButtonContent leftIcon={leftIcon} rightIcon={rightIcon}>
-                    {children}
-                </ButtonContent>
-            )}
+            <ShimmerEffect variant={variant} />
+            <span className="relative z-10 flex items-center justify-center gap-2 w-full">
+                {isLoading ? (
+                    <LoadingContent size={size} />
+                ) : (
+                    <ButtonContent 
+                      leftIcon={leftIcon} 
+                      rightIcon={rightIcon} 
+                      size={size}
+                    >
+                        {children}
+                    </ButtonContent>
+                )}
+            </span>
+            <span className="absolute inset-0 rounded-inherit border-2 border-transparent group-focus-visible:border-interactive-primary/50 transition-colors duration-200" />
         </button>
     )
 })

@@ -1,5 +1,5 @@
 import { memo, useState, useEffect, useRef, useCallback } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X } from '@/components/icons'
 import ThemeToggle from '@/components/layout/ThemeToggle'
 import MenuOverlay from '@/components/layout/MenuOverlay'
 
@@ -12,14 +12,12 @@ const Navbar = memo(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
 
-  // Accessibility: Close menu on Escape key and return focus
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
@@ -27,21 +25,18 @@ const Navbar = memo(() => {
         menuButtonRef.current?.focus()
       }
     }
-
     document.addEventListener('keydown', handleKeyDown)
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [isMenuOpen])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
     }
-
     return () => {
       document.body.style.overflow = 'unset'
     }
@@ -60,7 +55,7 @@ const Navbar = memo(() => {
     setIsMenuOpen(false)
   }, [])
 
-  // Accessibility: Announce menu state changes to screen readers
+  // Announce menu state for screen readers
   const announceToScreenReader = useCallback((message: string) => {
     const liveRegion = document.createElement('div')
     liveRegion.setAttribute('aria-live', 'polite')
@@ -85,7 +80,6 @@ const Navbar = memo(() => {
 
   return (
     <>
-      {/* Skip Link */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-interactive-primary text-text-inverse px-4 py-2 rounded-lg z-[9999] focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2"
@@ -105,43 +99,40 @@ const Navbar = memo(() => {
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center h-16">
             <button
-  onClick={scrollToTop}
-  className="group flex items-center gap-2 text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
-  aria-label="NCW - Return to top of page"
-  type="button"
->
-  {/* gradient container with your SVG logo inside */}
-  <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-6 h-6 text-black dark:text-white"
-      aria-hidden="true"
-    >
-      <path
-        d="M6 4L10 28M10 4L16 28M16 4L22 28M22 4L26 28"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <rect
-        x="4"
-        y="4"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        strokeWidth="2"
-        rx="3"
-      />
-    </svg>
-  </div>
-
-  {/* the “NCW” text */}
-  <span className="font-black text-lg tracking-tight">NCW</span>
-</button>
+              onClick={scrollToTop}
+              className="group flex items-center gap-2 text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
+              aria-label="NCW - Return to top of page"
+              type="button"
+            >
+              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6 text-black dark:text-white"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 4L10 28M10 4L16 28M16 4L22 28M22 4L26 28"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <rect
+                    x="4"
+                    y="4"
+                    width="24"
+                    height="24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    rx="3"
+                  />
+                </svg>
+              </div>
+              <span className="font-black text-lg tracking-tight">NCW</span>
+            </button>
 
             <div className="hidden md:flex items-center gap-4">
               <ThemeToggle />
@@ -179,7 +170,6 @@ const Navbar = memo(() => {
       <MenuOverlay 
         isOpen={isMenuOpen} 
         onClose={closeMenu}
-        onToggle={toggleMenu}
       />
     </>
   )
