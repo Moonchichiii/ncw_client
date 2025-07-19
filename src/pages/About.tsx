@@ -50,7 +50,7 @@ interface SectionProps {
 
 const Section = memo<SectionProps>(({ title, children, id }) => (
   <div className="mb-8">
-    <h3 
+    <h3
       id={id}
       className="text-lg font-semibold text-slate-900 dark:text-white mb-4 border-b border-slate-200 dark:border-slate-700 pb-2"
     >
@@ -83,7 +83,7 @@ const About = memo(() => {
 
   const contactLinks = [
     {
-      href: "contact@nordiccodeworks.com",
+      href: "mailto:contact@nordiccodeworks.com",
       icon: Mail,
       label: "Email Mats",
       text: "contact@nordiccodeworks.com",
@@ -107,23 +107,23 @@ const About = memo(() => {
 
   const skillCategories = [
     {
-      title: "Front-End",
+      title: "Frontend",
       skills: "React, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS",
       icon: Code2
     },
     {
-      title: "Back-End",
-      skills: "Python, Django, REST APIs",
+      title: "Backend",
+      skills: "Python, Django, REST APIs, Node.js",
       icon: Server
     },
     {
       title: "Databases",
-      skills: "PostgreSQL, Redis",
+      skills: "PostgreSQL, Redis, MongoDB",
       icon: Database
     },
     {
-      title: "DevOps/Tools",
-      skills: "Docker, Git/GitHub, CI/CD (GitHub Actions)",
+      title: "DevOps & Tools",
+      skills: "Docker, Git/GitHub, CI/CD, AWS, Vercel",
       icon: Globe
     }
   ]
@@ -137,29 +137,29 @@ const About = memo(() => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          
+         
           <header className="mb-16">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
               <span className="text-sm font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                About
+                About Me
               </span>
             </div>
-            
-            <h2 
+           
+            <h2
               id="about-title"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
               style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
             >
-              Nordic Code Works
+              Mats Gustafsson
             </h2>
-            
+           
             <div className="max-w-3xl">
               <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-                Fullstack Developer specializing in building scalable web applications with React, TypeScript, and Django.
+                Full-Stack Developer passionate about building scalable web applications that make a difference.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                I focus on clean code, intuitive user experiences, and efficient solutions that solve real problems.
+                I combine technical expertise with creative problem-solving to deliver solutions that are both powerful and user-friendly.
               </p>
             </div>
           </header>
@@ -168,7 +168,7 @@ const About = memo(() => {
             <div className="lg:col-span-4">
               <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700 mb-8">
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                  Get in touch
+                  Let&#39;s connect
                 </h2>
                 <div className="space-y-2">
                   {contactLinks.map((link) => (
@@ -183,6 +183,10 @@ const About = memo(() => {
                 </h2>
                 <div className="space-y-3 text-sm">
                   <div>
+                    <span className="font-medium text-slate-900 dark:text-white">Location:</span>
+                    <span className="text-slate-600 dark:text-slate-400 ml-2">Sweden (Remote Ready)</span>
+                  </div>
+                  <div>
                     <span className="font-medium text-slate-900 dark:text-white">Languages:</span>
                     <span className="text-slate-600 dark:text-slate-400 ml-2">Swedish (Native), English (Fluent)</span>
                   </div>
@@ -195,11 +199,15 @@ const About = memo(() => {
             </div>
 
             <div className="lg:col-span-8">
-              <Section title="Profile" id="profile-section">
+              <Section title="My Story" id="profile-section">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  I&#39;m a passionate full-stack developer who discovered my love for coding through the challenge of creating 
+                  something meaningful from nothing but an idea and a blank screen. What started as curiosity about how 
+                  websites work has evolved into a career dedicated to crafting digital experiences that matter.
+                </p>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Seasoned developer with hands‑on experience in React, TypeScript, and Django. 
-                  I thrive on solving complex problems and continuously adopt new technologies to 
-                  deliver high‑quality applications that users love to use.
+                  I thrive on solving complex problems and take pride in writing clean, maintainable code that stands the test of time. 
+                  My approach combines technical rigor with creative thinking to deliver solutions that exceed expectations.
                 </p>
               </Section>
 
@@ -211,25 +219,25 @@ const About = memo(() => {
                 </div>
               </Section>
 
-              <Section title="Current Focus" id="projects-section">
+              <Section title="What I'm Working On" id="projects-section">
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                  Building full‑stack projects with Django back‑end and React/TypeScript front‑end. 
-                  Currently exploring:
+                  Currently focused on building full-stack applications that showcase modern web development practices. 
+                  I&#39;m particularly excited about:
                 </p>
                 <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1 ml-4">
-                  <li>JWT authentication systems</li>
-                  <li>RESTful API design and optimization</li>
-                  <li>PostgreSQL database architecture</li>
-                  <li>Docker containerization workflows</li>
+                  <li>Building performant React applications with TypeScript</li>
+                  <li>Creating robust Django REST APIs with authentication</li>
+                  <li>Implementing modern DevOps practices with Docker and CI/CD</li>
+                  <li>Exploring cutting-edge web technologies and frameworks</li>
                 </ul>
               </Section>
 
-              <Section title="Experience" id="experience-section">
+              <Section title="Beyond Code" id="experience-section">
                 <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Focused on building a strong portfolio of full-stack applications while continuously 
-                    learning and applying modern development practices. Open to collaboration and 
-                    new opportunities.
+                    When I&#39;m not coding, you&#39;ll find me exploring Sweden&#39;s beautiful nature, staying up-to-date with 
+                    the latest tech trends, or contributing to open source projects. I believe the best developers 
+                    are lifelong learners, and I&#39;m always eager to tackle new challenges and grow my expertise.
                   </p>
                 </div>
               </Section>

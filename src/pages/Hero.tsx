@@ -111,7 +111,7 @@ const Hero = memo(() => {
 
             <p className="text-lg sm:text-xl md:text-2xl font-medium text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
               Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
-              Crafting tomorrow&#39;s web, today
+              Crafting tomorrow&#39;s web.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -123,7 +123,7 @@ const Hero = memo(() => {
                 fullWidth
                 className="sm:w-auto"
               >
-                See Our Work
+                See My Work
               </Button>
               <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth className="sm:w-auto">
                 Start Project
@@ -147,7 +147,7 @@ const Hero = memo(() => {
             <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
               <p className="text-xl lg:text-2xl xl:text-3xl font-medium text-text-secondary leading-relaxed text-left">
                 Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
-                Crafting tomorrow&#39;s web, today
+                Crafting tomorrow&#39;s web.
               </p>
 
               <div className="flex flex-col gap-4">
@@ -158,7 +158,7 @@ const Hero = memo(() => {
                   size="lg"
                   fullWidth
                 >
-                  See Our Work
+                  See My Work
                 </Button>
                 <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth>
                   Start Project

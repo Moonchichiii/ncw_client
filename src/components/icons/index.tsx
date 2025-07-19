@@ -124,3 +124,8 @@ export const Target = createIcon('Target', <>
     <circle cx="12" cy="12" r="6"/>
     <circle cx="12" cy="12" r="2"/>
 </>)
+export const CheckCircle2 = createIcon('CheckCircle2', <>
+    <circle cx="12" cy="12" r="10"/>
+    <path d="m9 12 2 2 4-4"/>
+</>)
+export const Send = createIcon('Send', <path d="m22 2-7 20-4-9-9-4Z"/>)

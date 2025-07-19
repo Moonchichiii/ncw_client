@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import { Mail, Linkedin, Github, MessageCircle, ArrowRight, Clock, MapPin } from '@/components/icons/index'
+import ContactForm from '@/components/common/ContactForm'
 
 interface ContactMethodProps {
   icon: React.ComponentType<{ size?: number; className?: string }>
@@ -11,29 +12,29 @@ interface ContactMethodProps {
   primary?: boolean
 }
 
-const ContactMethod = memo<ContactMethodProps>(({ 
-  icon: Icon, 
-  title, 
-  description, 
-  href, 
-  buttonText, 
+const ContactMethod = memo<ContactMethodProps>(({
+  icon: Icon,
+  title,
+  description,
+  href,
+  buttonText,
   external = false,
-  primary = false 
+  primary = false
 }) => (
   <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow">
     <div className="flex items-start gap-4">
       <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${
-        primary 
-          ? 'bg-slate-900 dark:bg-white' 
+        primary
+          ? 'bg-slate-900 dark:bg-white'
           : 'bg-slate-100 dark:bg-slate-700'
       }`}>
-        <Icon 
-          size={20} 
-          className={primary ? 'text-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-400'} 
-          aria-hidden="true" 
+        <Icon
+          size={20}
+          className={primary ? 'text-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-400'}
+          aria-hidden="true"
         />
       </div>
-      
+     
       <div className="flex-1 min-w-0">
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
           {title}
@@ -85,7 +86,7 @@ const Contact = memo(() => {
     {
       icon: Mail,
       title: "Email",
-      description: "Best way to reach me for project inquiries, collaboration, or just to say hello.",
+      description: "The best way to reach me for project opportunities, collaboration ideas, or just to say hello.",
       href: "mailto:contact@nordiccodeworks.com",
       buttonText: "Send Email",
       external: false,
@@ -94,18 +95,18 @@ const Contact = memo(() => {
     {
       icon: Linkedin,
       title: "LinkedIn",
-      description: "Connect with me professionally and see my career journey and recommendations.",
-      href: "https://linkedin.com/in/mats-gustafsson",
-      buttonText: "View Profile",
+      description: "Connect with me professionally to see my career journey, recommendations, and industry insights.",
+      href: "https://www.linkedin.com/in/mats-gustafsson-a57643103/",
+      buttonText: "Connect",
       external: true,
       primary: false
     },
     {
       icon: Github,
       title: "GitHub",
-      description: "Check out my code, projects, and contributions to open source repositories.",
+      description: "Explore my code, discover my projects, and see my contributions to the developer community.",
       href: "https://github.com/Moonchichiii",
-      buttonText: "View Code",
+      buttonText: "Follow",
       external: true,
       primary: false
     }
@@ -124,25 +125,26 @@ const Contact = memo(() => {
             <div className="flex items-center justify-center gap-2 mb-6">
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
               <span className="text-sm font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                Contact
+                Get In Touch
               </span>
               <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
             </div>
-            
-            <h2 
+           
+            <h2
               id="contact-title"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
               style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
             >
-              Let&apos;s work together
+              Let&apos;s build something great
             </h2>
-            
+           
             <div className="max-w-3xl mx-auto">
               <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-                Ready to start your next project? I&apos;d love to hear about your ideas and discuss how we can bring them to life.
+                I&apos;m always excited to discuss new opportunities, interesting projects, or potential collaborations.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                Whether it&apos;s a new web application, improving an existing project, or just a technical consultation, I&apos;m here to help.
+                Whether you have a specific project in mind, need technical consultation, or just want to connect 
+                with a fellow developer, I&apos;d love to hear from you.
               </p>
             </div>
           </header>
@@ -153,6 +155,11 @@ const Contact = memo(() => {
             ))}
           </div>
 
+          {/* Contact Form Section */}
+          <div className="mb-16">
+            <ContactForm />
+          </div>
+
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 text-center">
             <div className="max-w-2xl mx-auto">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -161,21 +168,21 @@ const Contact = memo(() => {
                   What to expect
                 </h2>
               </div>
-              
+             
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                 <div className="flex items-start gap-3">
                   <Clock size={16} className="text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <div className="text-left">
                     <p className="font-medium text-slate-900 dark:text-white mb-1">Quick Response</p>
-                    <p className="text-slate-600 dark:text-slate-400">I typically respond within 24 hours</p>
+                    <p className="text-slate-600 dark:text-slate-400">I aim to respond within 24 hours, usually much sooner</p>
                   </div>
                 </div>
-                
+               
                 <div className="flex items-start gap-3">
                   <MapPin size={16} className="text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <div className="text-left">
-                    <p className="font-medium text-slate-900 dark:text-white mb-1">Location</p>
-                    <p className="text-slate-600 dark:text-slate-400">Based in Sweden, available for remote work</p>
+                    <p className="font-medium text-slate-900 dark:text-white mb-1">Location & Availability</p>
+                    <p className="text-slate-600 dark:text-slate-400">Based in Sweden, open to remote opportunities worldwide</p>
                   </div>
                 </div>
               </div>

@@ -669,7 +669,6 @@ button:not(:hover) {
   opacity: 0.2;
 }
 
-
 /* =================================================================
    SECTIONS SPACING 
    ================================================================= */
@@ -681,4 +680,246 @@ section:not(#hero) {
 /* Smooth scroll offset for anchor links */
 html {
   scroll-padding-top: 5rem !important;
+}
+
+/* =================================================================
+   🎯 2025 RESPONSIVE DESIGN IMPROVEMENTS
+   ================================================================= */
+
+/* Better spacing scale for different screen sizes */
+.section-spacing {
+  padding: 4rem 0;
+  
+  @media (min-width: 768px) {
+    padding: 5rem 0;
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 6rem 0;
+  }
+  
+  @media (min-width: 1440px) {
+    padding: 7rem 0;
+  }
+}
+
+/* Improved typography scaling */
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  
+  @media (min-width: 1024px) {
+    font-size: clamp(4rem, 6vw, 7rem);
+    line-height: 0.85;
+  }
+}
+
+.hero-subtitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  line-height: 1.4;
+  
+  @media (min-width: 1024px) {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.3;
+  }
+}
+
+/* =================================================================
+   ENHANCED CARD DESIGNS - 2025 STYLE
+   ================================================================= */
+
+/* Multiple shadows for better definition (from best practices) */
+.card-enhanced {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 12px;
+  
+  /* Multiple shadows for better definition */
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
+  
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-enhanced:hover {
+  transform: translateY(-2px);
+  
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(59, 130, 246, 0.1);
+}
+
+/* Project cards with better proportions */
+.project-card {
+  aspect-ratio: 1.2;
+  
+  @media (min-width: 1024px) {
+    aspect-ratio: 1.1; /* Slightly taller on desktop */
+  }
+}
+
+/* =================================================================
+   CONTACT FORM IMPROVEMENTS
+   ================================================================= */
+
+/* Better form field sizing */
+.form-field {
+  padding: 12px 16px;
+  font-size: 1rem;
+  
+  @media (min-width: 1024px) {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Form container max-width to prevent sprawling */
+.contact-form-container {
+  @media (min-width: 1024px) {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* Contact form button - make it less dominant on desktop */
+.contact-form-button {
+  @media (min-width: 1024px) {
+    max-width: 200px;
+    margin: 0 auto; /* Center it instead of full-width */
+  }
+}
+
+/* =================================================================
+   NAVIGATION REFINEMENTS
+   ================================================================= */
+
+/* Better nav button sizing */
+.nav-menu-button {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  
+  @media (min-width: 1024px) {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Logo scaling improvements */
+.nav-logo {
+  transform: scale(1);
+  
+  @media (min-width: 1024px) {
+    transform: scale(0.9);
+  }
+  
+  @media (min-width: 1440px) {
+    transform: scale(0.85);
+  }
+}
+
+/* =================================================================
+   MICRO-INTERACTIONS - 2025 TRENDS
+   ================================================================= */
+
+/* Enhanced button hover states */
+.btn-enhanced-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-enhanced-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-enhanced-hover:hover::before {
+  left: 100%;
+}
+
+/* Improved focus states */
+.enhanced-focus:focus-visible {
+  outline: 2px solid var(--color-interactive-primary);
+  outline-offset: 2px;
+  box-shadow: 
+    0 0 0 4px rgba(59, 130, 246, 0.1),
+    0 0 12px rgba(59, 130, 246, 0.15);
+}
+
+/* =================================================================
+   WHITESPACE IMPROVEMENTS
+   ================================================================= */
+
+/* Better content max-widths */
+.content-wrapper {
+  max-width: 65ch; /* Optimal reading width */
+  
+  @media (min-width: 1024px) {
+    max-width: 70ch;
+  }
+}
+
+/* Improved section containers */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  
+  @media (min-width: 1024px) {
+    max-width: 1400px;
+    padding: 0 2rem;
+  }
+  
+  @media (min-width: 1440px) {
+    padding: 0 3rem;
+  }
+}
+
+/* =================================================================
+   STATUS INDICATOR IMPROVEMENTS
+   ================================================================= */
+
+/* Better "Available for Projects" badge sizing */
+.status-badge {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  
+  @media (min-width: 1024px) {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* =================================================================
+   DARK MODE ENHANCEMENTS
+   ================================================================= */
+
+/* Better shadow definitions for dark mode */
+.dark .card-enhanced {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .card-enhanced:hover {
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
 }
