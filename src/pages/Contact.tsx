@@ -21,9 +21,9 @@ const ContactMethod = memo<ContactMethodProps>(({
   external = false,
   primary = false
 }) => (
-  <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow">
+  <div className="card-enhanced hover:shadow-md transition-shadow shadow-sm">
     <div className="flex items-start gap-4">
-      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${
+      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center btn-enhanced-hover ${
         primary
           ? 'bg-slate-900 dark:bg-white'
           : 'bg-slate-100 dark:bg-slate-700'
@@ -39,14 +39,14 @@ const ContactMethod = memo<ContactMethodProps>(({
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
           {title}
         </h3>
-        <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+        <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed content-wrapper">
           {description}
         </p>
         <a
           href={href}
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors enhanced-focus ${
             primary
               ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100'
               : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600'
@@ -116,10 +116,10 @@ const Contact = memo(() => {
     <section
       ref={sectionRef}
       id="contact"
-      className="py-16 lg:py-24 bg-white dark:bg-slate-800"
+      className="section-spacing bg-white dark:bg-slate-800"
       aria-labelledby="contact-title"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <div className="section-container">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <header className="text-center mb-16">
             <div className="flex items-center justify-center gap-2 mb-6">

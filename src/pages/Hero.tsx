@@ -102,30 +102,36 @@ const Hero = memo(() => {
           <div className="block lg:hidden text-center">
             <h1
               id="hero-title"
-              className="font-heading font-black text-6xl sm:text-7xl md:text-8xl text-text-primary leading-tight mb-8"
+              className="font-heading font-black hero-title text-text-primary leading-tight mb-8"
             >
               <span className="block">NORDIC</span>
               <span className="block text-gradient-brand">CODE</span>
               <span className="block">WORKS</span>
             </h1>
 
-            <p className="text-lg sm:text-xl md:text-2xl font-medium text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
+            <p className="hero-subtitle font-medium text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
               Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
               Crafting tomorrow&#39;s web.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-[320px] mx-auto lg:max-w-none">
               <Button
                 onClick={scrollToWork}
                 onMouseEnter={preloadWorkSection}
                 variant="primary"
                 size="lg"
                 fullWidth
-                className="sm:w-auto"
+                className="sm:w-auto btn-enhanced-hover"
               >
-                See My Work
+                View My Work
               </Button>
-              <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth className="sm:w-auto">
+              <Button 
+                onClick={scrollToContact} 
+                variant="secondary" 
+                size="lg" 
+                fullWidth 
+                className="sm:w-auto btn-enhanced-hover"
+              >
                 Start Project
               </Button>
             </div>
@@ -136,7 +142,7 @@ const Hero = memo(() => {
             <div className="lg:col-span-7">
               <h1
                 id="hero-title"
-                className="font-heading font-black text-text-primary leading-none text-left text-7xl xl:text-8xl 2xl:text-9xl"
+                className="font-heading font-black hero-title text-text-primary leading-none text-left"
               >
                 <span className="block">NORDIC</span>
                 <span className="block text-gradient-brand">CODE</span>
@@ -145,28 +151,35 @@ const Hero = memo(() => {
             </div>
 
             <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
-              <p className="text-xl lg:text-2xl xl:text-3xl font-medium text-text-secondary leading-relaxed text-left">
+              <p className="hero-subtitle font-medium text-text-secondary leading-relaxed text-left">
                 Digital experiences with <span className="font-bold text-interactive-primary">Nordic precision</span><br />
                 Crafting tomorrow&#39;s web.
               </p>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 max-w-[320px]">
                 <Button
                   onClick={scrollToWork}
                   onMouseEnter={preloadWorkSection}
                   variant="primary"
                   size="lg"
                   fullWidth
+                  className="btn-enhanced-hover"
                 >
-                  See My Work
+                  View My Work
                 </Button>
-                <Button onClick={scrollToContact} variant="secondary" size="lg" fullWidth>
+                <Button 
+                  onClick={scrollToContact} 
+                  variant="secondary" 
+                  size="lg" 
+                  fullWidth
+                  className="btn-enhanced-hover"
+                >
                   Start Project
                 </Button>
               </div>
 
               <div className="flex justify-start">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
+                <div className="inline-flex items-center gap-2 status-badge bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full font-medium">
                   <div className="w-2 h-2 bg-green-500 rounded-full" />
                   Available for Projects
                 </div>
