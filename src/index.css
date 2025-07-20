@@ -308,7 +308,7 @@ a:focus-visible,
    PERFORMANCE OPTIMIZATIONS - SELECTIVE CONTAINMENT
    ================================================================= */
 
-/* Critical content optimization - but NOT on sections that need fixed positioning */
+/* Critical content optimization  */
 #hero-title {
   contain: layout style paint;
   content-visibility: auto;
@@ -645,7 +645,7 @@ button:not(:hover) {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.3;
+  opacity: 0.1;
   mix-blend-mode: multiply;
   z-index: 1;
 }

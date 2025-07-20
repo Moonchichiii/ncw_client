@@ -4,9 +4,19 @@ import CookieConsent from '@/components/cookies/CookieConsent'
 
 interface LayoutProps {
   children: ReactNode
+  onOpenPrivacy?: () => void
+  onOpenTerms?: () => void
+  onPreloadLegal?: () => void
+  onCookieSettings?: () => void
 }
 
-const Layout = memo<LayoutProps>(({ children }) => {
+const Layout = memo<LayoutProps>(({ 
+  children, 
+  onOpenPrivacy, 
+  onOpenTerms, 
+  onPreloadLegal,
+  onCookieSettings
+}) => {
   return (
     <div className="min-h-screen bg-bg-primary transition-colors duration-300">
       <a
@@ -24,9 +34,16 @@ const Layout = memo<LayoutProps>(({ children }) => {
         {children}
       </main>
 
-      <Footer />
+      {/* Single Footer with modal triggers and preloading */}
+      <div onMouseEnter={onPreloadLegal}>
+        <Footer 
+          onOpenPrivacy={onOpenPrivacy}
+          onOpenTerms={onOpenTerms}
+          onCookieSettings={onCookieSettings}
+        />
+      </div>
     </div>
-  ) 
+  )
 })
 
 Layout.displayName = 'Layout'
