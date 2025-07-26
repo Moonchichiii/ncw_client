@@ -176,7 +176,7 @@ const About = memo(() => {
 
                   <QuickFactItem label="Resume">
                    <a 
-  href="src/assets/cv/CV_EN.pdf"
+  href="/CV_EN.pdf"
   className="btn-nordic-primary btn-enhanced-hover inline-flex items-center gap-2 px-4 py-2 text-sm rounded-full"
   download="Mats_Gustafsson_CV.pdf"
 >
