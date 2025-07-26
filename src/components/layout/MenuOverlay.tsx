@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useCallback, useState } from 'react'
-import { Github,Linkedin, X } from '@/components/icons'
+import { Github, Linkedin, X } from '@/components/icons'
 import Footer from '@/components/layout/Footer'
 import LegalModal from '@/components/modals/LegalModal'
 import { useLegalModals } from '@/hooks/useLegalModals'
@@ -28,7 +28,6 @@ const menuLinks: MenuLink[] = [
 const socialLinks: SocialLink[] = [
   { id: 'github-link', title: 'Github', href: 'https://github.com/Moonchichiii', icon: Github },
   { id: 'linkedin-link', title: 'LinkedIn', href: 'https://www.linkedin.com/in/mats-gustafsson-a57643103/', icon: Linkedin },
-  
 ]
 
 interface MenuOverlayProps {
@@ -40,7 +39,8 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
-  
+  const [viewportHeight, setViewportHeight] = useState<number>(0)
+
   const { 
     activeModal, 
     openTerms, 
@@ -51,6 +51,41 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
   } = useLegalModals()
 
   const { showPreferencesPanel } = useCookieConsent()
+
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      const height = window.visualViewport?.height ?? window.innerHeight
+      setViewportHeight(height)
+    }
+
+    updateViewportHeight()
+    window.addEventListener('resize', updateViewportHeight)
+    window.addEventListener('orientationchange', updateViewportHeight)
+    
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateViewportHeight)
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateViewportHeight)
+      window.removeEventListener('orientationchange', updateViewportHeight)
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', updateViewportHeight)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const setupOptimizedAnimations = useCallback((isOpen: boolean, overlayRef: HTMLDivElement): void => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -109,7 +144,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
       }
     }
   }, [])
-
   const scheduleTask = useCallback((cb: () => void, priority: 'urgent' | 'normal' = 'normal'): void => {
     const delay = priority === 'urgent' ? 0 : 250
     setTimeout(cb, delay)
@@ -117,7 +151,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (!overlayRef.current) {return}
-
     setIsAnimating(true)
     scheduleTask(() => {
       if (overlayRef.current) {
@@ -126,14 +159,12 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
       }
     }, 'urgent')
   }, [isOpen, setupOptimizedAnimations, scheduleTask])
-
   useEffect(() => {
     if (isOpen && !isAnimating) {
       const timer = setTimeout(() => firstMenuItemRef.current?.focus(), 100)
       return () => clearTimeout(timer)
     }
   }, [isOpen, isAnimating])
-
   useEffect(() => {
     const handler = createOptimizedKeyboardHandler(isOpen, onClose, overlayRef.current)
     if (isOpen) {document.addEventListener('keydown', handler, { passive: false })}
@@ -145,7 +176,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
       closeModal()
     }
   }, [isOpen, activeModal, closeModal])
-
   const handleLinkClick = useCallback(
     (e: React.MouseEvent, href: string) => {
       e.preventDefault()
@@ -158,7 +188,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
     },
     [isAnimating, onClose, scheduleTask]
   )
-
   return (
     <>
       <div
@@ -168,9 +197,21 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
-        style={{ opacity: 0, visibility: 'hidden', contain: 'layout style paint' }}
-      >
-        <div className="min-h-screen flex flex-col justify-between p-6 pt-24 md:p-12 md:pt-32">
+        style={{ 
+          opacity: 0, 
+          visibility: 'hidden', 
+          contain: 'layout style paint',
+          height: viewportHeight ? `${viewportHeight}px` : '100dvh',
+          maxHeight: viewportHeight ? `${viewportHeight}px` : '100dvh'
+        }}
+      ><div 
+          className="flex flex-col justify-between p-6 pt-20 md:p-12 md:pt-32"
+          style={{
+            height: '100%',
+            overflowY: 'auto',
+            overflowX: 'hidden'
+          }}
+        >
           <button
             onClick={onClose}
             disabled={isAnimating}
@@ -185,10 +226,9 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
           >
             <X size={24} strokeWidth={2} className="drop-shadow-sm" />
           </button>
-
           <div className="flex-grow flex items-center">
             <div className="w-full max-w-7xl mx-auto">
-              <ul className="space-y-6 md:space-y-8 mb-16 list-none">
+              <ul className="space-y-4 md:space-y-6 lg:space-y-8 mb-12 md:mb-16 list-none">
                 {menuLinks.map((link, i) => (
                   <li
                     key={link.id}
@@ -200,7 +240,7 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
                       aria-label={link.description}
-                      className="block font-heading text-5xl md:text-7xl lg:text-8xl font-black 
+                      className="block font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black 
                                  uppercase tracking-tighter leading-none 
                                  transition-all duration-300 ease-out 
                                  text-text-primary hover:text-interactive-primary hover:translate-x-2 
@@ -212,7 +252,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
                   </li>
                 ))}
               </ul>
-
               <ul className="flex gap-4 list-none menu-footer" style={{ opacity: 0, transform: 'translateY(20px)' }}>
                 {socialLinks.map(({ id, icon: Icon, href, title }) => (
                   <li key={id}>
@@ -235,7 +274,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
               </ul>
             </div>
           </div>
-
           <Footer 
             overlay 
             onOpenPrivacy={openPrivacy}
@@ -244,7 +282,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
           />
         </div>
       </div>
-
       <LegalModal 
         type="terms"
         isOpen={isTermsOpen}
@@ -258,6 +295,5 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
     </>
   )
 })
-
 MenuOverlay.displayName = 'MenuOverlay'
 export default MenuOverlay
