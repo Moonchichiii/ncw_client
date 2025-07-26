@@ -3,20 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   
     <meta name="description" content="Nordic Code Works - Digital experiences with Nordic precision. Expert web development and design services.">
     <meta name="author" content="Nordic Code Works">
     <meta property="og:title" content="Nordic Code Works">
     <meta property="og:description" content="Digital experiences with Nordic precision">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#1d4ed8">
-   
     <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg">
-   
     <title>Nordic Code Works - Digital Experiences with Nordic Precision</title>
-   
     <style>
-      /* INSTANT LOADING SYSTEM FONTS - NO CLS */
       html {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       }
@@ -25,46 +20,33 @@
         background: #ffffff;
         color: #0f172a;
       }
-     
-      /* Reserve exact space for hero title */
       #hero-title {
         min-height: 240px;
         contain: layout style;
       }
-      
       @media (min-width: 1024px) {
         #hero-title {
           min-height: 320px;
         }
       }
-     
-      /* System font families */
       .font-heading {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         font-weight: 900;
       }
-      
       .font-sans {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       }
-     
-      /* Prevent theme transition flicker */
       .preload * {
         transition: none !important;
       }
     </style>
-   
     <script>
-      // Optimized theme loading
       (function() {
         var root = document.documentElement;
         var savedTheme = localStorage.getItem('theme');
         var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-       
         root.classList.add('preload');
         if (theme === 'dark') root.classList.add('dark');
-        
-        // Remove preload class immediately since no fonts to load
         requestAnimationFrame(function() {
           root.classList.remove('preload');
         });
