@@ -1,64 +1,36 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
-import { Mail, Linkedin, Github, MessageCircle, ArrowRight, Clock, MapPin } from '@/components/icons/index'
+import { Linkedin, Github, MessageCircle, Clock, MapPin } from '@/components/icons/index'
 import ContactForm from '@/components/common/ContactForm'
 
-interface ContactMethodProps {
+interface SocialLinkProps {
   icon: React.ComponentType<{ size?: number; className?: string }>
   title: string
-  description: string
   href: string
-  buttonText: string
-  external?: boolean
-  primary?: boolean
+  description: string
 }
 
-const ContactMethod = memo<ContactMethodProps>(({
-  icon: Icon,
-  title,
-  description,
-  href,
-  buttonText,
-  external = false,
-  primary = false
-}) => (
-  <div className="card-enhanced hover:shadow-md transition-shadow shadow-sm">
-    <div className="flex items-start gap-4">
-      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center btn-enhanced-hover ${
-        primary
-          ? 'bg-slate-900 dark:bg-white'
-          : 'bg-slate-100 dark:bg-slate-700'
-      }`}>
-        <Icon
-          size={20}
-          className={primary ? 'text-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-400'}
-          aria-hidden="true"
-        />
-      </div>
-     
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-          {title}
-        </h3>
-        <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed content-wrapper">
-          {description}
-        </p>
-        <a
-          href={href}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors enhanced-focus ${
-            primary
-              ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100'
-              : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600'
-          }`}
-          aria-label={external ? `${buttonText} (opens in new tab)` : buttonText}
-        >
-          <span>{buttonText}</span>
-          <ArrowRight size={16} aria-hidden="true" />
-        </a>
-      </div>
+const SocialLink = memo<SocialLinkProps>(({ icon: Icon, title, href, description }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex flex-col items-center text-center p-6 hover:bg-bg-elevated rounded-2xl transition-all duration-300 hover:scale-105"
+    aria-label={`${title} (opens in new tab)`}
+  >
+    <div className="w-16 h-16 bg-gradient-to-br from-interactive-primary/10 to-accent-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:from-interactive-primary group-hover:to-accent-primary group-hover:scale-110 transition-all duration-300">
+      <Icon 
+        size={32} 
+        className="text-interactive-primary group-hover:text-text-inverse transition-colors duration-300" 
+        aria-hidden="true" 
+      />
     </div>
-  </div>
+    <h3 className="text-lg font-semibold text-text-primary mb-2 group-hover:text-interactive-primary transition-colors duration-300">
+      {title}
+    </h3>
+    <p className="text-text-secondary text-sm group-hover:text-text-primary transition-colors duration-300">
+      {description}
+    </p>
+  </a>
 ))
 
 const Contact = memo(() => {
@@ -82,33 +54,18 @@ const Contact = memo(() => {
     return () => observer.disconnect()
   }, [])
 
-  const contactMethods = [
-    {
-      icon: Mail,
-      title: "Email",
-      description: "The best way to reach me for project opportunities, collaboration ideas, or just to say hello.",
-      href: "mailto:contact@nordiccodeworks.com",
-      buttonText: "Send Email",
-      external: false,
-      primary: true
-    },
+  const socialLinks = [
     {
       icon: Linkedin,
       title: "LinkedIn",
-      description: "Connect with me professionally to see my career journey, recommendations, and industry insights.",
       href: "https://www.linkedin.com/in/mats-gustafsson-a57643103/",
-      buttonText: "Connect",
-      external: true,
-      primary: false
+      description: "Let's connect professionally"
     },
     {
       icon: Github,
       title: "GitHub",
-      description: "Explore my code, discover my projects, and see my contributions to the developer community.",
       href: "https://github.com/Moonchichiii",
-      buttonText: "Follow",
-      external: true,
-      primary: false
+      description: "Explore my open source work"
     }
   ]
 
@@ -116,74 +73,81 @@ const Contact = memo(() => {
     <section
       ref={sectionRef}
       id="contact"
-      className="section-spacing bg-white dark:bg-slate-800"
+      className="py-16 lg:py-24 bg-bg-secondary"
       aria-labelledby="contact-title"
     >
-      <div className="section-container">
-        <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
+        <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          
+          {/* Header */}
           <header className="text-center mb-16">
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
-              <span className="text-sm font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                Get In Touch
-              </span>
-              <div className="w-8 h-px bg-slate-300 dark:bg-slate-600" />
-            </div>
-           
             <h2
               id="contact-title"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight tracking-tight"
-              style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-black text-text-primary mb-8 tracking-tight"
             >
-              Let&apos;s build something great
+              Let&#39;s build something{' '}              
             </h2>
            
             <div className="max-w-3xl mx-auto">
-              <p className="text-xl lg:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-                I&apos;m always excited to discuss new opportunities, interesting projects, or potential collaborations.
-              </p>
-              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                Whether you have a specific project in mind, need technical consultation, or just want to connect 
-                with a fellow developer, I&apos;d love to hear from you.
+              <p className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-6">
+                Ready to discuss your next project or explore new opportunities?
               </p>
             </div>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            {contactMethods.map((method) => (
-              <ContactMethod key={method.title} {...method} />
-            ))}
-          </div>
-
-          {/* Contact Form Section */}
+          {/* Contact Form */}
           <div className="mb-16">
             <ContactForm />
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 text-center">
-            <div className="max-w-2xl mx-auto">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <MessageCircle size={20} className="text-slate-600 dark:text-slate-400" aria-hidden="true" />
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+          {/* Social Links */}
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-text-primary mb-4">
+                Or connect with me on
+              </h3>
+              <p className="text-text-secondary">
+                Follow my journey and see what I&#39;m working on
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-lg mx-auto">
+              {socialLinks.map((link) => (
+                <SocialLink key={link.title} {...link} />
+              ))}
+            </div>
+          </div>
+
+          {/* What to Expect */}
+          <div className=" rounded-3xl p-8 text-center relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-interactive-primary/5 via-transparent to-accent-primary/5" />
+            
+            <div className="relative max-w-2xl mx-auto">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-interactive-primary/10 to-accent-primary/10 rounded-xl flex items-center justify-center">
+                  <MessageCircle size={20} className="text-interactive-primary" aria-hidden="true" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary">
                   What to expect
-                </h2>
+                </h3>
               </div>
              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-                <div className="flex items-start gap-3">
-                  <Clock size={16} className="text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
-                  <div className="text-left">
-                    <p className="font-medium text-slate-900 dark:text-white mb-1">Quick Response</p>
-                    <p className="text-slate-600 dark:text-slate-400">I aim to respond within 24 hours, usually much sooner</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-status-success/10 to-status-success/20 rounded-xl flex items-center justify-center mb-3">
+                    <Clock size={20} className="text-status-success" aria-hidden="true" />
                   </div>
+                  <h4 className="font-semibold text-text-primary mb-2">Quick Response</h4>
+                  <p className="text-text-secondary text-sm">Usually within 24 hours, often much sooner</p>
                 </div>
                
-                <div className="flex items-start gap-3">
-                  <MapPin size={16} className="text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
-                  <div className="text-left">
-                    <p className="font-medium text-slate-900 dark:text-white mb-1">Location & Availability</p>
-                    <p className="text-slate-600 dark:text-slate-400">Based in Sweden, open to remote opportunities worldwide</p>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-status-info/10 to-status-info/20 rounded-xl flex items-center justify-center mb-3">
+                    <MapPin size={20} className="text-status-info" aria-hidden="true" />
                   </div>
+                  <h4 className="font-semibold text-text-primary mb-2">Global Availability</h4>
+                  <p className="text-text-secondary text-sm">Based in Sweden, open to remote work worldwide</p>
                 </div>
               </div>
             </div>
@@ -195,7 +159,7 @@ const Contact = memo(() => {
   )
 })
 
-ContactMethod.displayName = 'ContactMethod'
+SocialLink.displayName = 'SocialLink'
 Contact.displayName = 'Contact'
 
 export default Contact

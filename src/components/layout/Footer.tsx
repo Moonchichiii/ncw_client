@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Github, Dribbble, Linkedin, Twitter } from '@/components/icons'
+import { Github, Linkedin, } from '@/components/icons'
 import clsx from 'clsx'
 
 interface SocialLink {
@@ -9,10 +9,8 @@ interface SocialLink {
 }
 
 const socialLinks: SocialLink[] = [
-  { id: 'github', href: 'https://github.com/Moonchichiii', icon: Github },
-  { id: 'dribbble', href: 'https://dribbble.com/your-handle', icon: Dribbble },
-  { id: 'linkedin', href: 'https://www.linkedin.com/in/mats-gustafsson-a57643103/', icon: Linkedin },
-  { id: 'twitter', href: 'https://twitter.com/your-handle', icon: Twitter },
+  { id: 'github', href: 'https://github.com/Moonchichiii', icon: Github },  
+  { id: 'linkedin', href: 'https://www.linkedin.com/in/mats-gustafsson-a57643103/', icon: Linkedin },  
 ]
 
 interface FooterProps {
@@ -58,7 +56,7 @@ const LegalLinks = memo<LegalLinksProps>(({ overlay, onOpenPrivacy, onOpenTerms,
     </button>
     <span className={overlay ? 'text-slate-500' : 'text-text-tertiary'}>•</span>
     <button
-      onClick={onCookieSettings}
+       onClick={onCookieSettings}
       className={clsx(
         overlay 
           ? 'text-slate-300 hover:text-white focus:text-white hover:bg-white/10 focus:bg-white/10 px-2 py-1 rounded' 

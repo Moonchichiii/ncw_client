@@ -55,7 +55,7 @@ const Navbar = memo(() => {
     setIsMenuOpen(false)
   }, [])
 
-  // Announce menu state for screen readers
+  // Menu state for screen readers
   const announceToScreenReader = useCallback((message: string) => {
     const liveRegion = document.createElement('div')
     liveRegion.setAttribute('aria-live', 'polite')

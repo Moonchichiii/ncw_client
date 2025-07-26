@@ -29,7 +29,11 @@ export const Sun = createIcon('Sun', <>
   <line x1="4.22" y1="19.78"  x2="5.64" y2="18.36"/>
   <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
 </>)
-
+export const Download = createIcon('Download', <>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7,10 12,15 17,10"/>
+    <line x1="12" x2="12" y1="15" y2="3"/>
+</>)
 export const Moon = createIcon('Moon', <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>)
 export const Github = createIcon('Github', <>
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
@@ -85,13 +89,6 @@ export const MapPin = createIcon('MapPin', <>
     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
     <circle cx="12" cy="10" r="3"/>
 </>)
-export const Dribbble = createIcon('Dribbble', <>
-    <circle cx="12" cy="12" r="10"/>
-    <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
-    <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
-    <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
-</>)
-export const Twitter = createIcon('Twitter', <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>)
 export const Database = createIcon('Database', <>
     <ellipse cx="12" cy="5" rx="9" ry="3"/>
     <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
@@ -137,3 +134,11 @@ export const CheckCircle2 = createIcon('CheckCircle2', <>
     <path d="m9 12 2 2 4-4"/>
 </>)
 export const Send = createIcon('Send', <path d="m22 2-7 20-4-9-9-4Z"/>)
+
+export const FileText = createIcon('FileText', <>
+    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/>
+    <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+    <path d="M10 9H8"/>
+    <path d="M16 13H8"/>
+    <path d="M16 17H8"/>
+</>)

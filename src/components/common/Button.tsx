@@ -74,7 +74,6 @@ const VARIANT_CLASSES = {
   `
 } as const
 
-// 🎯 RESPONSIVE SIZE CLASSES - Now scales properly across devices!
 const SIZE_CLASSES = {
     xs: `
       px-3 py-1.5 text-xs font-medium rounded-lg min-h-[28px]

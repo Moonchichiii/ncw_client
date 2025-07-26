@@ -34,7 +34,7 @@ const Layout = memo<LayoutProps>(({
         {children}
       </main>
 
-      {/* Single Footer with modal triggers and preloading */}
+      {/* Footer with modal triggers and preloading */}
       <div onMouseEnter={onPreloadLegal}>
         <Footer 
           onOpenPrivacy={onOpenPrivacy}

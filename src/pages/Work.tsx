@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useRef } from 'react'
+import { memo, useEffect, useState, useRef, useCallback } from 'react'
 import { ExternalLink, Github, Loader2, AlertCircle, Code2 } from '@/components/icons/index'
 
 interface Repo {
@@ -14,23 +14,46 @@ const useRepositories = () => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const isDeployedLikely = (repo: Repo) => {
+    const keywords = ['portfolio', 'site', 'demo', 'project']
+    return keywords.some(keyword => repo.name.toLowerCase().includes(keyword))
+  }
+
+  const getHomepageURL = useCallback((repo: Repo): string | null => {
+    if (repo.homepage) {return repo.homepage}
+    if (isDeployedLikely(repo)) {
+      return `https://moonchichiii.github.io/${repo.name}/`
+    }
+    return null
+  }, [])
+
   useEffect(() => {
     const fetchRepos = async () => {
       try {
         const res = await fetch('https://api.github.com/users/Moonchichiii/repos?per_page=100')
         if (!res.ok) {throw new Error(`Failed to fetch repositories (${res.status})`)}
         const data: Repo[] = await res.json()
-        setRepos(
-          data.filter(r => !r.fork && r.homepage).sort((a, b) => a.name.localeCompare(b.name))
-        )
+
+        const enhanced = data
+          .filter(r => !r.fork && (r.homepage !== null || isDeployedLikely(r)))
+          .map(repo => ({
+            ...repo,
+            homepage: getHomepageURL(repo)
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name))
+
+        setRepos(enhanced)
       } catch (e: unknown) {
         setError(e instanceof Error ? e.message : 'Unknown error occurred')
       } finally {
         setLoading(false)
       }
     }
+
     fetchRepos()
-  }, [])
+  }, [getHomepageURL])
+
   return { repos, loading, error }
 }
 

@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useCallback, useState } from 'react'
-import { Github, Dribbble, Linkedin, Twitter, X } from '@/components/icons'
+import { Github,Linkedin, X } from '@/components/icons'
 import Footer from '@/components/layout/Footer'
 import LegalModal from '@/components/modals/LegalModal'
 import { useLegalModals } from '@/hooks/useLegalModals'
@@ -20,16 +20,15 @@ interface SocialLink {
 }
 
 const menuLinks: MenuLink[] = [
-  { id: 'work-link', title: 'Work', href: '#work', description: 'View our portfolio' },
   { id: 'about-link', title: 'About', href: '#about', description: 'Our story' },
+  { id: 'work-link', title: 'Work', href: '#work', description: 'View our portfolio' },
   { id: 'contact-link', title: 'Contact', href: '#contact', description: 'Get in touch' },
 ]
 
 const socialLinks: SocialLink[] = [
   { id: 'github-link', title: 'Github', href: 'https://github.com/Moonchichiii', icon: Github },
-  { id: 'dribbble-link', title: 'Dribbble', href: 'https://dribbble.com/your-handle', icon: Dribbble },
   { id: 'linkedin-link', title: 'LinkedIn', href: 'https://www.linkedin.com/in/mats-gustafsson-a57643103/', icon: Linkedin },
-  { id: 'twitter-link', title: 'Twitter', href: 'https://twitter.com/your-handle', icon: Twitter },
+  
 ]
 
 interface MenuOverlayProps {
@@ -42,7 +41,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   
-  // Add legal modals functionality
   const { 
     activeModal, 
     openTerms, 
@@ -52,10 +50,8 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
     isPrivacyOpen 
   } = useLegalModals()
 
-  // Add cookie consent integration
   const { showPreferencesPanel } = useCookieConsent()
 
-  // Helper functions moved inside component for Fast Refresh compatibility
   const setupOptimizedAnimations = useCallback((isOpen: boolean, overlayRef: HTMLDivElement): void => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -144,7 +140,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
     return () => document.removeEventListener('keydown', handler)
   }, [isOpen, onClose, createOptimizedKeyboardHandler])
 
-  // Close legal modal when menu overlay closes
   useEffect(() => {
     if (!isOpen && activeModal) {
       closeModal()
@@ -241,7 +236,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Footer with modal support and cookie settings */}
           <Footer 
             overlay 
             onOpenPrivacy={openPrivacy}
@@ -251,7 +245,6 @@ const MenuOverlay = memo<MenuOverlayProps>(({ isOpen, onClose }) => {
         </div>
       </div>
 
-      {/* Legal Modals - these will appear above the menu overlay */}
       <LegalModal 
         type="terms"
         isOpen={isTermsOpen}

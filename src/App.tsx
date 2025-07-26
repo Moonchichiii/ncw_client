@@ -8,11 +8,11 @@ import { ErrorFallback } from '@/components/common/ErrorFallback'
 import { useLegalModals } from '@/hooks/useLegalModals'
 import { useCookieConsent } from '@/hooks/useCookieConsent'
 
-const Work = lazy(() =>
-  import('@/pages/Work').then(module => ({ default: module.default }))
-)
 const About = lazy(() =>
   import('@/pages/About').then(module => ({ default: module.default }))
+)
+const Work = lazy(() =>
+  import('@/pages/Work').then(module => ({ default: module.default }))
 )
 const Contact = lazy(() =>
   import('@/pages/Contact').then(module => ({ default: module.default }))
@@ -37,7 +37,13 @@ const preloadComponent = (componentImport: () => Promise<unknown>): Promise<unkn
   return componentImport()
 }
 
-// Preload legal documents when user hovers over footer
+const preloadNextSections = (): void => {
+  startTransition(() => {
+    preloadComponent(() => import('@/pages/About'))
+    preloadComponent(() => import('@/pages/Work'))
+  })
+}
+
 const preloadLegalDocs = (): void => {
   startTransition(() => {
     preloadComponent(() => import('@/pages/TermsOfService'))
@@ -46,22 +52,21 @@ const preloadLegalDocs = (): void => {
 }
 
 const App = memo(() => {
-  const { 
-    openTerms, 
-    openPrivacy, 
+  const {
+    openTerms,
+    openPrivacy,
     closeModal,
     isTermsOpen,
-    isPrivacyOpen 
+    isPrivacyOpen
   } = useLegalModals()
 
-  // Add cookie consent integration
   const { showPreferencesPanel } = useCookieConsent()
 
   if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
     window.requestIdleCallback(() => {
       startTransition(() => {
-        preloadComponent(() => import('@/pages/Work'))
         preloadComponent(() => import('@/pages/About'))
+        preloadComponent(() => import('@/pages/Work'))
         preloadComponent(() => import('@/pages/Contact'))
       })
     })
@@ -76,25 +81,26 @@ const App = memo(() => {
         onPreloadLegal={preloadLegalDocs}
         onCookieSettings={showPreferencesPanel}
       >
-        <Hero />
-        <Suspense fallback={<SectionLoader />}>
-          <Work />
-        </Suspense>
+        <div onMouseEnter={preloadNextSections}>
+          <Hero />
+        </div>
         <Suspense fallback={<SectionLoader />}>
           <About />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Work />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <Contact />
         </Suspense>
       </Layout>
 
-      {/* Legal Modals */}
-      <LegalModal 
+      <LegalModal
         type="terms"
         isOpen={isTermsOpen}
         onClose={closeModal}
       />
-      <LegalModal 
+      <LegalModal
         type="privacy"
         isOpen={isPrivacyOpen}
         onClose={closeModal}

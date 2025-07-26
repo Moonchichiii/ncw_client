@@ -23,14 +23,12 @@ export default defineConfig({
     assetsInlineLimit: 2048,
     cssCodeSplit: true,
     rollupOptions: {
-      // 🚀 Enhanced tree shaking for better bundle optimization
       treeshake: {
         moduleSideEffects: false,
         propertyReadSideEffects: false,
         tryCatchDeoptimization: false,
       },
       output: {
-        // 📦 Better minification with compact output
         compact: true,
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],

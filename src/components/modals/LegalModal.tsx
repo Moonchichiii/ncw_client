@@ -1,160 +1,165 @@
-import { memo, useEffect, useRef, Suspense, lazy } from 'react'
-import { X } from '@/components/icons'
-import { createPortal } from 'react-dom'
+import { memo, useEffect, useRef, lazy, Suspense } from 'react'
+import { X, AlertCircle, Shield } from '@/components/icons'
 
-const TermsOfService = lazy(() => 
-    import('@/pages/TermsOfService').then(module => ({ default: module.default }))
-)
-
-const PrivacyPolicy = lazy(() => 
-    import('@/pages/PrivacyPolicy').then(module => ({ default: module.default }))
-)
+const TermsOfService = lazy(() => import('@/pages/TermsOfService'))
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'))
 
 interface LegalModalProps {
-    type: 'terms' | 'privacy'
-    isOpen: boolean
-    onClose: () => void
+  type: 'terms' | 'privacy'
+  isOpen: boolean
+  onClose: () => void
 }
 
-const ModalLoader = memo(() => (
-    <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-            <div 
-                className="w-8 h-8 border-3 border-interactive-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"
-                role="status"
-                aria-label="Loading document"
-            />
-            <p className="text-text-secondary">Loading document...</p>
-        </div>
+const LoadingContent = memo(() => (
+  <div className="flex items-center justify-center py-12">
+    <div className="text-center">
+      <div className="w-8 h-8 border-3 border-interactive-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+      <p className="text-text-secondary">Loading content...</p>
     </div>
+  </div>
 ))
 
-ModalLoader.displayName = 'ModalLoader'
+LoadingContent.displayName = 'LoadingContent'
 
 const LegalModal = memo<LegalModalProps>(({ type, isOpen, onClose }) => {
-    const modalRef = useRef<HTMLDivElement>(null)
-    const previousFocusRef = useRef<Element | null>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const firstFocusableRef = useRef<HTMLButtonElement>(null)
 
-    useEffect(() => {
-        if (isOpen) {
-            previousFocusRef.current = document.activeElement
-            
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden'
-            
-            // Focus the modal after it's rendered
-            const timer = setTimeout(() => {
-                modalRef.current?.focus()
-            }, 100)
-            
-            return () => {
-                clearTimeout(timer)
-                document.body.style.overflow = ''
-                // Restore focus to the element that opened the modal
-                if (previousFocusRef.current && 'focus' in previousFocusRef.current) {
-                    (previousFocusRef.current as HTMLElement).focus()
-                }
-            }
+  const config = {
+    terms: {
+      title: 'Terms of Service',
+      icon: AlertCircle,
+      description: 'Our terms and conditions'
+    },
+    privacy: {
+      title: 'Privacy Policy', 
+      icon: Shield,
+      description: 'How we handle your data'
+    }
+  }
+
+  const { title, icon: Icon, description } = config[type]
+
+  useEffect(() => {
+    if (!isOpen) {return}
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        onClose()
+      }
+
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+        
+        if (!focusable.length) {return}
+
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        const active = document.activeElement as HTMLElement
+
+        if (e.shiftKey && active === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault() 
+          first.focus()
         }
-    }, [isOpen])
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (!isOpen) {return}
-
-            if (event.key === 'Escape') {
-                event.preventDefault()
-                onClose()
-                return
-            }
-
-            // Trap focus within modal
-            if (event.key === 'Tab' && modalRef.current) {
-                const focusable = modalRef.current.querySelectorAll<HTMLElement>(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                )
-                
-                if (!focusable.length) {return}
-
-                const first = focusable[0]
-                const last = focusable[focusable.length - 1]
-
-                if (event.shiftKey && document.activeElement === first) {
-                    event.preventDefault()
-                    last.focus()
-                } else if (!event.shiftKey && document.activeElement === last) {
-                    event.preventDefault()
-                    first.focus()
-                }
-            }
-        }
-
-        if (isOpen) {
-            document.addEventListener('keydown', handleKeyDown)
-            return () => document.removeEventListener('keydown', handleKeyDown)
-        }
-    }, [isOpen, onClose])
-
-    if (!isOpen) {return null}
-
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            onClose()
-        }
+      }
     }
 
-    const content = (
-        <div 
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            onClick={handleBackdropClick}
-            role="button"
-            tabIndex={0}
-            aria-label="Close modal"
-            onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    onClose()
-                }
-            }}
+    document.addEventListener('keydown', handleKeyDown)
+    document.body.style.overflow = 'hidden'
+
+    // Focus close button 
+    const timer = setTimeout(() => {
+      firstFocusableRef.current?.focus()
+    }, 100)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'unset'
+      clearTimeout(timer)
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) {return null}
+
+  return (
+    <div className="fixed inset-0 z-[300] transition-all duration-300">
+      {/* Backdrop  */}
+      <button
+        className="absolute inset-0 w-full h-full bg-bg-overlay/95 backdrop-blur-sm cursor-default"
+        onClick={onClose}
+        aria-label={`Close ${title}`}
+        type="button"
+        tabIndex={-1}
+      />
+      
+      {/* Modal Content */}
+      <div 
+        className="relative min-h-screen flex items-center justify-center p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div
+          ref={modalRef}
+          className="w-full max-w-4xl max-h-[90vh] bg-bg-primary rounded-3xl shadow-2xl border border-border-primary overflow-hidden transform transition-all duration-300 scale-100 relative z-10"
         >
-            <div
-                ref={modalRef}
-                className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="modal-title"
-                tabIndex={-1}
-            >
-                {/* Header */}
-                <div className="sticky top-0 z-10 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 px-6 py-4">
-                    <h1
-                        id="modal-title"
-                        className="mx-auto text-xl font-semibold text-gray-900 dark:text-white text-center"
-                    >
-                        {type === 'terms' ? 'Terms of Service' : 'Privacy Policy'}
-                    </h1>
-                    <button
-                        onClick={onClose}
-                        className="absolute right-6 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-lg
-                                             flex items-center justify-center transition-colors
-                                             hover:bg-gray-100 dark:hover:bg-slate-700
-                                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                        aria-label="Close modal"
-                    >
-                        <X size={20} />
-                    </button>
-                </div>
-
-                {/* Content */}
-                <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
-                    <Suspense fallback={<ModalLoader />}>
-                        {type === 'terms' ? <TermsOfService /> : <PrivacyPolicy />}
-                    </Suspense>
-                </div>
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 border-b border-border-primary bg-gradient-to-r from-interactive-primary/5 to-transparent">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-interactive-primary to-interactive-hover rounded-2xl flex items-center justify-center">
+                <Icon size={24} className="text-white" aria-hidden="true" />
+              </div>
+              <div>
+                <h2 
+                  id="modal-title"
+                  className="text-2xl font-bold text-text-primary"
+                >
+                  {title}
+                </h2>
+                <p className="text-sm text-text-secondary mt-1">
+                  {description}
+                </p>
+              </div>
             </div>
-        </div>
-    )
+            
+            <button
+              ref={firstFocusableRef}
+              onClick={onClose}
+              className="w-10 h-10 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-secondary rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-border-focus"
+              aria-label={`Close ${title}`}
+              type="button"
+            >
+              <X size={20} aria-hidden="true" />
+            </button>
+          </div>
 
-    return createPortal(content, document.body)
+          {/* Content */}
+          <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+            <Suspense fallback={<LoadingContent />}>
+              {type === 'terms' ? <TermsOfService /> : <PrivacyPolicy />}
+            </Suspense>
+          </div>
+
+          {/* Footer */}
+          <div className="flex justify-end gap-3 p-6 border-t border-border-primary bg-bg-secondary/50">
+            <button
+              onClick={onClose}
+              className="px-6 py-3 bg-interactive-primary hover:bg-interactive-hover text-text-inverse font-semibold rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-border-focus"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 })
 
 LegalModal.displayName = 'LegalModal'

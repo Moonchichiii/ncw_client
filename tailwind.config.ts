@@ -54,31 +54,37 @@ const config: Config = {
         'status-warning': 'var(--color-warning)',
         'status-error': 'var(--color-error)',
         'status-info': 'var(--color-info)',
+        
+        'accent-primary': 'var(--color-accent-primary)',
+        'accent-secondary': 'var(--color-accent-secondary)',
+        'accent-tertiary': 'var(--color-accent-tertiary)',
+        
         brand: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+          50: '#f0f7ff',
+          100: '#e0efff',
+          200: '#b8dfff',
+          300: '#78c7ff',
+          400: '#2d5f87',
+          500: '#2d5f87',
+          600: '#1e4159',
+          700: '#1a3550',
+          800: '#1c2b42',
+          900: '#1d2938',
+          950: '#131a25',
         },
+        
         accent: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
+          50: '#f0f9f4',
+          100: '#dcf4e4',
+          200: '#bbe6cc',
+          300: '#86d0a4',
+          400: '#4a7c59',
+          500: '#4a7c59',
+          600: '#3d6b4a',
+          700: '#32563d',
+          800: '#2a4633',
+          900: '#223b2c',
+          950: '#0f1f16',
         },
       },
       
@@ -87,6 +93,7 @@ const config: Config = {
         'slide-up': 'slideUp 0.6s ease-out',
         'slide-right': 'slideRight 0.6s ease-out',
         'float': 'float 6s ease-in-out infinite',
+        'nordic-glow': 'nordicGlow 4s ease-in-out infinite',
       },
       
       keyframes: {
@@ -105,6 +112,14 @@ const config: Config = {
         float: {
           '0%, 100%': { transform: 'translateY(0rem)' },
           '50%': { transform: 'translateY(-0.625rem)' },
+        },
+        nordicGlow: {
+          '0%, 100%': { 
+            'box-shadow': '0 0 20px rgba(45, 95, 135, 0.1)',
+          },
+          '50%': { 
+            'box-shadow': '0 0 30px rgba(74, 124, 89, 0.2)',
+          },
         },
       },
       
@@ -135,6 +150,12 @@ const config: Config = {
         'xl': '0.75rem',
         '2xl': '1rem',
         '3xl': '1.5rem',
+      },
+      
+      backgroundImage: {
+        'nordic-gradient-primary': 'linear-gradient(135deg, var(--color-interactive-primary) 0%, var(--color-accent-primary) 100%)',
+        'nordic-gradient-secondary': 'linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent-tertiary) 100%)',
+        'nordic-gradient-aurora': 'linear-gradient(135deg, var(--color-interactive-primary) 0%, var(--color-accent-primary) 50%, var(--color-accent-secondary) 100%)',
       },
     },
   },
