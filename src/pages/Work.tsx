@@ -209,7 +209,7 @@ const ProjectGrid = memo<{ repos: Repo[] }>(({ repos }) => (
 
 const GitHubFooter = memo(() => (
   <div className="text-center mt-12 pt-8 border-t border-border-primary">
-    <p className="text-sm text-text-tertiary">
+     <p className="text-sm text-text-secondary">
       Explore more projects and contributions on{' '}
       <a
         href="https://github.com/Moonchichiii"
