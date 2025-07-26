@@ -229,10 +229,10 @@ const Hero = memo(() => {
             </div>
           </div>
         </div>
-        <button
+<button
           onClick={scrollToNextSection}
           onMouseEnter={preloadAboutSection}
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 group flex flex-col items-center gap-2 text-text-tertiary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-interactive-primary rounded-lg p-2"
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 group flex flex-col items-center gap-2 text-text-secondary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-interactive-primary rounded-lg p-2"
           aria-label="Scroll to next section"
           type="button"
         >
