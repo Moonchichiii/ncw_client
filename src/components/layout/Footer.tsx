@@ -1,17 +1,5 @@
 import { memo } from 'react'
-import { Github, Linkedin, } from '@/components/icons'
-import clsx from 'clsx'
-
-interface SocialLink {
-  id: string
-  href: string
-  icon: typeof Github
-}
-
-const socialLinks: SocialLink[] = [
-  { id: 'github', href: 'https://github.com/Moonchichiii', icon: Github },  
-  { id: 'linkedin', href: 'https://www.linkedin.com/in/mats-gustafsson-a57643103/', icon: Linkedin },  
-]
+import { ArrowUpRight } from '@/components/icons'
 
 interface FooterProps {
   overlay?: boolean
@@ -20,126 +8,39 @@ interface FooterProps {
   onCookieSettings?: () => void
 }
 
-interface LegalLinksProps {
-  overlay: boolean
-  onOpenPrivacy?: () => void
-  onOpenTerms?: () => void
-  onCookieSettings?: () => void
-}
-
-const LegalLinks = memo<LegalLinksProps>(({ overlay, onOpenPrivacy, onOpenTerms, onCookieSettings }) => (
-  <div className="flex flex-wrap gap-4 text-sm">
-    <button
-      onClick={onOpenPrivacy}
-      className={clsx(
-        overlay 
-          ? 'text-slate-300 hover:text-white focus:text-white hover:bg-white/10 focus:bg-white/10 px-2 py-1 rounded' 
-          : 'text-text-tertiary hover:text-interactive-primary focus:text-interactive-primary',
-        'transition-all cursor-pointer hover:underline focus:underline focus:outline-none'
-      )}
-      type="button"
-    >
-      Privacy Policy
-    </button>
-    <span className={overlay ? 'text-slate-500' : 'text-text-tertiary'}>•</span>
-    <button
-      onClick={onOpenTerms}
-      className={clsx(
-        overlay 
-          ? 'text-slate-300 hover:text-white focus:text-white hover:bg-white/10 focus:bg-white/10 px-2 py-1 rounded' 
-          : 'text-text-tertiary hover:text-interactive-primary focus:text-interactive-primary',
-        'transition-all cursor-pointer hover:underline focus:underline focus:outline-none'
-      )}
-      type="button"
-    >
-      Terms of Service
-    </button>
-    <span className={overlay ? 'text-slate-500' : 'text-text-tertiary'}>•</span>
-    <button
-       onClick={onCookieSettings}
-      className={clsx(
-        overlay 
-          ? 'text-slate-300 hover:text-white focus:text-white hover:bg-white/10 focus:bg-white/10 px-2 py-1 rounded' 
-          : 'text-text-tertiary hover:text-interactive-primary focus:text-interactive-primary',
-        'transition-all cursor-pointer hover:underline focus:underline focus:outline-none'
-      )}
-      type="button"
-    >
-      Cookie Settings
-    </button>
-  </div>
-))
-
-LegalLinks.displayName = 'LegalLinks'
-
-const Footer = memo<FooterProps>(({ 
-  overlay = false, 
-  onOpenPrivacy, 
-  onOpenTerms, 
-  onCookieSettings 
-}) => {
-  const base = overlay
-    ? 'pt-6 border-t border-white/20 text-white'
-    : 'py-8 bg-bg-overlay border-t border-border-primary text-text-secondary'
-
+const Footer = memo<FooterProps>(({ onOpenPrivacy, onOpenTerms, onCookieSettings }) => {
   return (
-    <footer className={clsx(base, overlay ? 'menu-footer' : '', 'transition-colors')}>
-      <div className="container mx-auto px-6">
-        {/* Main Footer Content */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-          {/* Contact Email */}
-          <a
-            href="mailto:contact@nordiccodeworks.com"
-            className={clsx(
-              overlay 
-                ? 'text-slate-300 hover:text-white focus:text-white hover:bg-white/10 focus:bg-white/10 px-2 py-1 rounded' 
-                : 'text-text-secondary hover:text-text-primary focus:text-text-primary',
-              'transition-all font-medium hover:underline focus:underline focus:outline-none'
-            )}
-          >
-            contact@nordiccodeworks.com
-          </a>
+    <footer className="w-full bg-bg-main border-t border-border-main relative z-10">
+      <div className="container mx-auto px-4">
+        <div className="py-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 bg-text-main" />
+              <span className="text-xl font-black tracking-tighter leading-none">NCW_Nordic code works</span>
+            </div>
+            <div className="font-mono text-xs text-text-muted uppercase tracking-widest flex flex-col sm:flex-row gap-2 sm:gap-4 font-bold">
+              <span>© {new Date().getFullYear()} NORDIC CODE WORKS</span>
+              <span className="hidden sm:inline text-border-main">|</span>
+              <span>STOCKHOLM, SE</span>
+            </div>
+          </div>
 
-          {/* Social Media Links */}
-          <ul className="flex gap-4">
-            {socialLinks.map(({ id, href, icon: Icon }) => (
-              <li key={id}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={clsx(
-                    overlay
-                      ? 'w-12 h-12 rounded-xl flex items-center justify-center hover:bg-white/20 focus:bg-white/30 text-slate-300 hover:text-white focus:text-white hover:scale-105 focus:scale-105'
-                      : 'p-2 rounded-lg hover:bg-bg-secondary focus:bg-bg-secondary text-text-secondary hover:text-interactive-primary focus:text-interactive-primary hover:scale-105 focus:scale-105',
-                    'transition-all duration-200 focus:outline-none'
-                  )}
-                  aria-label={`Visit my ${id} (opens in new tab)`}
-                >
-                  <Icon size={20} aria-hidden="true" />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-widest font-bold">
+            <button onClick={onOpenPrivacy} className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group">
+              PRIVACY
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+            <button onClick={onOpenTerms} className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group">
+              TERMS
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+            <button onClick={onCookieSettings} className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group">
+              COOKIES
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          </div>
 
-        {/* Legal Links and Copyright */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-white/10">
-          {/* Legal Links */}
-          <LegalLinks 
-            overlay={overlay} 
-            onOpenPrivacy={onOpenPrivacy}
-            onOpenTerms={onOpenTerms}
-            onCookieSettings={onCookieSettings}
-          />
-
-          {/* Copyright */}
-          <span className={clsx(
-            overlay ? 'text-slate-400 text-sm' : 'text-text-tertiary text-sm',
-            'flex-shrink-0'
-          )}>
-            © {new Date().getFullYear()} Nordic Code Works. All rights reserved.
-          </span>
         </div>
       </div>
     </footer>

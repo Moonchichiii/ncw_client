@@ -1,68 +1,175 @@
-import { memo, useEffect, useState, useRef, useCallback } from 'react'
-import { ExternalLink, Github, Loader2, AlertCircle, Code2 } from '@/components/icons/index'
+import { memo, useEffect, useState, useRef } from 'react'
+import { ExternalLink, Github, ArrowUpRight } from '@/components/icons/index'
+import CloudinaryImg from '@/components/common/CloudinaryImg'
 
-interface Repo {
-  id: number
-  name: string
-  description: string | null
-  html_url: string
-  homepage: string | null
-  fork: boolean
-}
-
-const useRepositories = () => {
-  const [repos, setRepos] = useState<Repo[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const isDeployedLikely = (repo: Repo) => {
-    const keywords = ['portfolio', 'site', 'demo', 'project']
-    return keywords.some(keyword => repo.name.toLowerCase().includes(keyword))
+const PROJECTS = [
+  {
+    id: '01',
+    title: 'SANDLÅDAN SYSTEM',
+    description: 'A high-performance full-stack application leveraging Server-Side Rendering. Demonstrates modern Python web capabilities with zero client-side hydration overhead.',
+    tech: ['FastAPI', 'HTMX', 'Python', 'Jinja2', 'Render'],
+    image: 'ncw/ya1d5ehu45r3rdokwm1i',
+    status: 'LIVE_SYSTEM', 
+    links: {
+      demo: 'https://sandladanab.onrender.com/',
+      repo: 'https://github.com/Moonchichiii' 
+    }
+  },
+  {
+    id: '02',
+    title: 'LASERENITY.FR',
+    description: 'Commercial platform with a decoupled architecture. Backend containerized (Docker) on Fly.io with Upstash Redis for caching. Frontend delivered via Cloudflare Pages. Media assets optimized and served through Cloudinary.',
+    tech: ['Django/Wagtail', 'Fly.io', 'Cloudflare Pages', 'Upstash Redis', 'Cloudinary'],
+    image: 'ncw/bkedaqkgjsyw4ldxntp5',
+    status: 'COMMERCIAL_DEPLOYMENT',
+    links: {
+      demo: 'https://laserenity.fr',
+      repo: null 
+    }
+  },
+  {
+    id: '03',
+    title: 'PORTFOLIO SYSTEM V2',
+    description: 'The current interface. Designed with a strict industrial aesthetic, utilizing high-contrast typography and strict grid layouts.',
+    tech: ['React', 'Tailwind v4', 'Framer Motion'],
+    image: 'ncw/portfolio',
+    status: 'DEPLOYED',
+    links: {
+      demo: 'https://nordiccodeworks.com',
+      repo: 'https://github.com/Moonchichiii/ncw_client'
+    }
+  },
+  {
+    id: '04',
+    title: 'BATTLESHIP ENGINE',
+    description: 'A logic-heavy implementation of the classic strategy game. Features CPU opponent logic, state management, and drag-and-drop mechanics.',
+    tech: ['React', 'Game Logic', 'Jest', 'Tailwind'],
+    image: 'ncw/battleship', 
+    status: 'PROTOTYPE_ALPHA',
+    links: {
+      demo: 'https://moonchichiii.github.io/battleship-project3/',
+      repo: 'https://github.com/Moonchichiii/battleship-project3'
+    }
   }
+]
 
-  const getHomepageURL = useCallback((repo: Repo): string | null => {
-    if (repo.homepage) {return repo.homepage}
-    if (isDeployedLikely(repo)) {
-      return `https://moonchichiii.github.io/${repo.name}/`
-    }
-    return null
-  }, [])
+/* --- COMPONENTS --- */
 
-  useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        const res = await fetch('https://api.github.com/users/Moonchichiii/repos?per_page=100')
-        if (!res.ok) {throw new Error(`Failed to fetch repositories (${res.status})`)}
-        const data: Repo[] = await res.json()
+const ProjectCard = memo<{ project: typeof PROJECTS[0]; index: number }>(({ project, index }) => {
+  const projectId = `LOG_${(index + 1).toString().padStart(3, '0')}`
+  
+  return (
+    <article className="group flex flex-col h-full bg-bg-sub hover:bg-bg-acc transition-colors duration-300 relative">
+      
+      {/* 1. IMAGE CONTAINER (The Monitor) */}
+      <div className="relative w-full aspect-video border-b border-border-main overflow-hidden bg-bg-acc">
+        {/* Overlay Grid Pattern */}
+        <div className="absolute inset-0 z-10 opacity-10 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAiLz4KPHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4=')]" />
+        
+        <div className="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105">
+          <CloudinaryImg 
+            publicId={project.image}
+            alt={`Screenshot of ${project.title}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Status Badge */}
+        <div className="absolute top-4 left-4 z-20">
+          <div className="bg-bg-main/90 border border-border-main px-2 py-1 font-mono text-[10px] text-text-main uppercase tracking-widest backdrop-blur-sm">
+            {project.status}
+          </div>
+        </div>
+      </div>
 
-        const enhanced = data
-          .filter(r => !r.fork && (r.homepage !== null || isDeployedLikely(r)))
-          .map(repo => ({
-            ...repo,
-            homepage: getHomepageURL(repo)
-          }))
-          .sort((a, b) => a.name.localeCompare(b.name))
+      {/* 2. CONTENT CONTAINER */}
+      <div className="p-8 flex flex-col flex-grow">
+        <div className="flex justify-between items-start mb-6">
+           <div className="flex items-center gap-3">
+             <span className="w-1.5 h-1.5 bg-accent rounded-none" />
+             <span className="font-mono text-[10px] text-text-muted tracking-widest uppercase">
+               {projectId}
+             </span>
+           </div>
+        </div>
+        
+        <h3 className="text-xl font-bold text-text-main mb-4 leading-none tracking-tight group-hover:text-accent transition-colors">
+          {project.title}
+        </h3>
+        
+        <p className="text-text-muted text-sm leading-relaxed mb-6 font-medium line-clamp-4">
+          {project.description}
+        </p>
 
-        setRepos(enhanced)
-      } catch (e: unknown) {
-        setError(e instanceof Error ? e.message : 'Unknown error occurred')
-      } finally {
-        setLoading(false)
-      }
-    }
+        {/* Tech Tags */}
+        <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+          {project.tech.map(t => (
+            <span key={t} className="px-2 py-1 bg-bg-main border border-border-dim text-[10px] font-mono text-text-muted uppercase tracking-wider">
+              {t}
+            </span>
+          ))}
+        </div>
 
-    fetchRepos()
-  }, [getHomepageURL])
+        {/* Links */}
+        <div className="pt-6 border-t border-border-dim flex items-center justify-between">
+          <div className="flex gap-6">
+            {project.links.demo && (
+              <a
+                href={project.links.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[10px] font-bold text-text-main hover:text-accent transition-colors uppercase tracking-widest font-mono"
+              >
+                LIVE_DEMO <ExternalLink size={12} /> 
+              </a>
+            )}
+            {project.links.repo && (
+              <a
+                href={project.links.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[10px] font-bold text-text-muted hover:text-text-main transition-colors uppercase tracking-widest font-mono"
+              >
+                SOURCE <Github size={12} />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+})
 
-  return { repos, loading, error }
-}
+/* FIX: Changed headerRef type to HTMLDivElement for strict compatibility with <div ref={...}> */
+const WorkHeader = memo<{ isVisible: boolean; headerRef: React.RefObject<HTMLDivElement | null> }>(
+  ({ isVisible, headerRef }) => (
+    <div 
+      ref={headerRef}
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 border-b border-border-main pb-12 transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+    >
+      <div>
+         <div className="font-mono text-xs text-accent mb-4">/// SECTION_03</div>
+         <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase text-text-strong">
+          PROJECT<br/>INDEX
+        </h2>
+      </div>
+      <div className="flex flex-col justify-end">
+        <p className="text-xl text-text-muted leading-relaxed max-w-lg font-medium border-l border-border-main pl-6">
+          <span className="text-text-main">Deployment Log.</span> A curated index of production-grade systems and experimental interfaces.
+        </p>
+      </div>
+    </div>
+  )
+)
 
 const useHeaderVisibility = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
-  const headerRef = useRef<HTMLElement | null>(null)
+  /* FIX: Changed useRef type to HTMLDivElement */
+  const headerRef = useRef<HTMLDivElement | null>(null)
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setIsHeaderVisible(true),
+      ([entry]) => { if (entry.isIntersecting) {setIsHeaderVisible(true)} },
       { threshold: 0.1, rootMargin: '50px' }
     )
     if (headerRef.current) {observer.observe(headerRef.current)}
@@ -71,181 +178,30 @@ const useHeaderVisibility = () => {
   return { isHeaderVisible, headerRef }
 }
 
-const ProjectCard = memo<{ repo: Repo; index: number }>(({ repo, index }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setTimeout(() => setIsVisible(true), index * 100),
-      { threshold: 0.1, rootMargin: '50px' }
-    )
-    if (cardRef.current) {observer.observe(cardRef.current)}
-    return () => observer.disconnect()
-  }, [index])
-  const displayName = repo.name.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')
+const Work = memo(() => {
+  const { isHeaderVisible, headerRef } = useHeaderVisibility()
+
   return (
-    <article
-      ref={cardRef}
-      className={`
-        project-card-polish relative bg-bg-elevated border border-border-primary rounded-2xl p-6
-        transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94)
-        hover:border-interactive-primary
-        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-      `}
-      aria-labelledby={`project-${repo.id}-title`}
-    >
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-interactive-primary/10 to-interactive-hover/10 opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10" />
-      <div className="flex items-start gap-3 mb-4">
-        <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-interactive-primary/10 to-interactive-hover/10 rounded-xl flex items-center justify-center border border-border-primary/50">
-          <Code2 size={20} className="text-interactive-primary" aria-hidden="true" />
+    <section id="work" className="py-24 bg-bg-main relative z-10 border-t border-border-main">
+      <div className="container mx-auto px-4">
+        <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />
+        
+        {/* THE GRID: 1px gap for grid lines */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-main border border-border-main mb-12">
+          {PROJECTS.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 id={`project-${repo.id}-title`} className="text-lg font-semibold text-text-primary mb-2 leading-tight">
-            {displayName}
-          </h3>
-          {repo.description && (
-            <p className="text-text-secondary text-sm leading-relaxed mb-4">{repo.description}</p>
-          )}
-        </div>
-      </div>
-      <div className="flex gap-3">
-        {repo.homepage && (
+
+        <div className="flex justify-end pt-6 border-t border-border-main">
           <a
-            href={repo.homepage}
+            href="https://github.com/Moonchichiii"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-polish micro-bounce inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-interactive-primary to-interactive-hover text-text-inverse rounded-xl font-medium hover:shadow-glow transition-all duration-300 focus-ring-enhanced"
-            aria-label={`View live demo of ${displayName} (opens in new tab)`}
+            className="group flex items-center gap-3 font-mono text-xs text-text-muted hover:text-text-main transition-colors uppercase tracking-widest"
           >
-            <ExternalLink size={16} aria-hidden="true" />
-            <span>Live Demo</span>
+            FULL_REPOSITORY_ACCESS <ArrowUpRight size={16} className="text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
-        )}
-        <a
-          href={repo.html_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="glass-enhanced micro-bounce inline-flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border-primary text-text-primary rounded-xl font-medium hover:border-interactive-primary hover:text-interactive-primary transition-all duration-300 focus-ring-enhanced"
-          aria-label={`View source code of ${displayName} on GitHub (opens in new tab)`}
-        >
-          <Github size={16} aria-hidden="true" />
-          <span>Code</span>
-        </a>
-      </div>
-    </article>
-  )
-})
-
-const LoadingState = memo(() => (
-  <div className="text-center py-12">
-    <div className="flex items-center justify-center gap-3 mb-4">
-      <Loader2 size={20} className="animate-spin text-interactive-primary" aria-hidden="true" />
-      <span className="text-text-secondary">Loading projects...</span>
-    </div>
-    <p className="text-sm text-text-tertiary">Fetching latest work from GitHub</p>
-  </div>
-))
-
-const ErrorState = memo<{ error: string }>(({ error }) => (
-  <div className="text-center py-12">
-    <div className="flex items-center justify-center gap-3 mb-4">
-      <AlertCircle size={20} className="text-status-error" aria-hidden="true" />
-      <span className="text-text-primary font-medium">Unable to load projects</span>
-    </div>
-    <p className="text-sm text-text-secondary mb-4">{error}</p>
-    <button
-      onClick={() => window.location.reload()}
-      className="btn-polish micro-bounce inline-flex items-center gap-2 px-4 py-2 glass-enhanced border border-border-primary text-text-primary rounded-xl font-medium hover:border-interactive-primary transition-all duration-300"
-    >
-      Try Again
-    </button>
-  </div>
-))
-
-const EmptyState = memo(() => (
-  <div className="text-center py-12">
-    <div className="w-16 h-16 bg-gradient-to-br from-interactive-primary/10 to-interactive-hover/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-border-primary/50">
-      <Code2 size={24} className="text-interactive-primary" aria-hidden="true" />
-    </div>
-    <h3 className="text-lg font-semibold text-text-primary mb-2">New projects coming soon</h3>
-    <p className="text-text-secondary">
-      Currently working on exciting new applications to showcase here.
-    </p>
-  </div>
-))
-
-const WorkHeader = memo<{ isVisible: boolean; headerRef: React.RefObject<HTMLElement | null> }>(
-  ({ isVisible, headerRef }) => (
-    <header
-      ref={headerRef}
-      className={`mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-    >
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-px bg-gradient-to-r from-interactive-primary to-transparent" />
-        <span className="badge-polish badge-info">Portfolio</span>
-      </div>
-      <h2 id="work-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-8 leading-tight tracking-tight">
-        Recent <span className="text-gradient-brand">Work</span>
-      </h2>
-      <div className="max-w-3xl">
-        <p className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-6">
-          A collection of web applications I&#39;ve designed and built, showcasing my approach to solving complex problems with clean, scalable code.
-        </p>
-        <p className="text-lg text-text-tertiary leading-relaxed">
-          Each project reflects my passion for creating intuitive user experiences backed by robust, well-tested architecture.
-        </p>
-      </div>
-    </header>
-  )
-)
-
-const ProjectGrid = memo<{ repos: Repo[] }>(({ repos }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {repos.map((repo, index) => (
-      <ProjectCard key={repo.id} repo={repo} index={index} />
-    ))}
-  </div>
-))
-
-const GitHubFooter = memo(() => (
-  <div className="text-center mt-12 pt-8 border-t border-border-primary">
-     <p className="text-sm text-text-secondary">
-      Explore more projects and contributions on{' '}
-      <a
-        href="https://github.com/Moonchichiii"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-interactive-primary hover:text-interactive-hover underline transition-colors duration-200"
-      >
-        my GitHub profile
-      </a>
-    </p>
-  </div>
-))
-
-const WorkContent = memo<{ repos: Repo[]; loading: boolean; error: string | null }>(
-  ({ repos, loading, error }) => {
-    if (loading) {return <LoadingState />}
-    if (error) {return <ErrorState error={error} />}
-    if (repos.length === 0) {return <EmptyState />}
-    return (
-      <>
-        <ProjectGrid repos={repos} />
-        <GitHubFooter />
-      </>
-    )
-  }
-)
-
-const Work = memo(() => {
-  const { repos, loading, error } = useRepositories()
-  const { isHeaderVisible, headerRef } = useHeaderVisibility()
-  return (
-    <section id="work" className="py-16 lg:py-24 bg-bg-secondary" aria-labelledby="work-title">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />
-        <div className="min-h-[400px]">
-          <WorkContent repos={repos} loading={loading} error={error} />
         </div>
       </div>
     </section>
@@ -253,12 +209,7 @@ const Work = memo(() => {
 })
 
 ProjectCard.displayName = 'ProjectCard'
-LoadingState.displayName = 'LoadingState'
-ErrorState.displayName = 'ErrorState'
-EmptyState.displayName = 'EmptyState'
 WorkHeader.displayName = 'WorkHeader'
-ProjectGrid.displayName = 'ProjectGrid'
-GitHubFooter.displayName = 'GitHubFooter'
-WorkContent.displayName = 'WorkContent'
 Work.displayName = 'Work'
+
 export default Work

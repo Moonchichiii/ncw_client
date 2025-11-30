@@ -1,55 +1,61 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Nordic Code Works - Digital experiences with Nordic precision. Expert web development and design services.">
+    <meta name="description" content="Nordic Code Works - High-performance digital systems built with industrial precision. Full-stack development by Mats Gustafsson.">
     <meta name="author" content="Nordic Code Works">
-    <meta property="og:title" content="Nordic Code Works">
-    <meta property="og:description" content="Digital experiences with Nordic precision">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nordic Code Works | System V2.5">
+    <meta property="og:description" content="Deployment Log & System Overview. Scalable web engineering.">
     <meta property="og:type" content="website">
-    <meta name="theme-color" content="#1d4ed8">
+    <meta name="theme-color" content="#050505">
+    
     <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg">
-    <title>Nordic Code Works - Digital Experiences with Nordic Precision</title>
+    <title>NCW_SYSTEMS // V2.5</title>
+    
     <style>
-      html {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      /* Critical CSS to prevent FOUC (Flash of Unstyled Content) */
+      /* Sets base industrial theme immediately */
+      :root {
+        --bg-main: #050505;
+        --text-main: #e5e5e5;
       }
+      
+      html {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
       body {
         margin: 0;
-        background: #ffffff;
-        color: #0f172a;
+        opacity: 0; /* Hide body until JS loads to prevent layout shift */
+        animation: fadeIn 0.5s ease-out forwards;
       }
-      #hero-title {
-        min-height: 240px;
-        contain: layout style;
+
+      @keyframes fadeIn {
+        to { opacity: 1; }
       }
-      @media (min-width: 1024px) {
-        #hero-title {
-          min-height: 320px;
-        }
-      }
-      .font-heading {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-weight: 900;
-      }
-      .font-sans {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      .preload * {
-        transition: none !important;
-      }
+
+      /* Scrollbar styling for Webkit */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #0a0a0a; }
+      ::-webkit-scrollbar-thumb { background: #333; }
+      ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
+
     <script>
+      // Immediate Theme Logic (Forces Dark Mode preference if set)
       (function() {
-        var root = document.documentElement;
-        var savedTheme = localStorage.getItem('theme');
-        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        root.classList.add('preload');
-        if (theme === 'dark') root.classList.add('dark');
-        requestAnimationFrame(function() {
-          root.classList.remove('preload');
-        });
+        var saved = localStorage.getItem('theme');
+        var sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && sys)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       })();
     </script>
   </head>

@@ -1,6 +1,5 @@
 import { memo, type ReactNode } from 'react'
 import Footer from '@/components/layout/Footer'
-import CookieConsent from '@/components/cookies/CookieConsent'
 
 interface LayoutProps {
   children: ReactNode
@@ -18,23 +17,22 @@ const Layout = memo<LayoutProps>(({
   onCookieSettings
 }) => {
   return (
-    <div className="min-h-screen bg-bg-primary transition-colors duration-300">
+    <div className="min-h-screen bg-bg-main transition-colors duration-300 selection:bg-accent selection:text-white">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2
-                   bg-interactive-primary text-text-inverse px-4 py-2 rounded-lg z-[9999]
-                   focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999]
+                   bg-accent text-white px-6 py-3 font-mono text-sm font-bold uppercase tracking-widest"
       >
-        Skip to main content
+        Skip to content
       </a>
 
-      <CookieConsent />
+      {/* CookieConsent removed from here - it is now handled in App.tsx */}
       
-      <main id="main-content">
+      <main id="main-content" className="flex flex-col">
         {children}
       </main>
 
-      {/* Footer with modal triggers and preloading */}
+      {/* Footer attached to bottom */}
       <div onMouseEnter={onPreloadLegal}>
         <Footer 
           onOpenPrivacy={onOpenPrivacy}

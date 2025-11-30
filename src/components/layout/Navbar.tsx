@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useRef, useCallback } from 'react'
+import { memo, useState, useEffect, useRef } from 'react'
 import { Menu, X } from '@/components/icons'
 import ThemeToggle from '@/components/layout/ThemeToggle'
 import MenuOverlay from '@/components/layout/MenuOverlay'
@@ -9,158 +9,59 @@ const Navbar = memo(() => {
   const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false)
-        menuButtonRef.current?.focus()
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset'
   }, [isMenuOpen])
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isMenuOpen])
-
-  const toggleMenu = useCallback(() => {
-    setIsMenuOpen(prev => !prev)
-  }, [])
-
-  const closeMenu = useCallback(() => {
-    setIsMenuOpen(false)
-  }, [])
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    setIsMenuOpen(false)
-  }, [])
-
-  // Menu state for screen readers
-  const announceToScreenReader = useCallback((message: string) => {
-    const liveRegion = document.createElement('div')
-    liveRegion.setAttribute('aria-live', 'polite')
-    liveRegion.setAttribute('aria-atomic', 'true')
-    liveRegion.className = 'sr-only'
-    liveRegion.textContent = message
-    document.body.appendChild(liveRegion)
-    setTimeout(() => {
-      if (document.body.contains(liveRegion)) {
-        document.body.removeChild(liveRegion)
-      }
-    }, 1000)
-  }, [])
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      announceToScreenReader('Navigation menu opened')
-    } else {
-      announceToScreenReader('Navigation menu closed')
-    }
-  }, [isMenuOpen, announceToScreenReader])
 
   return (
     <>
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-interactive-primary text-text-inverse px-4 py-2 rounded-lg z-[9999] focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2"
-      >
-        Skip to main content
-      </a>
-
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
           isScrolled
-            ? 'bg-bg-overlay backdrop-blur-xl border-b border-border-primary'
-            : 'bg-transparent'
+            ? 'bg-bg-main/95 backdrop-blur-md border-border-main'
+            : 'bg-transparent border-transparent'
         }`}
-        role="navigation"
-        aria-label="Main navigation"
       >
-        <div className="container mx-auto px-6">
-          <div className="flex justify-between items-center h-16">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center h-20">
+            
+            {/* LOGO: Uses semantic variables for perfect contrast */}
             <button
-              onClick={scrollToTop}
-              className="group flex items-center gap-2 text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
-              aria-label="NCW - Return to top of page"
-              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="group flex flex-col items-start focus:outline-none"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 text-black dark:text-white"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6 4L10 28M10 4L16 28M16 4L22 28M22 4L26 28"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <rect
-                    x="4"
-                    y="4"
-                    width="24"
-                    height="24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    rx="3"
-                  />
-                </svg>
+              <div className="flex items-center gap-3">
+                <span className="w-4 h-4 bg-text-main group-hover:bg-accent transition-colors duration-300" />
+                <span className="text-xl font-black tracking-tighter leading-none text-text-main group-hover:text-accent transition-colors duration-300">
+                  NCW
+                </span>
               </div>
-              <span className="font-black text-lg tracking-tight">NCW</span>
+              <span className="font-mono text-[9px] text-text-muted tracking-widest pl-7 pt-1 group-hover:text-text-main transition-colors duration-300">
+                SYSTEM_V2.5
+              </span>
             </button>
 
-            <div className="hidden md:flex items-center gap-4">
+            {/* CONTROLS */}
+            <div className="flex items-center gap-4 sm:gap-6">
               <ThemeToggle />
+              
               <button
                 ref={menuButtonRef}
-                onClick={toggleMenu}
-                className="text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
-                aria-expanded={isMenuOpen}
-                aria-controls="main-menu"
-                aria-label="Toggle navigation menu"
-                type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="flex items-center gap-3 text-text-main hover:text-accent transition-colors focus:outline-none group"
+                aria-label="Toggle menu"
               >
-                <span className="text-sm font-bold uppercase tracking-wider">Menu</span>
-              </button>
-            </div>
-
-            <div className="flex md:hidden items-center gap-2">
-              <ThemeToggle />
-              <button
-                ref={menuButtonRef}
-                onClick={toggleMenu}
-                className="w-10 h-10 flex items-center justify-center text-text-primary hover:text-interactive-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-border-focus focus:ring-offset-2 rounded-lg"
-                aria-expanded={isMenuOpen}
-                aria-controls="main-menu"
-                aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                type="button"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                <span className="font-mono text-[10px] tracking-widest hidden md:block group-hover:text-accent font-bold uppercase">
+                  {isMenuOpen ? 'Close' : 'Menu'}
+                </span>
+                <div className="w-9 h-9 flex items-center justify-center border border-border-main bg-bg-sub group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
+                  {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                </div>
               </button>
             </div>
           </div>
@@ -169,12 +70,11 @@ const Navbar = memo(() => {
 
       <MenuOverlay 
         isOpen={isMenuOpen} 
-        onClose={closeMenu}
+        onClose={() => setIsMenuOpen(false)} 
       />
     </>
   )
 })
 
 Navbar.displayName = 'Navbar'
-
 export default Navbar

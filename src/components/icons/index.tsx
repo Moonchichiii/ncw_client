@@ -142,3 +142,14 @@ export const FileText = createIcon('FileText', <>
     <path d="M16 13H8"/>
     <path d="M16 17H8"/>
 </>)
+
+// --- ADDED MISSING ICONS HERE ---
+export const ArrowUpRight = createIcon('ArrowUpRight', <>
+    <path d="M7 7h10v10" />
+    <path d="M7 17 17 7" />
+</>)
+
+export const Copy = createIcon('Copy', <>
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</>)

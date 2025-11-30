@@ -1,11 +1,22 @@
-import { memo, useEffect, useRef, useState, useCallback } from 'react'
-import { Cookie, Settings, X, Shield } from '@/components/icons'
-import clsx from 'clsx'
-import { useCookieConsent, type CookieCategory, type CookiePreferences } from '@/hooks/useCookieConsent'
+import { memo, useEffect, useState, useCallback } from 'react'
+import { X, Settings } from '@/components/icons'
+import type { CookieCategory, CookiePreferences } from '@/hooks/useCookieConsent'
 import CookieCategoryToggle from '@/components/cookies/CookieCategoryToggle'
 import { COOKIE_CATEGORIES } from '@/components/cookies/cookieCategories'
 
-const CookieConsent = memo(() => {
+// Properly type the props using the imported CookiePreferences
+interface CookieConsentProps {
+  showBanner: boolean
+  showPreferences: boolean
+  preferences: CookiePreferences
+  acceptAll: () => void
+  rejectAll: () => void
+  saveCustomPreferences: (prefs: CookiePreferences) => void
+  showPreferencesPanel: () => void
+  hideModals: () => void
+}
+
+const CookieConsent = memo<CookieConsentProps>((props) => {
   const {
     showBanner,
     showPreferences,
@@ -15,238 +26,92 @@ const CookieConsent = memo(() => {
     saveCustomPreferences,
     showPreferencesPanel,
     hideModals,
-  } = useCookieConsent()
+  } = props
 
-  const [localPreferences, setLocalPreferences] = useState<CookiePreferences>(preferences)
   const [isVisible, setIsVisible] = useState(false)
-  const bannerRef = useRef<HTMLDivElement>(null)
-  const modalRef = useRef<HTMLDivElement>(null)
-  const firstFocusableRef = useRef<HTMLButtonElement>(null)
+  const [localPreferences, setLocalPreferences] = useState<CookiePreferences>(preferences)
 
-  useEffect(() => {
-    if (showBanner) {
-      const timer = setTimeout(() => setIsVisible(true), 100)
-      return () => clearTimeout(timer)
-    } else {
-      setIsVisible(false)
-    }
-  }, [showBanner])
-
+  // Sync local state when prop changes
   useEffect(() => {
     setLocalPreferences(preferences)
   }, [preferences])
 
   useEffect(() => {
-    if (!showPreferences) {return}
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        hideModals()
-      }
+    if (showBanner) {
+      setTimeout(() => setIsVisible(true), 500)
+    } else {
+      setIsVisible(false)
     }
-
-    document.addEventListener('keydown', onKey)
-    const timer = setTimeout(() => firstFocusableRef.current?.focus(), 100)
-
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      clearTimeout(timer)
-    }
-  }, [showPreferences, hideModals])
-
-  useEffect(() => {
-    document.body.style.overflow = showPreferences ? 'hidden' : 'unset'
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [showPreferences])
+  }, [showBanner])
 
   const handleCategoryChange = useCallback((id: CookieCategory, enabled: boolean) => {
-    setLocalPreferences(prev => ({ ...prev, [id]: enabled }))
+    setLocalPreferences(prev => ({ 
+      ...prev, 
+      [id]: enabled 
+    }))
   }, [])
-
-  const handleAcceptSelected = useCallback(() => {
-    saveCustomPreferences(localPreferences)
-  }, [localPreferences, saveCustomPreferences])
 
   if (!showBanner && !showPreferences) {return null}
 
   return (
     <>
+      {/* INDUSTRIAL BANNER */}
       {showBanner && (
-        <div
-          ref={bannerRef}
-          className={clsx(
-            'fixed top-20 left-4 right-4 z-[100] max-w-md mx-auto',
-            'bg-bg-primary/95 backdrop-blur-lg border border-border-primary',
-            'rounded-2xl shadow-2xl',
-            'transform transition-all duration-500 ease-out',
-            isVisible 
-              ? 'translate-y-0 opacity-100 scale-100' 
-              : '-translate-y-4 opacity-0 scale-95'
-          )}
-          role="dialog"
-          aria-labelledby="cookie-banner-title"
-          aria-describedby="cookie-banner-description"
-        >
-          <div className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-interactive-primary to-interactive-hover rounded-xl flex items-center justify-center">
-                  <Cookie size={20} className="text-white" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 id="cookie-banner-title" className="font-bold text-text-primary text-lg">
-                    Cookie Notice
-                  </h3>
-                  <p className="text-xs text-text-tertiary">
-                    Enhanced privacy controls
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={hideModals}
-                className="w-8 h-8 flex items-center justify-center text-text-tertiary hover:text-text-primary hover:bg-bg-secondary rounded-lg transition-colors duration-200"
-                aria-label="Close cookie notice"
-                type="button"
-              >
-                <X size={16} aria-hidden="true" />
+        <div className={`fixed bottom-0 right-0 z-[2000] w-full max-w-md p-4 transition-transform duration-500 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}>
+          <div className="bg-bg-main border border-border-main shadow-2xl p-6 relative">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-mono text-xs text-text-muted uppercase tracking-widest border-b border-accent pb-1">
+                SYSTEM_NOTICE // PRIVACY
+              </h3>
+              <button onClick={hideModals} className="text-text-muted hover:text-text-main">
+                <X size={16} />
               </button>
             </div>
-
-            <p id="cookie-banner-description" className="text-sm text-text-secondary leading-relaxed mb-6">
-              We use cookies to enhance your browsing experience and analyze site traffic. 
-              Choose your preferences or accept all to continue.
+            
+            <p className="text-sm text-text-main mb-6 leading-relaxed font-medium">
+              We utilize local storage tokens to enhance system performance and analyze traffic patterns.
             </p>
 
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                <button
-                  onClick={acceptAll}
-                  className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-interactive-primary to-interactive-hover hover:from-interactive-hover hover:to-interactive-primary rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-                  type="button"
-                >
-                  Accept All
-                </button>
-                <button
-                  onClick={rejectAll}
-                  className="px-4 py-2.5 text-sm font-medium text-text-secondary hover:text-text-primary bg-bg-elevated hover:bg-bg-secondary border border-border-primary rounded-xl transition-colors duration-200"
-                  type="button"
-                >
-                  Reject
-                </button>
-              </div>
-              <button
-                onClick={showPreferencesPanel}
-                className="w-full px-4 py-2.5 text-sm font-medium text-interactive-primary hover:text-interactive-hover bg-interactive-primary/5 hover:bg-interactive-primary/10 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
-                type="button"
-              >
-                <Settings size={16} aria-hidden="true" />
-                Customize Settings
+            <div className="grid grid-cols-2 gap-4">
+              <button onClick={rejectAll} className="px-4 py-3 bg-bg-sub border border-border-main text-xs font-mono font-bold uppercase tracking-wider hover:bg-bg-acc transition-colors">
+                DENY_ALL
+              </button>
+              <button onClick={acceptAll} className="px-4 py-3 bg-text-main text-bg-main border border-text-main text-xs font-mono font-bold uppercase tracking-wider hover:bg-accent hover:border-accent transition-colors">
+                ACCEPT_ALL
               </button>
             </div>
+            
+            <button onClick={showPreferencesPanel} className="mt-4 w-full text-center text-[10px] font-mono text-text-muted hover:text-text-main uppercase tracking-widest flex items-center justify-center gap-2">
+              <Settings size={10} /> CONFIGURE_PARAMETERS
+            </button>
           </div>
         </div>
       )}
 
+      {/* INDUSTRIAL PREFERENCES MODAL */}
       {showPreferences && (
-        <div
-          className="fixed inset-0 z-[200] bg-bg-overlay/90 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cookie-preferences-title"
-        >
-          <div className="min-h-screen flex items-center justify-center p-4">
-            <div
-              ref={modalRef}
-              className="w-full max-w-4xl bg-bg-primary rounded-3xl shadow-2xl border border-border-primary max-h-[90vh] overflow-hidden"
-            >
-              <div className="flex items-center justify-between p-6 border-b border-border-primary bg-gradient-to-r from-interactive-primary/5 to-interactive-hover/5">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-interactive-primary to-interactive-hover rounded-2xl flex items-center justify-center">
-                    <Shield size={24} className="text-white" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h2 id="cookie-preferences-title" className="text-2xl font-bold text-text-primary">
-                      Privacy Preferences
-                    </h2>
-                    <p className="text-sm text-text-secondary mt-1">
-                      Take control of your data and privacy settings
-                    </p>
-                  </div>
-                </div>
-                <button
-                  ref={firstFocusableRef}
-                  onClick={hideModals}
-                  className="w-10 h-10 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-secondary rounded-xl transition-colors duration-200"
-                  type="button"
-                  aria-label="Close privacy preferences"
-                >
-                  <X size={20} aria-hidden="true" />
-                </button>
-              </div>
-
-              <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
-                <div className="bg-gradient-to-r from-status-info/10 to-interactive-primary/10 rounded-2xl p-5 border border-status-info/20">
-                  <p className="text-text-primary leading-relaxed font-medium">
-                    Your privacy matters to us. We&#39;re committed to transparency about data collection 
-                    and giving you complete control over your experience.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  {COOKIE_CATEGORIES.map(category => (
-                    <CookieCategoryToggle
-                      key={category.id}
-                      category={category}
-                      enabled={localPreferences[category.id]}
-                      onChange={handleCategoryChange}
-                      disabled={category.required}
-                    />
-                  ))}
-                </div>
-
-                <div className="mt-6 p-5 bg-bg-secondary rounded-2xl border border-border-primary">
-                  <p className="text-sm text-text-secondary">
-                    <strong className="text-text-primary">Learn More:</strong>{' '}
-                    Read our{' '}
-                    <a
-                      href="/privacy-policy"
-                      className="text-interactive-primary hover:text-interactive-hover underline font-medium"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Privacy Policy
-                    </a>{' '}
-                    for detailed information about data handling and your rights.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-border-primary bg-bg-secondary/50">
-                <button
-                  onClick={rejectAll}
-                  className="flex-1 px-6 py-3 text-sm font-medium text-text-secondary hover:text-text-primary bg-bg-elevated hover:bg-bg-secondary border border-border-primary hover:border-interactive-primary rounded-xl transition-all duration-200"
-                  type="button"
-                >
-                  Reject All
-                </button>
-                <button
-                  onClick={handleAcceptSelected}
-                  className="flex-1 px-6 py-3 text-sm font-semibold bg-interactive-secondary hover:bg-interactive-primary text-text-primary hover:text-text-inverse rounded-xl transition-all duration-200 border border-border-primary hover:border-interactive-primary"
-                  type="button"
-                >
-                  Save Preferences
-                </button>
-                <button
-                  onClick={acceptAll}
-                  className="flex-1 px-6 py-3 text-sm font-semibold bg-gradient-to-r from-interactive-primary to-interactive-hover hover:from-interactive-hover hover:to-interactive-primary text-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
-                  type="button"
-                >
-                  Accept All
-                </button>
-              </div>
+        <div className="fixed inset-0 z-[2001] bg-bg-main/90 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-bg-main border border-border-main shadow-2xl flex flex-col max-h-[85vh]">
+            <div className="p-6 border-b border-border-main flex justify-between items-center bg-bg-sub">
+              <h2 className="font-mono text-sm text-text-main uppercase tracking-widest">PRIVACY_CONFIGURATION</h2>
+              <button onClick={hideModals} className="hover:text-accent"><X size={20} /></button>
+            </div>
+            <div className="p-6 overflow-y-auto space-y-4">
+               {COOKIE_CATEGORIES.map(category => (
+                 <CookieCategoryToggle
+                   key={category.id}
+                   category={category}
+                   // We need to use "as keyof CookiePreferences" because string indexing on interfaces can be tricky in TS
+                   enabled={localPreferences[category.id as keyof CookiePreferences]}
+                   onChange={handleCategoryChange}
+                   disabled={category.required}
+                 />
+               ))}
+            </div>
+            <div className="p-6 border-t border-border-main bg-bg-sub flex justify-end">
+              <button onClick={() => saveCustomPreferences(localPreferences)} className="px-8 py-3 bg-text-main text-bg-main font-bold uppercase tracking-widest text-xs hover:bg-accent transition-colors">
+                SAVE_CONFIG
+              </button>
             </div>
           </div>
         </div>

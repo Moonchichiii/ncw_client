@@ -1,262 +1,142 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
-import { Code2, Database, Server, Globe, ExternalLink, Download } from '@/components/icons/index'
+import { memo, type ReactNode, type ComponentType, type SVGProps } from 'react'
+import { Code2, Server, Globe, Download, ArrowRight } from '@/components/icons/index'
 
-interface SkillCategoryProps {
+// 1. Define the type for your custom icons
+type CustomIcon = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
+
+interface SpecCardProps {
   title: string
-  skills: string
-  icon: React.ComponentType<{ size?: number; className?: string }>
+  children: ReactNode
+  className?: string
+  // 2. Add the icon prop to the interface
+  icon?: CustomIcon
 }
 
-const SkillCategory = memo<SkillCategoryProps>(({ title, skills, icon: Icon }) => (
-  <div className="flex gap-3">
-    <div className="flex-shrink-0 w-8 h-8 bg-interactive-primary/10 rounded-lg flex items-center justify-center mt-0.5">
-      <Icon size={16} className="text-interactive-primary" aria-hidden="true" />
+/* INDUSTRIAL CARD COMPONENT */
+const SpecCard = ({ title, children, className, icon: Icon }: SpecCardProps) => (
+  <div className={`industrial-card p-8 flex flex-col justify-between h-full ${className}`}>
+    <div className="flex justify-between items-start mb-6">
+      {/* Darkened text color and sharper border for light mode visibility */}
+      <h3 className="font-mono text-xs text-text-main opacity-60 uppercase tracking-widest border-b border-border-main pb-2 w-full">
+        {title}
+      </h3>
+      {/* Icon positioned absolute or flex end to not break layout if title is long */}
+      {Icon && <div className="ml-4"><Icon size={18} className="text-text-muted" /></div>}
     </div>
-    <div className="flex-1">
-      <h4 className="font-semibold text-text-primary mb-1">{title}</h4>
-      <p className="text-text-secondary text-sm leading-relaxed">{skills}</p>
-    </div>
+    <div>{children}</div>
   </div>
-))
-
-interface SectionProps {
-  title: string
-  children: React.ReactNode
-  id?: string
-}
-
-const Section = memo<SectionProps>(({ title, children, id }) => (
-  <div className="mb-8">
-    <h3
-      id={id}
-      className="text-lg font-semibold text-text-primary mb-4 border-b border-border-primary pb-2"
-    >
-      {title}
-    </h3>
-    {children}
-  </div>
-))
-
-const QuickFactItem = memo<{
-  label: string
-  children: React.ReactNode
-}>(({ label, children }) => (
-  <div className="space-y-1">
-    <dt className="font-semibold text-text-primary text-sm">
-      {label}
-    </dt>
-    <dd className="text-text-secondary text-sm leading-relaxed">
-      {children}
-    </dd>
-  </div>
-))
+)
 
 const About = memo(() => {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: "React, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS",
-      icon: Code2
-    },
-    {
-      title: "Backend",
-      skills: "Python, Django, REST APIs, Node.js",
-      icon: Server
-    },
-    {
-      title: "Databases",
-      skills: "PostgreSQL, Redis, MongoDB",
-      icon: Database
-    },
-    {
-      title: "DevOps & Tools",
-      skills: "Docker, Git/GitHub, CI/CD, AWS, Vercel",
-      icon: Globe
-    }
-  ]
-
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="py-16 lg:py-24 bg-bg-secondary"
-      aria-labelledby="about-title"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-         
-          <header className="mb-16">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-px bg-interactive-primary/30" />
-              <span className="text-sm font-medium text-text-tertiary uppercase tracking-wider">
-                About Me
-              </span>
-            </div>
-           
-            <h2
-              id="about-title"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-8 leading-tight tracking-tight font-heading"
-            >
-              Mats Gustafsson
+    <section id="about" className="py-24 bg-bg-main relative z-10 border-t border-border-main">
+      <div className="container mx-auto px-4">
+        
+        {/* 1. SECTION HEADER */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 border-b border-border-main pb-12">
+          <div>
+             <div className="font-mono text-xs text-accent mb-4">/// SECTION_02</div>
+             <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase text-text-strong">
+              System<br/>Overview
             </h2>
-           
-            <div className="max-w-3xl">
-              <p className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-6">
-                Full-Stack Developer passionate about building scalable web applications that make a difference.
-              </p>
-              <p className="text-lg text-text-tertiary leading-relaxed">
-                I combine technical expertise with creative problem-solving to deliver solutions that are both powerful and user-friendly.
-              </p>
+          </div>
+          <div className="flex flex-col justify-end">
+            <p className="text-xl text-text-muted leading-relaxed max-w-lg font-medium">
+              <span className="text-text-main font-bold">Web development as engineering.</span> I build scalable, type-safe, and high-performance applications designed to endure.
+            </p>
+          </div>
+        </div>
+
+        {/* 2. THE GRID SYSTEM */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border-main border border-border-main">
+          
+          {/* A. BIO MODULE (Double Width) */}
+          <div className="md:col-span-2 industrial-card p-8 bg-bg-sub relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Code2 size={120} />
             </div>
-          </header>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* Quick Facts - Improved Structure */}
-            <div className="lg:col-span-4 xl:col-span-3">
-              <div className="card-nordic p-6 lg:p-8 sticky top-8">
-                <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-interactive-primary rounded-full" />
-                  Quick Facts
-                </h3>
+            
+            <div className="relative z-10 h-full flex flex-col justify-between">
+              <div className="mb-8">
+                <div className="font-mono text-xs text-text-muted mb-4">OPERATOR_ID: MG-2025</div>
+                <h3 className="text-4xl font-bold mb-2 text-text-main">Mats Gustafsson</h3>
+                <p className="font-mono text-sm text-accent">FULL_STACK_DEVELOPER</p>
+              </div>
+              
+              <div className="space-y-6">
+                <p className="text-text-muted text-lg leading-relaxed max-w-md">
+                   Graduate of Code Institute (2024). Focused on removing friction between user intent and system response. Based in Stockholm, accessible globally.
+                </p>
                 
-                <dl className="space-y-4">
-                  <QuickFactItem label="Location">
-                    <div className="flex items-center gap-2">
-                      <span>🇸🇪</span>
-                      <span>Sweden</span>
-                
-                    </div>
-                  </QuickFactItem>
-
-                  <QuickFactItem label="Languages">
-                    <div className="space-y-1">
-                      <div>Swedish (Native)</div>
-                      <div>English (Fluent)</div>
-                    </div>
-                  </QuickFactItem>
-
-                  <QuickFactItem label="Education">
-                    <div className="space-y-3">
-                      <div>
-                        <div className="font-medium text-text-primary">Full Stack Web Developer</div>
-                        <div className="text-xs text-text-tertiary">Code Institute • 2024</div>
-                      </div>
-                      
-                      <a 
-                        href="https://www.credential.net/4df81dea-06b8-4048-a1a0-f4eb1a00a415#acc.xWtM1N8a"
-                        className="inline-flex items-center gap-2 text-interactive-primary hover:text-interactive-hover text-sm font-medium transition-colors duration-200 group"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-                        View Certificate
-                      </a>
-                    </div>
-                  </QuickFactItem>
-
-                  <QuickFactItem label="Resume">
-                   <a 
-  href="/CV_EN.pdf"
-  className="btn-nordic-primary btn-enhanced-hover inline-flex items-center gap-2 px-4 py-2 text-sm rounded-full"
-  download="Mats_Gustafsson_CV.pdf"
->
-  <Download size={16} aria-hidden="true" />
-  Download CV
-</a>
-
-                  </QuickFactItem>
-
-                  <QuickFactItem label="Status">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-status-success rounded-full animate-pulse" />
-                      <span className="text-status-success font-medium">Open to opportunities</span>
-                    </div>
-                  </QuickFactItem>
-                </dl>
+                <a 
+                  href="/CV_EN.pdf"
+                  className="inline-flex items-center gap-4 text-text-main font-bold group/link mt-4"
+                >
+                  <span className="border-b border-text-main pb-1 group-hover/link:text-accent group-hover/link:border-accent transition-colors">
+                    DOWNLOAD_RESUME.PDF
+                  </span>
+                  <Download size={16} className="group-hover/link:text-accent transition-colors" />
+                </a>
               </div>
             </div>
-
-            {/* Main Content */}
-            <div className="lg:col-span-8 xl:col-span-9">
-              <Section title="My Story" id="profile-section">
-                <div className="space-y-4 text-text-secondary leading-relaxed">
-                  <p>
-                    I&apos;m a passionate full-stack developer who discovered my love for coding through the challenge of creating 
-                    something meaningful from nothing but an idea and a blank screen. What started as curiosity about how 
-                    websites work has evolved into a career dedicated to crafting digital experiences that matter.
-                  </p>
-                  <p>
-                    I thrive on solving complex problems and take pride in writing clean, maintainable code that stands the test of time. 
-                    My approach combines technical rigor with creative thinking to deliver solutions that exceed expectations.
-                  </p>
-                </div>
-              </Section>
-
-              <Section title="Technical Skills" id="skills-section">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {skillCategories.map((category) => (
-                    <SkillCategory key={category.title} {...category} />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="What I'm Working On" id="projects-section">
-                <div className="space-y-4">
-                  <p className="text-text-secondary leading-relaxed">
-                    Currently focused on building full-stack applications that showcase modern web development practices. 
-                    I&apos;m particularly excited about:
-                  </p>
-                  <ul className="space-y-2 text-text-secondary">
-                    <li className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 bg-interactive-primary rounded-full mt-2 flex-shrink-0" />
-                      <span>Building performant React applications with TypeScript</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 bg-interactive-primary rounded-full mt-2 flex-shrink-0" />
-                      <span>Creating robust Django REST APIs with authentication</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 bg-interactive-primary rounded-full mt-2 flex-shrink-0" />
-                      <span>Implementing modern DevOps practices with Docker and CI/CD</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 bg-interactive-primary rounded-full mt-2 flex-shrink-0" />
-                      <span>Exploring cutting-edge web technologies and frameworks</span>
-                    </li>
-                  </ul>
-                </div>
-              </Section>
-            </div>
           </div>
+
+          {/* B. TECH STACK (Frontend) */}
+          <SpecCard title="FRONTEND_ARCH" icon={Globe} className="bg-bg-main">
+             <ul className="space-y-3 mt-2">
+               {['React.js', 'TypeScript', 'HTMX', 'Tailwind CSS', 'Framer Motion'].map(item => (
+                 // Changed border-border-sub to border-border-main for better visibility
+                 <li key={item} className="flex items-center justify-between text-sm font-medium border-b border-border-main py-2 last:border-0 group">
+                   <span className="text-text-main">{item}</span>
+                   <span className="w-1.5 h-1.5 bg-border-main rounded-none group-hover:bg-accent transition-colors" />
+                 </li>
+               ))}
+             </ul>
+          </SpecCard>
+
+          {/* C. TECH STACK (Backend) */}
+          <SpecCard title="BACKEND_OPS" icon={Server} className="bg-bg-main">
+             <ul className="space-y-3 mt-2">
+               {['Python', 'FastAPI', 'Django REST', 'Node.js', 'Docker'].map(item => (
+                 <li key={item} className="flex items-center justify-between text-sm font-medium border-b border-border-main py-2 last:border-0 group">
+                   <span className="text-text-main">{item}</span>
+                   <span className="w-1.5 h-1.5 bg-border-main rounded-none group-hover:bg-accent transition-colors" />
+                 </li>
+               ))}
+             </ul>
+          </SpecCard>
+
+          {/* D. METRICS ROW (Span Full Width) */}
+          <div className="md:col-span-4 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-main">
+             <div className="industrial-card p-6 text-center bg-bg-sub hover:bg-bg-acc transition-colors">
+               <div className="text-5xl font-black text-text-main tracking-tighter">100</div>
+               {/* Improved contrast for label: opacity-70 instead of muted */}
+               <div className="font-mono text-[10px] text-text-main opacity-70 mt-2 uppercase tracking-widest">LIGHTHOUSE_SCORE</div>
+             </div>
+             
+             <div className="industrial-card p-6 text-center bg-bg-sub hover:bg-bg-acc transition-colors">
+               <div className="text-5xl font-black text-text-main tracking-tighter">&lt;0.1s</div>
+               <div className="font-mono text-[10px] text-text-main opacity-70 mt-2 uppercase tracking-widest">CLS_SHIFT</div>
+             </div>
+             
+             <div className="industrial-card p-6 text-center bg-bg-sub hover:bg-bg-acc transition-colors">
+               <div className="text-5xl font-black text-text-main tracking-tighter">A+</div>
+               <div className="font-mono text-[10px] text-text-main opacity-70 mt-2 uppercase tracking-widest">ACCESSIBILITY</div>
+             </div>
+             
+             {/* Status Block - FORCED BLUE BACKGROUND */}
+             <div className="industrial-card p-6 text-center !bg-accent !border-accent text-white flex flex-col items-center justify-center group cursor-default">
+               <div className="text-3xl font-black tracking-tight flex items-center gap-2 group-hover:scale-110 transition-transform text-white">
+                 OPEN TO WORK <ArrowRight size={24} className="-rotate-45" />
+               </div>
+             </div>
+          </div>
+
         </div>
       </div>
     </section>
   )
 })
 
-SkillCategory.displayName = 'SkillCategory'
-Section.displayName = 'Section'
-QuickFactItem.displayName = 'QuickFactItem'
 About.displayName = 'About'
-
 export default About
