@@ -12,6 +12,9 @@
   --color-text-strong: var(--text-strong);
   --color-text-muted: var(--text-muted);
   --color-text-accent: var(--text-accent);
+  
+  /* Alias for convenient usage */
+  --color-accent: var(--text-accent);
 
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
@@ -49,11 +52,10 @@
 
   --text-main: #e5e5e5; 
   --text-strong: #ffffff; 
-  --text-muted: #a3a3a3; /* Lightened from #737373 for better readability */
+  --text-muted: #a3a3a3;
   --text-accent: #38bdf8; 
 
-  /* SIGNIFICANTLY INCREASED BORDER VISIBILITY */
-  --border-main: #3f3f46; /* Zinc-700: Visible against black */
+  --border-main: #3f3f46;
   --border-sub: #27272a;
   
   --primary: #f8fafc;
@@ -75,7 +77,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Industrial Component Styles */
 .industrial-card {
   background: var(--bg-sub);
   border: 1px solid var(--border-main);
@@ -88,11 +89,9 @@ body {
   border-color: var(--text-main);
 }
 
-/* --- UTILITIES --- */
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 section:not(#hero) h2 { color: var(--text-strong); }
 .text-balance { text-wrap: balance; }
 
-/* COMPATIBILITY SHIMS */
 .bg-bg-primary { background-color: var(--bg-main); }
 .text-text-primary { color: var(--text-main); }
