@@ -35,7 +35,7 @@
   
   --text-main: #09090b; 
   --text-strong: #000000; 
-  --text-muted: #52525b; 
+    --text-muted: #4b5563;
   --text-accent: #2563eb; 
 
   --border-main: #d4d4d8; 
@@ -52,7 +52,7 @@
 
   --text-main: #e5e5e5; 
   --text-strong: #ffffff; 
-  --text-muted: #a3a3a3;
+    --text-muted: #d4d4d8;
   --text-accent: #38bdf8; 
 
   --border-main: #3f3f46;

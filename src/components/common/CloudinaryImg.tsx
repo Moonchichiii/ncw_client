@@ -11,19 +11,13 @@ interface CloudinaryImgProps {
 const CloudinaryImg = memo<CloudinaryImgProps>(({ publicId, alt, className }) => {
   const cloudName = import.meta.env.VITE_CLOUD_NAME
   
+  // If no cloud name, render nothing 
   if (!cloudName) {
-    // eslint-disable-next-line no-console
-    console.error('Cloudinary Cloud Name is missing in .env file')
     return null
   }
 
-  // Base URL for image optimization
-  // f_auto: auto format (webp/avif)
-  // q_auto: auto quality
-  // c_limit: resize but don't crop if not needed
   const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,c_limit`
 
-  // Generate responsive variants
   const srcSet = `
     ${baseUrl},w_640/${publicId} 640w,
     ${baseUrl},w_960/${publicId} 960w,
@@ -33,12 +27,8 @@ const CloudinaryImg = memo<CloudinaryImgProps>(({ publicId, alt, className }) =>
 
   return (
     <img
-      src={`${baseUrl},w_1280/${publicId}`} // Fallback
+      src={`${baseUrl},w_1280/${publicId}`}
       srcSet={srcSet}
-      // Sizes logic: 
-      // - Mobile: 100% width
-      // - Tablet: 50% width
-      // - Desktop: 33% width
       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
       alt={alt}
       className={className}
