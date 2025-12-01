@@ -63,7 +63,7 @@ const CookieConsent = memo<CookieConsentProps>((props) => {
               <h3 className="font-mono text-xs text-text-muted uppercase tracking-widest border-b border-accent pb-1">
                 SYSTEM_NOTICE // PRIVACY
               </h3>
-              <button onClick={hideModals} className="text-text-muted hover:text-text-main">
+              <button onClick={hideModals} className="text-text-muted hover:text-text-main" aria-label="Close cookie banner">
                 <X size={16} />
               </button>
             </div>
@@ -94,7 +94,7 @@ const CookieConsent = memo<CookieConsentProps>((props) => {
           <div className="w-full max-w-2xl bg-bg-main border border-border-main shadow-2xl flex flex-col max-h-[85vh]">
             <div className="p-6 border-b border-border-main flex justify-between items-center bg-bg-sub">
               <h2 className="font-mono text-sm text-text-main uppercase tracking-widest">PRIVACY_CONFIGURATION</h2>
-              <button onClick={hideModals} className="hover:text-accent"><X size={20} /></button>
+              <button onClick={hideModals} className="hover:text-accent" aria-label="Close preferences panel"><X size={20} /></button>
             </div>
             <div className="p-6 overflow-y-auto space-y-4">
                {COOKIE_CATEGORIES.map(category => (
