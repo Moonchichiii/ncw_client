@@ -22,21 +22,20 @@ const ContactForm = memo(() => {
     setFormData(prev => ({ ...prev, [name]: value }))
   }, [])
 
-  const encode = (data: Record<string, string>) => {
-    return Object.keys(data)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-      .join("&");
-  }
-
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus({ type: 'submitting' })
 
     try {
+      const body = new URLSearchParams({
+        "form-name": "contact",
+        ...formData
+      }).toString()
+
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact", ...formData }),
+        body,
       });
 
       if (!response.ok) {
@@ -62,7 +61,6 @@ const ContactForm = memo(() => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* HIDDEN FORM FOR NETLIFY DETECTION */}
       <form 
         name="contact" 
         data-netlify="true" 
@@ -75,7 +73,6 @@ const ContactForm = memo(() => {
         <textarea name="message" />
       </form>
 
-      {/* ACTUAL INTERACTIVE FORM */}
       <form 
         name="contact" 
         method="POST" 
@@ -83,13 +80,13 @@ const ContactForm = memo(() => {
         className="space-y-10"
       >
         <input type="hidden" name="form-name" value="contact" />
+        
         <p hidden>
           <label>
-            Don't fill this out if you're human: <input name="bot-field" />
+            Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
           </label>
         </p>
 
-        {/* Header with status indicator - Fixed contrast and accessibility */}
         <div className="flex items-center justify-between mb-12">
           <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-accent pb-1 inline-block">
             MESSAGE_INPUT

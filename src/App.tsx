@@ -4,7 +4,7 @@ import Layout from '@/components/layout/Layout'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/pages/Hero'
 import LegalModal from '@/components/modals/LegalModal'
-import CookieConsent from '@/components/cookies/CookieConsent' // Added Import
+import CookieConsent from '@/components/cookies/CookieConsent'
 import { ErrorFallback } from '@/components/common/ErrorFallback'
 import { useLegalModals } from '@/hooks/useLegalModals'
 import { useCookieConsent } from '@/hooks/useCookieConsent'
@@ -78,7 +78,7 @@ const App = memo(() => {
         onOpenPrivacy={openPrivacy}
         onOpenTerms={openTerms}
         onPreloadLegal={preloadLegalDocs}
-        onCookieSettings={cookieState.showPreferencesPanel} // Connects Footer Button
+        onCookieSettings={cookieState.showPreferencesPanel}
       >
         <div onMouseEnter={preloadNextSections}>
           <Hero />
