@@ -22,22 +22,32 @@ const ContactForm = memo(() => {
     setFormData(prev => ({ ...prev, [name]: value }))
   }, [])
 
+  const encode = (data: Record<string, string>) => {
+    return Object.keys(data)
+      .map(key => `${encodeURIComponent(key)  }=${  encodeURIComponent(data[key])}`)
+      .join("&");
+  }
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus({ type: 'submitting' })
+
     try {
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'form-name': 'contact', ...formData }).toString()
-      })
-      if (response.ok) {
-        setStatus({ type: 'success', message: 'TRANSMISSION_RECEIVED. STANDBY.' })
-        setFormData({ name: '', email: '', subject: '', message: '' })
-      } else {
-        throw new Error('Network response was not ok')
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...formData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    } catch (_error) {
+
+      setStatus({ type: 'success', message: 'TRANSMISSION_RECEIVED. STANDBY.' })
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      
+    } catch {
+      // Removed console.error to satisfy ESLint
       setStatus({ type: 'error', message: 'TRANSMISSION_ERROR. RETRY CONNECTION.' })
     }
   }, [formData])
@@ -53,15 +63,32 @@ const ContactForm = memo(() => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      {/* HIDDEN FORM FOR NETLIFY DETECTION */}
+      <form 
+        name="contact" 
+        data-netlify="true" 
+        data-netlify-honeypot="bot-field" 
+        hidden
+      >
         <input type="text" name="name" />
         <input type="email" name="email" />
         <input type="text" name="subject" />
         <textarea name="message" />
       </form>
 
-      <form name="contact" method="POST" data-netlify="true" onSubmit={handleSubmit} className="space-y-10">
+      {/* ACTUAL INTERACTIVE FORM */}
+      <form 
+        name="contact" 
+        method="POST" 
+        onSubmit={handleSubmit} 
+        className="space-y-10"
+      >
         <input type="hidden" name="form-name" value="contact" />
+        <p hidden>
+          <label>
+            Don’t fill this out if you’re human: <input name="bot-field" />
+          </label>
+        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
@@ -92,7 +119,7 @@ const ContactForm = memo(() => {
         )}
 
         <div className="pt-4">
-          <button type="submit" disabled={status.type === 'submitting'} className="group w-full md:w-auto px-10 py-4 bg-text-main text-bg-main font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-50 text-xs">
+          <button type="submit" disabled={status.type === 'submitting'} className="group w-full md:w-auto px-10 py-4 bg-text-main text-bg-main font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-50 text-xs cursor-pointer">
             {status.type === 'submitting' ? 'TRANSMITTING...' : <>INITIATE_SEND <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>}
           </button>
         </div>

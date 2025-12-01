@@ -24,15 +24,13 @@ const Layout = memo<LayoutProps>(({
                    bg-accent text-white px-6 py-3 font-mono text-sm font-bold uppercase tracking-widest"
       >
         Skip to content
-      </a>
-
-      {/* CookieConsent removed from here - it is now handled in App.tsx */}
+      </a>    
       
       <main id="main-content" className="flex flex-col">
         {children}
       </main>
 
-      {/* Footer attached to bottom */}
+      {/* Footer */}
       <div onMouseEnter={onPreloadLegal}>
         <Footer 
           onOpenPrivacy={onOpenPrivacy}

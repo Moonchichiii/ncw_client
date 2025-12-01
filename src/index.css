@@ -30,18 +30,18 @@
 /* --- LIGHT MODE --- */
 :root {
   --bg-main: #ffffff;
-  --bg-sub: #f4f4f5; 
-  --bg-acc: #e4e4e7;
+  --bg-sub: #f3f4f6; /* Slightly cooler gray for better separation */
+  --bg-acc: #e5e7eb; /* Distinct hover state */
   
-  --text-main: #09090b; 
-  --text-strong: #000000; 
-    --text-muted: #4b5563;
-  --text-accent: #2563eb; 
+  --text-main: #18181b; /* Zinc-900: Softer than pitch black, readable */
+  --text-strong: #000000; /* Pitch black for headlines only */
+  --text-muted: #52525b; /* Zinc-600: Dark enough to be read easily */
+  --text-accent: #0055ff; /* Darker Blue: Standard blue is too light on white */
 
-  --border-main: #d4d4d8; 
-  --border-sub: #e4e4e7;
+  --border-main: #d4d4d8; /* Zinc-300: Visible structural lines */
+  --border-sub: #e4e4e7; /* Zinc-200: Subtle grid lines */
   
-  --primary: #09090b;
+  --primary: #18181b;
 }
 
 /* --- DARK MODE --- */
@@ -52,11 +52,11 @@
 
   --text-main: #e5e5e5; 
   --text-strong: #ffffff; 
-    --text-muted: #d4d4d8;
+  --text-muted: #a1a1aa; /* Zinc-400: Lightened for better dark mode readability */
   --text-accent: #38bdf8; 
 
-  --border-main: #3f3f46;
-  --border-sub: #27272a;
+  --border-main: #27272a; /* Zinc-800 */
+  --border-sub: #18181b;
   
   --primary: #f8fafc;
 }
@@ -93,5 +93,6 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 section:not(#hero) h2 { color: var(--text-strong); }
 .text-balance { text-wrap: balance; }
 
+/* Utility classes mapping to vars */
 .bg-bg-primary { background-color: var(--bg-main); }
 .text-text-primary { color: var(--text-main); }

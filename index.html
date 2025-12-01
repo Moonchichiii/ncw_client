@@ -22,9 +22,12 @@
     <title>NCW_SYSTEMS // V2.5</title>
     
     <style>
-      /* Critical CSS to prevent FOUC (Flash of Unstyled Content) */
-      /* Sets base industrial theme immediately */
+      /* Critical CSS to prevent FOUC */
       :root {
+        --bg-main: #ffffff;
+        --text-main: #18181b;
+      }
+      .dark {
         --bg-main: #050505;
         --text-main: #e5e5e5;
       }
@@ -37,7 +40,7 @@
 
       body {
         margin: 0;
-        opacity: 0; /* Hide body until JS loads to prevent layout shift */
+        opacity: 0; 
         animation: fadeIn 0.5s ease-out forwards;
       }
 
@@ -45,15 +48,16 @@
         to { opacity: 1; }
       }
 
-      /* Scrollbar styling for Webkit */
+      /* Scrollbar styling */
       ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #0a0a0a; }
-      ::-webkit-scrollbar-thumb { background: #333; }
-      ::-webkit-scrollbar-thumb:hover { background: #555; }
+      ::-webkit-scrollbar-track { background: var(--bg-sub, #f3f4f6); }
+      ::-webkit-scrollbar-thumb { background: var(--border-main, #d4d4d8); }
+      .dark ::-webkit-scrollbar-track { background: #0a0a0a; }
+      .dark ::-webkit-scrollbar-thumb { background: #333; }
     </style>
 
     <script>
-      // Immediate Theme Logic (Forces Dark Mode preference if set)
+      // Immediate Theme Logic
       (function() {
         var saved = localStorage.getItem('theme');
         var sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
