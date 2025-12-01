@@ -183,14 +183,7 @@ const Work = memo(() => {
   return (
     <section id="work" className="py-24 bg-bg-main relative z-10 border-t border-border-main overflow-hidden">
       
-      <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />
-
-      {/* 
-         HORIZONTAL SCROLL CONTAINER 
-         - eslint-disable comments added for 'no-noninteractive-element-interactions'
-           because we are building a custom drag-scroll behavior.
-         - The role="region" and aria-label ensure screen readers still understand it.
-      */}
+      <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />    
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div 
         ref={scrollContainerRef}
