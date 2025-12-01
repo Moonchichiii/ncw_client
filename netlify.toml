@@ -10,19 +10,20 @@
 [[forms]]
   name = "contact"
 
-# Performance headers
+# 1. CACHE FONTS (Specific path for your /public/fonts folder)
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# 2. CACHE ASSETS (Images, etc.)
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# CACHE FONTS EXPLICITLY
-[[headers]]
-  for = "/*.woff2"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
+# 3. CACHE JS/CSS BUNDLES
 [[headers]]
   for = "*.js"
   [headers.values]
@@ -33,15 +34,17 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Security headers
+# 4. SECURITY HEADERS (Applied to everything)
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
+    # Optional: Referrer-Policy for privacy
+    Referrer-Policy = "strict-origin-when-cross-origin"
 
-# SPA fallback
+# SPA Fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
