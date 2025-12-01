@@ -1,237 +1,150 @@
-# Nordic Code Works
+# Nordic Code Works // Systems Engineering
 
-A high-performance React portfolio built with modern best practices in performance, accessibility, and privacy compliance.
+A high-performance React portfolio built with industrial precision. Focused on zero-latency interactions, strict type safety, and absolute accessibility.
 
-----------
-
-## 📋 Table of Contents
-
-1. About
-2. Features
-3. Technology Stack
-4. Installation & Quick Start
-5. Project Structure
-6. Testing & Metrics
-   - Lighthouse Scores
-   - Core Web Vitals
-7. Performance Optimizations
-8. Accessibility Features
-9. Cookie Consent System
-10. Monitoring & Analytics
-11. Development Guidelines
-12. Browser Support
-13. License
+![Lighthouse Score 100/100/100/100](https://img.shields.io/badge/Lighthouse-100%20%7C%20100%20%7C%20100%20%7C%20100-success?style=for-the-badge) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=for-the-badge) ![Tailwind](https://img.shields.io/badge/Tailwind-v4.1-38bdf8?style=for-the-badge)
 
 ----------
 
-## 📝 About
+## 📋 System Index
 
-Nordic Code Works is a production-grade React portfolio designed for the modern web. It emphasizes:
-
-- **Performance:** Sub-500ms load times with hardware-accelerated animations.
-- **Accessibility:** WCAG AAA compliance and comprehensive screen-reader support.
-- **Privacy:** GDPR-ready cookie consent and transparent data handling.
-- **Design:** A fluid, semantic design system with dark/light mode.
-
-----------
-
-## ✨ Features
-
-### 🎯 Performance First
-
-- Sub-500ms initial load via code splitting & lazy loading
-- Hardware-accelerated animations with `will-change` and CSS transforms
-- Zero layout shifts with optimized font loading & image handling
-
-### ♿ Accessibility Excellence
-
-- WCAG AAA compliant markup, ARIA roles, and live regions
-- Full keyboard navigation with focus management and skip links
-- Respect for reduced-motion preferences and high-contrast modes
-
-### 🍪 Privacy & Compliance
-
-- GDPR-ready cookie banner with category-based consent
-- Persistent, versioned preference storage
-- Clear, user-centric privacy controls accessible on every page
-
-### 🎨 Modern Design System
-
-- Semantic design tokens with automatic color-scheme switching
-- Fluid typography using CSS `clamp()` for responsive scaling
-- Glassmorphism effects with backdrop filters and gradients
-- Subtle micro-interactions for an engaging user experience
+1. [Mission Protocol](#-mission-protocol)
+2. [Technical Stack](#-technical-stack)
+3. [The Gold Standard (Lighthouse 100)](#-the-gold-standard-lighthouse-100)
+4. [Typography & Font Strategy](#-typography--font-strategy)
+5. [Accessibility Engineering](#-accessibility-engineering)
+6. [Privacy & Compliance](#-privacy--compliance)
+7. [Installation](#-installation)
+8. [Architecture](#-architecture)
 
 ----------
 
-## 🛠 Technology Stack
+## 📝 Mission Protocol
 
-- **Framework:** React 19 + TypeScript 5.8
-- **Build:** Vite 6.3 with optimized chunking
-- **Styling:** Tailwind CSS 4.1
-- **Icons:** Lucide React
-- **Fonts:** Inter (body) & Archivo Black (headings) with `font-display: swap`
-- **Error Handling:** React Error Boundary
+**Nordic Code Works** is a production-grade deployment log designed for the modern web. It abandons traditional "creative" bloat in favor of raw engineering performance.
+
+- **Industrial Design:** A strict, high-contrast UI inspired by technical manuals and terminal interfaces.
+- **Zero Latency:** Sub-500ms initial load times via aggressive optimization.
+- **Type Safety:** Strict TypeScript configuration with no `any` types allowed.
+- **Privacy:** Native Netlify Forms integration with GDPR-compliant data handling.
 
 ----------
 
-## 🚀 Installation & Quick Start
+## 🛠 Technical Stack
 
-```sh
-# Clone repository
-git clone https://github.com/your-username/nordic-code-works.git
-cd nordic-code-works
+- **Runtime:** React 19 + TypeScript 5.8
+- **Build Engine:** Vite 6.3 (ESBuild)
+- **Styling:** Tailwind CSS 4.1 (Native CSS Variables strategy)
+- **State:** React Hooks + LocalStorage Persistence
+- **Hosting:** Netlify (Edge Network)
+- **Assets:** Cloudinary (On-demand optimization)
 
-# Install dependencies
-pnpm install
+----------
 
-# Launch dev server
-pnpm dev
+## 🏆 The Gold Standard (Lighthouse 100)
 
-# Build for production
-pnpm build
+This system is engineered to pass Core Web Vitals with zero margins for error. Every byte sent to the client is justified.
 
-# Preview production build
-pnpm preview
+| Metric | Score | Detail |
+| :--- | :--- | :--- |
+| **Performance** | **100** | Zero render-blocking resources. CSS-contained layouts. |
+| **Accessibility** | **100** | WCAG AAA contrast compliance. Semantic ARIA implementation. |
+| **Best Practices** | **100** | Immutable caching policies. HTTPS enforcement. |
+| **SEO** | **100** | Semantic HTML5 structure. Optimized meta taxonomy. |
 
-# Run linting & type checks
-pnpm lint && pnpm type-check
+### Optimization Strategy
+
+1. **Zero Layout Shift (CLS 0):** By preloading fonts and defining strict dimensions for media, the UI never "jumps" during load.
+2. **Tailwind v4 Architecture:** Utilization of the new `@theme` CSS directive reduces JavaScript runtime overhead by leveraging native browser CSS variables for theming.
+3. **Route-Based Splitting:** Component lazy-loading ensures the main bundle remains under 50kb for the initial paint.
+
+----------
+
+## 🔠 Typography & Font Strategy
+
+To achieve **0ms font latency**, we rejected external CDNs (Google Fonts/Adobe Fonts) in favor of a localized, self-hosted strategy.
+
+### The Stack
+
+- **Headings:** *Familjen Grotesk* (Bold/Medium) - A distinct Swedish grotesque.
+- **Body:** *Switzer* (Regular/Medium) - Highly legible neo-grotesque.
+- **Monospace:** *Space Grotesk* - Technical data display.
+
+### The "Instant Load" Implementation
+
+External fonts typically cause a "Flash of Unstyled Text" (FOUT) or a layout shift. We solved this by:
+
+1. **Local Hosting:** WOFF2 files are stored in `/public` to eliminate DNS resolution time.
+2. **Preload Tags:** High-priority fonts are preloaded in `<head>` so they are available before the CSS Object Model is constructed.
+3. **Swap Policy:** `font-display: swap` ensures text is visible immediately, even on slow 3G connections.
+
+```html
+<!-- Example of the Zero-Latency Strategy -->
+<link rel="preload" href="/FamiljenGrotesk-Bold.woff2" as="font" type="font/woff2" crossorigin>
 ```
 
 ----------
 
-## 📁 Project Structure
+## ♿ Accessibility Engineering
+
+Accessibility is not an afterthought; it is a core system requirement.
+
+- **Strict Contrast Ratios:** Both Light and Dark modes use calibrated colors (e.g., `#0f0f10` text on `#ffffff` bg) to exceed WCAG AAA standards.
+- **Screen Reader Optimization:**
+  - Icon-only buttons include explicit `aria-label` attributes.
+  - Decorative elements (like status pulses) use `aria-hidden="true"`.
+- **Reduced Motion:** The system respects OS-level `prefers-reduced-motion` settings, disabling animations for sensitive users automatically via CSS media queries.
+- **Keyboard Navigation:** Full focus trapping in modals and logical tab indexing throughout the document.
+
+----------
+
+## 🍪 Privacy & Compliance
+
+- **No Third-Party Trackers:** Analytics are self-hosted or anonymous.
+- **Cookie Consent:** A custom-built, lightweight consent manager allows granular control (Necessary vs. Preferences).
+- **Secure Forms:** Contact submissions are handled via Netlify's serverless backend, ensuring data is encrypted in transit and at rest, with spam protection provided by hidden honeypot fields rather than intrusive CAPTCHAs.
+
+----------
+
+## 🚀 Installation
+
+```bash
+# 1. Clone Repository
+git clone https://github.com/Moonchichiii/ncw_client.git
+cd ncw_client
+
+# 2. Install Dependencies (PNPM recommended)
+pnpm install
+
+# 3. Initialize Dev Environment
+pnpm dev
+
+# 4. Compile Production Build
+pnpm build
+```
+
+----------
+
+## 🏗 Architecture
 
 ```text
 src/
-├── components/           # Reusable UI components
-│   ├── common/           # Buttons, feedback, etc.
-│   ├── layout/           # Navbar, Layout wrapper, overlays
-│   └── cookies/          # Cookie consent UI
-├── hooks/                # Custom React hooks
-├── pages/                # route-based page components
-├── assets/               # Optimized images & icons
-└── utils/                # Helpers & constants
+├── components/           
+│   ├── common/           # Atomic UI elements (Buttons, Forms, Images)
+│   ├── layout/           # Structural components (Navbar, Footer, Grid)
+│   ├── cookies/          # GDPR Consent Logic
+│   └── modals/           # Legal & System overlays
+├── pages/                # Route definitions (Hero, About, Work, Contact)
+├── hooks/                # Custom logic (useCookieConsent, useLegalModals)
+└── assets/               # Static vectors
+public/
+├── FamiljenGrotesk...    # Self-hosted WOFF2 font files
+└── Switzer...            # Self-hosted WOFF2 font files
 ```
-
-----------
-
-## 🧪 Testing & Metrics
-
-### Lighthouse Scores
-
-| Category       | Score         |
-| -------------- | ------------ |
-| Performance    | 100/100 ⚡    |
-| Accessibility  | 100/100 ♿    |
-| Best Practices | 100/100 ✅   |
-| SEO            | 100/100 🔍   |
-
-### Core Web Vitals
-
-- **First Contentful Paint (FCP):** 0.4s
-- **Largest Contentful Paint (LCP):** 0.5s
-- **Total Blocking Time (TBT):** 0ms
-- **Cumulative Layout Shift (CLS):** 0.003
-
-Automated Lighthouse CI is configured to run on every pull request to prevent regressions.
-
-----------
-
-## 🚅 Performance Optimizations
-
-### Code Splitting & Loading
-
-- Route-based `React.lazy()` & `Suspense`
-- Vendor chunk separation for dependencies
-- Prefetch & preload strategies for critical assets
-
-### Rendering Performance
-
-- `contain: layout style paint` for CSS containment
-- 3D transforms & `will-change` for GPU acceleration
-- `React.memo`, `useCallback`, and selective updates
-
-### Asset Optimization
-
-- Responsive WebP images
-- Inlined critical CSS
-- Tree-shaking & dead-code elimination
-
-----------
-
-## ♿ Accessibility Features
-
-### Screen Reader Support
-
-- ARIA live regions for dynamic updates
-- Semantic headings & landmark roles
-- Descriptive alt text and `aria-label`s
-
-### Keyboard Navigation
-
-- Logical tab order & focus trapping in modals
-- Visible focus styles meeting contrast ratios
-- Escape & arrow key handling for overlays
-
-### User Preferences
-
-- `prefers-reduced-motion` support
-- High-contrast mode detection & override
-- Manual theme switching with persisted settings
-
-----------
-
-## 🍪 Cookie Consent System
-
-### Privacy Controls
-
-- Granular categories: Necessary, Analytics, Marketing, Preferences
-- Versioned consent storage with audit logs
-- Accessible controls available site-wide
-
-### Compliance
-
-- Aligned with GDPR Article 7 (clear consent)
-- Easy withdrawal & preference updates
-- Detailed cookie policy documentation
-
-----------
-
-## 📊 Monitoring & Analytics
-
-- Core Web Vitals tracking (FCP, LCP, CLS)
-- Consent-based user interaction analytics
-- Error boundary reporting via external service
-- Performance budgets enforced in CI
-
-----------
-
-## 🔧 Development Guidelines
-
-### Code Quality
-
-- TypeScript strict mode & exhaustive checks
-- ESLint + Prettier for code consistency
-- `jsx-a11y` for accessibility linting
-
-### Testing Strategy
-
-- Lighthouse CI for performance gates
-- Automated accessibility checks
-- Cross-browser validation in CI workflows
-
-----------
-
-## 🌐 Browser Support
-
-- Chrome (90+) | Firefox (88+) | Safari (14+) | Edge (90+)
-- Progressive enhancement for legacy browsers
-- No runtime polyfills; uses ES2020+ natively
-- Responsive from 320px to 4K
 
 ----------
 
 ## 📜 License
 
-Distributed under the MIT License. See LICENSE for details.
+**MIT License** // Open Source Engineering.
+Copyright © 2025 Nordic Code Works.
