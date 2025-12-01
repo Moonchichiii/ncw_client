@@ -3,26 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Nordic Code Works - High-performance digital systems built with industrial precision. Full-stack development by Mats Gustafsson.">
+    
+    <!-- SEO: Optimized Meta Description -->
+    <meta name="description" content="Nordic Code Works is the portfolio of Mats Gustafsson, a Full-Stack Developer specializing in high-performance React systems, Python/FastAPI backends, and industrial UI design. Based in Stockholm, available for global remote contracts.">
+    <meta name="keywords" content="Full-Stack Developer, React Developer Stockholm, Python Developer, FastAPI, Industrial UI Design, Nordic Code Works, Mats Gustafsson, Web Engineering">
     <meta name="author" content="Nordic Code Works">
     
-    <!-- Preconnect to font origins -->
-    <link rel="preconnect" href="https://api.fontshare.com">
-    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
     <!-- Open Graph -->
-    <meta property="og:title" content="NCW_SYSTEMS // V2.5">
-    <meta property="og:description" content="Deployment Log & System Overview. Scalable web engineering.">
+    <meta property="og:title" content="Nordic Code Works // Full-Stack Systems Engineering">
+    <meta property="og:description" content="High-performance digital systems built with industrial precision. React, Python, and scalable architecture.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nordiccodeworks.com">
     <meta name="theme-color" content="#050505">
+
+    <!-- PRELOAD LOCAL FONTS: Updated to /fonts/ folder -->
+    <link rel="preload" href="/fonts/FamiljenGrotesk-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
     
     <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg">
-    <title>NCW_SYSTEMS // V2.5</title>
+    <title>Nordic Code Works // Full-Stack Engineer</title>
     
     <style>
-      /* Critical CSS to prevent FOUC */
+      /* Critical CSS */
       :root {
         --bg-main: #ffffff;
         --text-main: #18181b;
@@ -41,14 +43,13 @@
       body {
         margin: 0;
         opacity: 0; 
-        animation: fadeIn 0.5s ease-out forwards;
+        animation: fadeIn 0.3s ease-out forwards;
       }
 
       @keyframes fadeIn {
         to { opacity: 1; }
       }
 
-      /* Scrollbar styling */
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: var(--bg-sub, #f3f4f6); }
       ::-webkit-scrollbar-thumb { background: var(--border-main, #d4d4d8); }
@@ -57,7 +58,6 @@
     </style>
 
     <script>
-      // Immediate Theme Logic
       (function() {
         var saved = localStorage.getItem('theme');
         var sys = window.matchMedia('(prefers-color-scheme: dark)').matches;

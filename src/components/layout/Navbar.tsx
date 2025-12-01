@@ -34,6 +34,7 @@ const Navbar = memo(() => {
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="group flex flex-col items-start focus:outline-none"
+              aria-label="Scroll to top"
             >
               <div className="flex items-center gap-3">
                 <span className="w-4 h-4 bg-text-main group-hover:bg-accent transition-colors duration-300" />
@@ -54,7 +55,8 @@ const Navbar = memo(() => {
                 ref={menuButtonRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="flex items-center gap-3 text-text-main hover:text-accent transition-colors focus:outline-none group"
-                aria-label="Toggle menu"
+                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={isMenuOpen}
               >
                 <span className="font-mono text-[10px] tracking-widest hidden md:block group-hover:text-accent font-bold uppercase">
                   {isMenuOpen ? 'Close' : 'Menu'}

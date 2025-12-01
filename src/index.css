@@ -1,7 +1,47 @@
-/* 1. IMPORTS MUST BE FIRST */
-@import url('https://api.fontshare.com/v2/css?f[]=familjen-grotesk@400,500,600,700&f[]=switzer@300,400,500,600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
+
+/* --- LOCAL FONT DEFINITIONS --- */
+
+/* HEADING FONT: Familjen Grotesk */
+@font-face {
+  font-family: 'Familjen Grotesk';
+  src: url('/fonts/FamiljenGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Familjen Grotesk';
+  src: url('/fonts/FamiljenGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* BODY FONT: Switzer */
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* MONO FONT: Space Grotesk */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   --color-bg-main: var(--bg-main);
@@ -13,15 +53,13 @@
   --color-text-muted: var(--text-muted);
   --color-text-accent: var(--text-accent);
   
-  /* Alias for convenient usage */
   --color-accent: var(--text-accent);
-
   --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
   
   --color-border-main: var(--border-main);
   --color-border-sub: var(--border-sub);
 
+  /* LINKING THE LOCAL FONTS */
   --font-heading: 'Familjen Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'Space Grotesk', monospace;
@@ -30,18 +68,18 @@
 /* --- LIGHT MODE --- */
 :root {
   --bg-main: #ffffff;
-  --bg-sub: #f3f4f6; /* Slightly cooler gray for better separation */
-  --bg-acc: #e5e7eb; /* Distinct hover state */
+  --bg-sub: #f3f4f6;
+  --bg-acc: #e5e7eb;
   
-  --text-main: #18181b; /* Zinc-900: Softer than pitch black, readable */
-  --text-strong: #000000; /* Pitch black for headlines only */
-  --text-muted: #52525b; /* Zinc-600: Dark enough to be read easily */
-  --text-accent: #0055ff; /* Darker Blue: Standard blue is too light on white */
+  --text-main: #0f0f10; 
+  --text-strong: #000000;
+  --text-muted: #404045; 
+  --text-accent: #0044cc; 
 
-  --border-main: #d4d4d8; /* Zinc-300: Visible structural lines */
-  --border-sub: #e4e4e7; /* Zinc-200: Subtle grid lines */
+  --border-main: #a1a1aa;
+  --border-sub: #e4e4e7;
   
-  --primary: #18181b;
+  --primary: #0f0f10;
 }
 
 /* --- DARK MODE --- */
@@ -52,10 +90,10 @@
 
   --text-main: #e5e5e5; 
   --text-strong: #ffffff; 
-  --text-muted: #a1a1aa; /* Zinc-400: Lightened for better dark mode readability */
+  --text-muted: #a1a1aa;
   --text-accent: #38bdf8; 
 
-  --border-main: #27272a; /* Zinc-800 */
+  --border-main: #27272a;
   --border-sub: #18181b;
   
   --primary: #f8fafc;
@@ -89,10 +127,9 @@ body {
   border-color: var(--text-main);
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); letter-spacing: -0.025em; }
 section:not(#hero) h2 { color: var(--text-strong); }
 .text-balance { text-wrap: balance; }
 
-/* Utility classes mapping to vars */
 .bg-bg-primary { background-color: var(--bg-main); }
 .text-text-primary { color: var(--text-main); }
