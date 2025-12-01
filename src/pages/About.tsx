@@ -8,7 +8,6 @@ interface SpecCardProps {
   title: string
   children: ReactNode
   className?: string
-  // 2. Add the icon prop to the interface
   icon?: CustomIcon
 }
 
@@ -16,11 +15,9 @@ interface SpecCardProps {
 const SpecCard = ({ title, children, className, icon: Icon }: SpecCardProps) => (
   <div className={`industrial-card p-8 flex flex-col justify-between h-full ${className}`}>
     <div className="flex justify-between items-start mb-6">
-      {/* Darkened text color and sharper border for light mode visibility */}
       <h3 className="font-mono text-xs text-text-main opacity-60 uppercase tracking-widest border-b border-border-main pb-2 w-full">
         {title}
       </h3>
-      {/* Icon positioned absolute or flex end to not break layout if title is long */}
       {Icon && <div className="ml-4"><Icon size={18} className="text-text-muted" /></div>}
     </div>
     <div>{children}</div>
@@ -85,7 +82,6 @@ const About = memo(() => {
           <SpecCard title="FRONTEND_ARCH" icon={Globe} className="bg-bg-main">
              <ul className="space-y-3 mt-2">
                {['React.js', 'TypeScript', 'HTMX', 'Tailwind CSS', 'Framer Motion'].map(item => (
-                 // Changed border-border-sub to border-border-main for better visibility
                  <li key={item} className="flex items-center justify-between text-sm font-medium border-b border-border-main py-2 last:border-0 group">
                    <span className="text-text-main">{item}</span>
                    <span className="w-1.5 h-1.5 bg-border-main rounded-none group-hover:bg-accent transition-colors" />
@@ -110,7 +106,6 @@ const About = memo(() => {
           <div className="md:col-span-4 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-main">
              <div className="industrial-card p-6 text-center bg-bg-sub hover:bg-bg-acc transition-colors">
                <div className="text-5xl font-black text-text-main tracking-tighter">100</div>
-               {/* Improved contrast for label: opacity-70 instead of muted */}
                <div className="font-mono text-[10px] text-text-main opacity-70 mt-2 uppercase tracking-widest">LIGHTHOUSE_SCORE</div>
              </div>
              
@@ -123,9 +118,8 @@ const About = memo(() => {
                <div className="text-5xl font-black text-text-main tracking-tighter">A+</div>
                <div className="font-mono text-[10px] text-text-main opacity-70 mt-2 uppercase tracking-widest">ACCESSIBILITY</div>
              </div>
-             
-             {/* Status Block - FORCED BLUE BACKGROUND */}
-             <div className="industrial-card p-6 text-center !bg-accent !border-accent text-white flex flex-col items-center justify-center group cursor-default">
+                          
+             <div className="industrial-card p-6 text-center !bg-[#0044cc] !border-[#0044cc] text-white flex flex-col items-center justify-center group cursor-default">
                <div className="text-3xl font-black tracking-tight flex items-center gap-2 group-hover:scale-110 transition-transform text-white">
                  OPEN TO WORK <ArrowRight size={24} className="-rotate-45" />
                </div>
