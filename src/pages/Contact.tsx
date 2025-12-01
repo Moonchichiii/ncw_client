@@ -1,189 +1,131 @@
-import { memo, useState, useCallback } from 'react'
-import { CheckCircle2, AlertCircle, ArrowRight } from '@/components/icons/index'
+import { memo, useState, useRef } from 'react'
+import { Linkedin, Github, Mail, ArrowUpRight, Copy } from '@/components/icons/index'
+import ContactForm from '@/components/common/ContactForm'
 
-interface FormData {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SocialRow = ({ icon: Icon, title, href, label }: any) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center justify-between p-4 bg-bg-sub border-b border-border-main hover:bg-bg-acc transition-colors duration-200 last:border-b-0"
+  >
+    <div className="flex items-center gap-4">
+      <div className="p-2 bg-bg-main border border-border-sub group-hover:bg-text-main group-hover:text-bg-main transition-colors">
+        <Icon size={18} />
+      </div>
+      <div>
+        <div className="font-mono text-[10px] text-text-muted uppercase tracking-wider">{label}</div>
+        <div className="font-bold text-text-main">{title}</div>
+      </div>
+    </div>
+    <ArrowUpRight size={18} className="text-text-muted group-hover:text-accent transition-colors" />
+  </a>
+)
 
-interface FormStatus {
-  type: 'idle' | 'submitting' | 'success' | 'error'
-  message?: string
-}
+const Contact = memo(() => {
+  const [copied, setCopied] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
-const ContactForm = memo(() => {
-  const [formData, setFormData] = useState<FormData>({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState<FormStatus>({ type: 'idle' })
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }, [])
-
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus({ type: 'submitting' })
-
-    try {
-      const body = new URLSearchParams({
-        "form-name": "contact",
-        ...formData
-      }).toString()
-
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      setStatus({ type: 'success', message: 'TRANSMISSION_RECEIVED. STANDBY.' })
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      
-    } catch {
-      setStatus({ type: 'error', message: 'TRANSMISSION_ERROR. RETRY CONNECTION.' })
-    }
-  }, [formData])
-
-  const inputClasses = `
-    w-full bg-transparent border-b border-border-main py-3 
-    text-text-main placeholder-text-muted font-mono text-sm
-    focus:border-accent focus:outline-none transition-colors
-    rounded-none appearance-none
-  `
-  
-  const labelClasses = "block text-[10px] font-mono text-text-muted uppercase tracking-widest mb-1"
+  const copyEmail = () => {
+    navigator.clipboard.writeText('contact@nordiccodeworks.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {/* 
-         NETLIFY BOT DETECTION FORM (Hidden)
-         This ensures Netlify sees the fields at build time.
-      */}
-      <form 
-        name="contact" 
-        data-netlify="true" 
-        data-netlify-honeypot="bot-field" 
-        hidden
-      >
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <input type="text" name="subject" />
-        <textarea name="message" />
-      </form>
-
-      {/* ACTUAL USER FORM */}
-      <form 
-        name="contact" 
-        method="POST" 
-        onSubmit={handleSubmit} 
-        className="space-y-10"
-      >
-        <input type="hidden" name="form-name" value="contact" />
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-24 bg-bg-main relative z-10 border-t border-border-main"
+      aria-label="Contact Terminal"
+    >
+      <div className="container mx-auto px-4">
         
-        {/* Spam Honeypot */}
-        <p hidden>
-          <label>
-            Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
-          </label>
-        </p>
-
-        {/* Status Header - High Contrast & Static for Accessibility */}
-        <div className="flex items-center justify-between mb-12">
-          <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-accent pb-1 inline-block">
-            MESSAGE_INPUT
-          </h3>
-          <span className="font-mono text-[10px] text-accent font-bold" aria-hidden="true">
-            AWAITING_DATA...
-          </span>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <label htmlFor="name" className={labelClasses}>ID / Name *</label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              required 
-              autoComplete="name"
-              value={formData.name} 
-              onChange={handleChange} 
-              className={inputClasses} 
-              placeholder="ENTER_FULL_NAME" 
-            />
+        {/* 1. SECTION INTRO */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 border-b border-border-main pb-12">
+          <div className="lg:col-span-8">
+            <div className="font-mono text-xs text-accent mb-4">/// SECTION_04</div>
+            <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase mb-6">
+              Initialize<br />Comms.
+            </h2>
           </div>
-          <div>
-            <label htmlFor="email" className={labelClasses}>Return Address *</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              required 
-              autoComplete="email"
-              value={formData.email} 
-              onChange={handleChange} 
-              className={inputClasses} 
-              placeholder="EMAIL@PROTOCOL.COM" 
-            />
+          <div className="lg:col-span-4 flex flex-col justify-end">
+             <p className="text-text-muted font-mono text-sm leading-relaxed mb-6">
+               <span className="text-accent">&gt;</span> STATUS: READY FOR INTAKE<br/>
+               <span className="text-accent">&gt;</span> QUEUE: OPEN<br/>
+               <span className="text-accent">&gt;</span> REGION: EU_NORTH
+             </p>
+             <p className="text-lg text-text-main font-medium">
+               Ready to discuss architecture? Let&apos;s build something robust.
+             </p>
           </div>
         </div>
 
-        <div>
-          <label htmlFor="subject" className={labelClasses}>Subject Line *</label>
-          <input 
-            type="text" 
-            id="subject" 
-            name="subject" 
-            required 
-            autoComplete="off"
-            value={formData.subject} 
-            onChange={handleChange} 
-            className={inputClasses} 
-            placeholder="PROJECT_TYPE // INQUIRY" 
-          />
-        </div>
-
-        <div>
-          <label htmlFor="message" className={labelClasses}>Data Packet *</label>
-          <textarea 
-            id="message" 
-            name="message" 
-            required 
-            rows={4} 
-            value={formData.message} 
-            onChange={handleChange} 
-            className={`${inputClasses} resize-none`} 
-            placeholder="INPUT_MESSAGE_DATA..." 
-          />
-        </div>
-
-        {status.message && (
-          <div className={`flex items-center gap-3 p-4 border ${status.type === 'success' ? 'bg-green-500/10 border-green-500/20 text-green-600' : 'bg-red-500/10 border-red-500/20 text-red-600'}`}>
-            {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-            <span className="font-mono text-xs font-bold">{status.message}</span>
+        {/* 2. MAIN GRID LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-border-main border border-border-main">
+          
+          {/* LEFT: FORM TERMINAL */}
+          <div className="lg:col-span-8 bg-bg-main p-8 md:p-12 relative overflow-hidden">
+             <div className="relative z-10">
+               {/* 
+                  NOTE: The previous duplicate header "MESSAGE_INPUT / AWAITING_DATA" 
+                  was removed from here because it is now inside <ContactForm /> 
+                  to ensure single source of truth and perfect accessibility.
+               */}
+               <ContactForm />
+             </div>
           </div>
-        )}
 
-        <div className="pt-4">
-          <button 
-            type="submit" 
-            disabled={status.type === 'submitting'} 
-            aria-label="Send Message"
-            className="group w-full md:w-auto px-10 py-4 bg-text-main text-bg-main font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-50 text-xs cursor-pointer"
-          >
-            {status.type === 'submitting' ? 'TRANSMITTING...' : <>INITIATE_SEND <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" /></>}
-          </button>
+          {/* RIGHT: INFO SIDEBAR */}
+          <div className="lg:col-span-4 flex flex-col h-full bg-bg-sub">
+            
+            {/* A. DIRECT UPLINK (Socials) */}
+            <div className="border-b border-border-main p-8">
+              <h3 className="font-mono text-xs text-text-muted uppercase tracking-widest mb-6">DIRECT_UPLINK</h3>
+              <div className="flex flex-col border border-border-main bg-bg-main">
+                <SocialRow 
+                  icon={Linkedin} 
+                  title="LinkedIn" 
+                  label="PROFESSIONAL" 
+                  href="https://www.linkedin.com/in/mats-gustafsson-a57643103/" 
+                />
+                <SocialRow 
+                  icon={Github} 
+                  title="GitHub" 
+                  label="REPOSITORY" 
+                  href="https://github.com/Moonchichiii" 
+                />
+                
+                {/* Email Copy Block */}
+                <button
+                  onClick={copyEmail}
+                  className="group flex items-center justify-between p-4 bg-bg-sub hover:bg-bg-acc transition-all duration-200 text-left w-full border-t border-border-main"
+                  aria-label="Copy email address"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-bg-main border border-border-sub group-hover:bg-text-main group-hover:text-bg-main transition-colors">
+                      <Mail size={18} />
+                    </div>
+                    <div>
+                      <div className="font-mono text-[10px] text-text-muted uppercase tracking-wider">
+                        {copied ? 'COPIED_TO_CLIPBOARD' : 'EMAIL_PROTOCOL'}
+                      </div>
+                      <div className="font-bold text-text-main text-sm truncate max-w-[150px]">
+                        contact@nordiccodeworks.com
+                      </div>
+                    </div>
+                  </div>
+                  <Copy size={18} className="text-text-muted group-hover:text-accent transition-colors" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </section>
   )
 })
 
-ContactForm.displayName = 'ContactForm'
-export default ContactForm
+Contact.displayName = 'Contact'
+export default Contact

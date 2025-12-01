@@ -61,7 +61,10 @@ const ContactForm = memo(() => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* HIDDEN FORM FOR NETLIFY BOT DETECTION */}
+      {/* 
+         NETLIFY BOT DETECTION FORM (Hidden)
+         This ensures Netlify sees the fields at build time.
+      */}
       <form 
         name="contact" 
         data-netlify="true" 
@@ -74,7 +77,7 @@ const ContactForm = memo(() => {
         <textarea name="message" />
       </form>
 
-      {/* ACTUAL FORM */}
+      {/* ACTUAL USER FORM */}
       <form 
         name="contact" 
         method="POST" 
@@ -82,18 +85,15 @@ const ContactForm = memo(() => {
         className="space-y-10"
       >
         <input type="hidden" name="form-name" value="contact" />
+        
+        {/* Spam Honeypot */}
         <p hidden>
           <label>
             Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
           </label>
         </p>
 
-        {/* 
-          ACCESSIBLE HEADER 
-          - High contrast text-accent
-          - No animation
-          - aria-hidden on decorative text
-        */}
+        {/* Status Header - High Contrast & Static for Accessibility */}
         <div className="flex items-center justify-between mb-12">
           <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-accent pb-1 inline-block">
             MESSAGE_INPUT
