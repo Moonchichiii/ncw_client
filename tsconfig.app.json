@@ -6,9 +6,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    
-    /* Add this line to suppress the warning */
-    "ignoreDeprecations": "6.0", 
 
     /* Bundler mode */
     "moduleResolution": "bundler",
