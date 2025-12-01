@@ -8,7 +8,7 @@ const PROJECTS = [
     title: 'SANDLÅDAN SYSTEM',
     description: 'High-performance SSR application. Demonstrates modern Python web capabilities with zero client-side hydration overhead.',
     tech: ['FastAPI', 'HTMX', 'Python', 'Render'],
-    image: 'ncw/ya1d5ehu45r3rdokwm1i', // Existing ID
+    image: 'ncw/ya1d5ehu45r3rdokwm1i',
     status: 'LIVE_SYSTEM', 
     links: { demo: 'https://sandladanab.onrender.com/', repo: 'https://github.com/Moonchichiii' }
   },
@@ -17,7 +17,7 @@ const PROJECTS = [
     title: 'LASERENITY.FR',
     description: 'Decoupled architecture. Backend containerized on Fly.io with Redis caching. Frontend delivered via Cloudflare Pages.',
     tech: ['Django', 'Wagtail', 'Fly.io', 'Redis'],
-    image: 'ncw/bkedaqkgjsyw4ldxntp5', // Existing ID
+    image: 'ncw/bkedaqkgjsyw4ldxntp5',
     status: 'COMMERCIAL_DEPLOY',
     links: { demo: 'https://laserenity.fr', repo: null }
   },
@@ -26,7 +26,6 @@ const PROJECTS = [
     title: 'PORTFOLIO SYSTEM V2',
     description: 'Current interface. Strict industrial aesthetic utilizing high-contrast typography and CSS variables.',
     tech: ['React 19', 'Tailwind v4', 'Vite'],
-    // UPDATED ID from your provided link
     image: 'ncw/dducxvk141hq88bfbkds', 
     status: 'DEPLOYED',
     links: { demo: 'https://nordiccodeworks.com', repo: 'https://github.com/Moonchichiii/ncw_client' }
@@ -36,16 +35,11 @@ const PROJECTS = [
     title: 'BATTLESHIP ENGINE',
     description: 'Logic-heavy implementation of the classic strategy game. Features CPU opponent logic and state management.',
     tech: ['React', 'Game Logic', 'Jest'],
-    // UPDATED ID from your provided link
-    image: 'ncw/netg1aurff0czrwi4xof', 
+    image: 'ncw/netg1aurff0czrwi4xof',
     status: 'PROTOTYPE_ALPHA',
     links: { demo: 'https://moonchichiii.github.io/battleship-project3/', repo: 'https://github.com/Moonchichiii/battleship-project3' }
   }
 ]
-
-/* ... Rest of the file remains exactly the same as our previous Perfect Horizontal Scroll version ... */
-/* Include the ProjectCard, WorkHeader, and Work components as previously built */
-// (I am not repeating the whole 200 lines to save space, just use the array above in your existing Work.tsx)
 
 /* --- CARD COMPONENT --- */
 const ProjectCard = memo<{ project: typeof PROJECTS[0]; index: number }>(({ project, index }) => {
@@ -117,7 +111,6 @@ const ProjectCard = memo<{ project: typeof PROJECTS[0]; index: number }>(({ proj
   )
 })
 
-/* --- HEADER SECTION --- */
 const WorkHeader = memo<{ isVisible: boolean; headerRef: React.RefObject<HTMLDivElement | null> }>(
   ({ isVisible, headerRef }) => (
     <div 
@@ -132,7 +125,9 @@ const WorkHeader = memo<{ isVisible: boolean; headerRef: React.RefObject<HTMLDiv
       </div>
       <div className="flex flex-col justify-end">
         <p className="text-xl text-text-muted leading-relaxed max-w-lg font-medium border-l border-border-main pl-6">
-          <span className="text-text-main">Deployment Log.</span> Horizontal scrolling interface. Drag or scroll to navigate.
+          <span className="text-text-main">Deployment Log.</span> Horizontal scrolling interface. 
+          <span className="hidden lg:inline"> Scroll down to navigate.</span>
+          <span className="lg:hidden"> Drag to navigate.</span>
         </p>
       </div>
     </div>
@@ -143,11 +138,18 @@ const Work = memo(() => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
   const headerRef = useRef<HTMLDivElement | null>(null)
   
+  // --- DESKTOP SCROLL LOGIC ---
+  const sectionRef = useRef<HTMLElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [trackHeight, setTrackHeight] = useState(0)
+
+  // --- MOBILE DRAG LOGIC ---
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
 
+  // 1. Header Visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) {setIsHeaderVisible(true)} },
@@ -157,6 +159,52 @@ const Work = memo(() => {
     return () => observer.disconnect()
   }, [])
 
+  // 2. Desktop Scroll Handler
+  const handleScroll = useCallback(() => {
+    if (!sectionRef.current || !trackRef.current || window.innerWidth < 1024) {return}
+
+    const rect = sectionRef.current.getBoundingClientRect()
+    const sectionTop = rect.top
+    // Calculate how far we've scrolled into the section
+    const offset = Math.max(0, -sectionTop)
+    const trackWidth = trackRef.current.scrollWidth
+    const viewportWidth = window.innerWidth
+    const maxScroll = trackWidth - viewportWidth
+
+    // Apply the transform
+    const x = Math.min(offset, maxScroll)
+    trackRef.current.style.transform = `translateX(-${x}px)`
+  }, [])
+
+  // 3. Initialize Desktop Dimensions
+  useEffect(() => {
+    const initTrack = () => {
+      if (!trackRef.current) {return}
+      
+      if (window.innerWidth >= 1024) {
+        // Desktop: Make section tall enough to scroll horizontally
+        const trackWidth = trackRef.current.scrollWidth
+        const viewportWidth = window.innerWidth
+        setTrackHeight(trackWidth - viewportWidth + window.innerHeight)
+      } else {
+        // Mobile: Reset
+        setTrackHeight(0)
+        // FIX: Removed unnecessary conditional check here
+        trackRef.current.style.transform = 'translateX(0px)'
+      }
+    }
+
+    initTrack()
+    window.addEventListener('resize', initTrack)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('resize', initTrack)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [handleScroll])
+
+  /* --- Mobile Drag Handlers --- */
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!scrollContainerRef.current) {return}
     setIsDragging(true)
@@ -164,13 +212,8 @@ const Work = memo(() => {
     setScrollLeft(scrollContainerRef.current.scrollLeft)
   }, [])
 
-  const handleMouseLeave = useCallback(() => {
-    setIsDragging(false)
-  }, [])
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false)
-  }, [])
+  const handleMouseLeave = useCallback(() => {setIsDragging(false)}, [])
+  const handleMouseUp = useCallback(() => {setIsDragging(false)}, [])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging || !scrollContainerRef.current) {return}
@@ -181,33 +224,57 @@ const Work = memo(() => {
   }, [isDragging, startX, scrollLeft])
 
   return (
-    <section id="work" className="py-24 bg-bg-main relative z-10 border-t border-border-main overflow-hidden">
-      
-      <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />    
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <div 
-        ref={scrollContainerRef}
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        className="w-full overflow-x-auto pb-8 hide-scrollbar cursor-grab active:cursor-grabbing snap-x snap-mandatory focus:outline-none"
-        role="region" 
-        aria-label="Project Gallery Horizontal Scroll"
-        /* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */
-        tabIndex={0}
-      >
-        <div className="flex w-max border-y border-border-main">
-          <div className="w-4 md:w-[max(1rem,calc((100vw-1280px)/2))]" /> 
-          
-          {PROJECTS.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
+    <section 
+      id="work" 
+      ref={sectionRef}
+      className="bg-bg-main relative z-10 border-t border-border-main"
+      style={{ height: trackHeight > 0 ? `${trackHeight}px` : 'auto' }} // Pins height on Desktop
+    >
+      {/* 
+        STICKY CONTAINER 
+        - On desktop, this stays pinned to the top while the section scrolls behind it.
+      */}
+      <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden py-24 flex flex-col justify-center">
+        
+        <WorkHeader isVisible={isHeaderVisible} headerRef={headerRef} />
 
-          <div className="w-4 md:w-[max(1rem,calc((100vw-1280px)/2))]" />
+        {/* 
+           MAIN SCROLL/DRAG AREA 
+           - Supports 'ref' swapping logic.
+        */}
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+        <div 
+          ref={window.innerWidth >= 1024 ? null : scrollContainerRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className={`
+            w-full hide-scrollbar
+            /* Desktop */
+            lg:overflow-visible
+            /* Mobile */
+            overflow-x-auto pb-8 cursor-grab active:cursor-grabbing snap-x snap-mandatory focus:outline-none
+          `}
+          role="region" 
+          aria-label="Project Gallery Horizontal Scroll"
+          /* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */
+          tabIndex={0}
+        >
+          <div 
+            ref={trackRef} // Used by Desktop Scroll Logic
+            className="flex w-max border-y border-border-main transition-transform duration-75 ease-linear will-change-transform"
+          >
+            <div className="w-4 md:w-[max(1rem,calc((100vw-1280px)/2))]" /> 
+            
+            {PROJECTS.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+
+            <div className="w-4 md:w-[max(1rem,calc((100vw-1280px)/2))]" />
+          </div>
         </div>
       </div>
-
     </section>
   )
 })
