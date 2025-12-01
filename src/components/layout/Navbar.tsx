@@ -30,7 +30,7 @@ const Navbar = memo(() => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             
-            {/* LOGO: Uses semantic variables for perfect contrast */}
+            {/* LOGO */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="group flex flex-col items-start focus:outline-none"
@@ -55,14 +55,14 @@ const Navbar = memo(() => {
                 ref={menuButtonRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="flex items-center gap-3 text-text-main hover:text-accent transition-colors focus:outline-none group"
-                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
               >
                 <span className="font-mono text-[10px] tracking-widest hidden md:block group-hover:text-accent font-bold uppercase">
                   {isMenuOpen ? 'Close' : 'Menu'}
                 </span>
                 <div className="w-9 h-9 flex items-center justify-center border border-border-main bg-bg-sub group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
-                  {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                  {isMenuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
                 </div>
               </button>
             </div>

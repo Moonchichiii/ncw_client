@@ -33,9 +33,8 @@ const ThemeToggle = memo(() => {
       <span className="font-mono text-[10px] text-text-muted tracking-widest hidden md:block group-hover:text-text-main transition-colors">
         {theme === 'dark' ? 'DARK_MODE' : 'LIGHT_MODE'}
       </span>
-      {/* Increased size  */}
       <div className="w-9 h-9 flex items-center justify-center border border-border-main bg-bg-sub text-text-main group-hover:bg-text-main group-hover:text-bg-main group-hover:border-text-main transition-all duration-300">
-        {theme === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
+        {theme === 'dark' ? <Moon size={16} aria-hidden="true" /> : <Sun size={16} aria-hidden="true" />}
       </div>
     </button>
   )

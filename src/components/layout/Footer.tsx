@@ -29,19 +29,19 @@ const Footer = memo<FooterProps>(({ onOpenPrivacy, onOpenTerms, onCookieSettings
           <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-widest font-bold">
             <button 
               onClick={onOpenPrivacy} 
-              aria-label="Read Privacy Policy"
+              aria-label="Open Privacy Policy"
               className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
             >
               PRIVACY
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
             </button>
             <button 
               onClick={onOpenTerms} 
-              aria-label="Read Terms of Service"
+              aria-label="Open Terms of Service"
               className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
             >
               TERMS
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
             </button>
             <button 
               onClick={onCookieSettings} 
@@ -49,7 +49,7 @@ const Footer = memo<FooterProps>(({ onOpenPrivacy, onOpenTerms, onCookieSettings
               className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
             >
               COOKIES
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
             </button>
           </div>
 

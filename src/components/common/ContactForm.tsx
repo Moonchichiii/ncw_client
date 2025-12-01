@@ -24,7 +24,7 @@ const ContactForm = memo(() => {
 
   const encode = (data: Record<string, string>) => {
     return Object.keys(data)
-      .map(key => `${encodeURIComponent(key)  }=${  encodeURIComponent(data[key])}`)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
       .join("&");
   }
 
@@ -47,7 +47,6 @@ const ContactForm = memo(() => {
       setFormData({ name: '', email: '', subject: '', message: '' })
       
     } catch {
-      // Removed console.error to satisfy ESLint
       setStatus({ type: 'error', message: 'TRANSMISSION_ERROR. RETRY CONNECTION.' })
     }
   }, [formData])
@@ -86,9 +85,19 @@ const ContactForm = memo(() => {
         <input type="hidden" name="form-name" value="contact" />
         <p hidden>
           <label>
-            Don’t fill this out if you’re human: <input name="bot-field" />
+            Don't fill this out if you're human: <input name="bot-field" />
           </label>
         </p>
+
+        {/* Header with status indicator - Fixed contrast and accessibility */}
+        <div className="flex items-center justify-between mb-12">
+          <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-accent pb-1 inline-block">
+            MESSAGE_INPUT
+          </h3>
+          <span className="font-mono text-[10px] text-accent font-bold" aria-hidden="true">
+            AWAITING_DATA...
+          </span>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
@@ -119,8 +128,13 @@ const ContactForm = memo(() => {
         )}
 
         <div className="pt-4">
-          <button type="submit" disabled={status.type === 'submitting'} className="group w-full md:w-auto px-10 py-4 bg-text-main text-bg-main font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-50 text-xs cursor-pointer">
-            {status.type === 'submitting' ? 'TRANSMITTING...' : <>INITIATE_SEND <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>}
+          <button 
+            type="submit" 
+            disabled={status.type === 'submitting'} 
+            aria-label="Send Message"
+            className="group w-full md:w-auto px-10 py-4 bg-text-main text-bg-main font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-50 text-xs cursor-pointer"
+          >
+            {status.type === 'submitting' ? 'TRANSMITTING...' : <>INITIATE_SEND <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" /></>}
           </button>
         </div>
       </form>
