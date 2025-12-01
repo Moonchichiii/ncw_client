@@ -1,5 +1,5 @@
 import { memo, useEffect, useState, useRef } from 'react'
-import { ExternalLink, Github, ArrowRight } from '@/components/icons/index'
+import { Github, ArrowRight } from '@/components/icons/index'
 import CloudinaryImg from '@/components/common/CloudinaryImg'
 
 const PROJECTS = [
