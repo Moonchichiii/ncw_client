@@ -2,7 +2,6 @@ import { memo, useState, useRef } from 'react'
 import { Linkedin, Github, Mail, ArrowUpRight, Copy } from '@/components/icons/index'
 import ContactForm from '@/components/common/ContactForm'
 
-/* 1. INDUSTRIAL LINK ROW */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SocialRow = ({ icon: Icon, title, href, label }: any) => (
   <a
@@ -43,7 +42,7 @@ const Contact = memo(() => {
     >
       <div className="container mx-auto px-4">
         
-        {/* 1. HEADER */}
+        {/* 1. SECTION INTRO */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 border-b border-border-main pb-12">
           <div className="lg:col-span-8">
             <div className="font-mono text-xs text-accent mb-4">/// SECTION_04</div>
@@ -69,20 +68,16 @@ const Contact = memo(() => {
           {/* LEFT: FORM TERMINAL */}
           <div className="lg:col-span-8 bg-bg-main p-8 md:p-12 relative overflow-hidden">
              <div className="relative z-10">
-               <div className="flex items-center justify-between mb-12">
-                 <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-text-accent pb-1 inline-block">
-                   MESSAGE_INPUT
-                 </h3>
-                 <span className="font-mono text-[10px] text-text-muted animate-pulse">
-                   AWAITING_DATA...
-                 </span>
-               </div>
-               
+               {/* 
+                  NOTE: The previous duplicate header "MESSAGE_INPUT / AWAITING_DATA" 
+                  was removed from here because it is now inside <ContactForm /> 
+                  to ensure single source of truth and perfect accessibility.
+               */}
                <ContactForm />
              </div>
           </div>
 
-          {/* RIGHT: INFO SIDEBAR (This was missing!) */}
+          {/* RIGHT: INFO SIDEBAR */}
           <div className="lg:col-span-4 flex flex-col h-full bg-bg-sub">
             
             {/* A. DIRECT UPLINK (Socials) */}
@@ -106,6 +101,7 @@ const Contact = memo(() => {
                 <button
                   onClick={copyEmail}
                   className="group flex items-center justify-between p-4 bg-bg-sub hover:bg-bg-acc transition-all duration-200 text-left w-full border-t border-border-main"
+                  aria-label="Copy email address"
                 >
                   <div className="flex items-center gap-4">
                     <div className="p-2 bg-bg-main border border-border-sub group-hover:bg-text-main group-hover:text-bg-main transition-colors">
@@ -120,13 +116,10 @@ const Contact = memo(() => {
                       </div>
                     </div>
                   </div>
-                  <Copy size={18} className="text-text-muted group-hover:text-accent transition-colors" />
+                  <Copy size={18} className="text-text-muted group-hover:text-accent transition-colors" aria-hidden="true" />
                 </button>
               </div>
             </div>
-
-        
-        
           </div>
         </div>
       </div>

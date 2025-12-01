@@ -46,7 +46,6 @@ const ContactForm = memo(() => {
       setFormData({ name: '', email: '', subject: '', message: '' })
       
     } catch {
-      // Console removed for linting compliance
       setStatus({ type: 'error', message: 'TRANSMISSION_ERROR. RETRY CONNECTION.' })
     }
   }, [formData])
@@ -62,6 +61,7 @@ const ContactForm = memo(() => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
+      {/* HIDDEN FORM FOR NETLIFY BOT DETECTION */}
       <form 
         name="contact" 
         data-netlify="true" 
@@ -74,6 +74,7 @@ const ContactForm = memo(() => {
         <textarea name="message" />
       </form>
 
+      {/* ACTUAL FORM */}
       <form 
         name="contact" 
         method="POST" 
@@ -87,6 +88,12 @@ const ContactForm = memo(() => {
           </label>
         </p>
 
+        {/* 
+          ACCESSIBLE HEADER 
+          - High contrast text-accent
+          - No animation
+          - aria-hidden on decorative text
+        */}
         <div className="flex items-center justify-between mb-12">
           <h3 className="font-mono text-sm text-text-main uppercase tracking-widest border-b border-accent pb-1 inline-block">
             MESSAGE_INPUT
