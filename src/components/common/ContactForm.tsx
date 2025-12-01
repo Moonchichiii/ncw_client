@@ -46,6 +46,7 @@ const ContactForm = memo(() => {
       setFormData({ name: '', email: '', subject: '', message: '' })
       
     } catch {
+      // Console removed for linting compliance
       setStatus({ type: 'error', message: 'TRANSMISSION_ERROR. RETRY CONNECTION.' })
     }
   }, [formData])
@@ -80,7 +81,6 @@ const ContactForm = memo(() => {
         className="space-y-10"
       >
         <input type="hidden" name="form-name" value="contact" />
-        
         <p hidden>
           <label>
             Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
@@ -99,22 +99,61 @@ const ContactForm = memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <label htmlFor="name" className={labelClasses}>ID / Name *</label>
-            <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className={inputClasses} placeholder="ENTER_FULL_NAME" />
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              required 
+              autoComplete="name"
+              value={formData.name} 
+              onChange={handleChange} 
+              className={inputClasses} 
+              placeholder="ENTER_FULL_NAME" 
+            />
           </div>
           <div>
             <label htmlFor="email" className={labelClasses}>Return Address *</label>
-            <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className={inputClasses} placeholder="EMAIL@PROTOCOL.COM" />
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              required 
+              autoComplete="email"
+              value={formData.email} 
+              onChange={handleChange} 
+              className={inputClasses} 
+              placeholder="EMAIL@PROTOCOL.COM" 
+            />
           </div>
         </div>
 
         <div>
           <label htmlFor="subject" className={labelClasses}>Subject Line *</label>
-          <input type="text" id="subject" name="subject" required value={formData.subject} onChange={handleChange} className={inputClasses} placeholder="PROJECT_TYPE // INQUIRY" />
+          <input 
+            type="text" 
+            id="subject" 
+            name="subject" 
+            required 
+            autoComplete="off"
+            value={formData.subject} 
+            onChange={handleChange} 
+            className={inputClasses} 
+            placeholder="PROJECT_TYPE // INQUIRY" 
+          />
         </div>
 
         <div>
           <label htmlFor="message" className={labelClasses}>Data Packet *</label>
-          <textarea id="message" name="message" required rows={4} value={formData.message} onChange={handleChange} className={`${inputClasses} resize-none`} placeholder="INPUT_MESSAGE_DATA..." />
+          <textarea 
+            id="message" 
+            name="message" 
+            required 
+            rows={4} 
+            value={formData.message} 
+            onChange={handleChange} 
+            className={`${inputClasses} resize-none`} 
+            placeholder="INPUT_MESSAGE_DATA..." 
+          />
         </div>
 
         {status.message && (
