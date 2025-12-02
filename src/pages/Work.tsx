@@ -46,7 +46,7 @@ const ProjectCard = memo<{ project: typeof PROJECTS[0]; index: number }>(({ proj
   const projectId = `LOG_${(index + 1).toString().padStart(3, '0')}`
   
   return (
-    <article className="group relative flex-none w-[85vw] md:w-[600px] h-full bg-bg-sub border-r border-border-main last:border-r-0 flex flex-col snap-start select-none">
+    <article className="group relative flex-none w-[85vw] md:w-[600px] h-full bg-bg-sub border border-border-main flex flex-col snap-start select-none">
       
       {/* 1. MONITOR VIEW */}
       <div className="relative aspect-video w-full border-b border-border-main bg-bg-acc overflow-hidden">
@@ -263,7 +263,7 @@ const Work = memo(() => {
         >
           <div 
             ref={trackRef} // Used by Desktop Scroll Logic
-            className="flex w-max border-y border-border-main transition-transform duration-75 ease-linear will-change-transform"
+            className="flex gap-4 w-max border-y border-border-main transition-transform duration-75 ease-linear will-change-transform"
           >
             <div className="w-4 md:w-[max(1rem,calc((100vw-1280px)/2))]" /> 
             
