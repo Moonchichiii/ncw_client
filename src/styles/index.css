@@ -352,7 +352,16 @@
     height: 1px;
     background-color: var(--border-subtle);
   }
+   .section-paper {
+    background: #f3f1ea;
+    color: #0f1316;
+    border-top: 1px solid rgba(15,19,22,0.12);
+    border-bottom: 1px solid rgba(15,19,22,0.12);
+  }
+  .section-paper .paper-muted { color: rgba(15,19,22,0.70); }
+  .section-paper .paper-faint { color: rgba(15,19,22,0.55); }
 }
+
 
 /* ── Utilities ── */
 

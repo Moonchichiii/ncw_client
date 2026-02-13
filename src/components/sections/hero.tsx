@@ -9,33 +9,10 @@ const META_ITEMS = [
 ] as const;
 
 const Hero = memo(() => (
-  <section
-    id="hero"
-    className="relative min-h-svh bg-surface overflow-hidden"
-  >
-    {/* Subtle background grid */}
+  <section id="hero" className="relative min-h-svh bg-surface overflow-hidden">
+    {/* Radial glow (keep) */}
     <div
-      className="absolute inset-0 pointer-events-none"
-      aria-hidden="true"
-      style={{
-        backgroundImage: `
-          repeating-linear-gradient(
-            to right,
-            rgba(207, 234, 99, 0.03) 0 1px,
-            transparent 1px 72px
-          ),
-          repeating-linear-gradient(
-            to bottom,
-            rgba(207, 234, 99, 0.03) 0 1px,
-            transparent 1px 72px
-          )
-        `,
-      }}
-    />
-
-    {/* Radial glow */}
-    <div
-      className="absolute top-0 left-0 w-[1000px] h-[600px] pointer-events-none"
+      className="absolute top-0 left-0 w-250 h-150 pointer-events-none"
       aria-hidden="true"
       style={{
         background:
@@ -43,13 +20,13 @@ const Hero = memo(() => (
       }}
     />
 
-    <div className="relative z-10 mx-auto max-w-[1200px] px-5 sm:px-8">
+    <div className="relative z-10 mx-auto w-full max-w-300 xl:max-w-360 2xl:max-w-400 px-5 sm:px-8 2xl:px-12">
       {/* Meta rail */}
       <div className="pt-28 sm:pt-36 pb-6 border-b border-edge-subtle">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           {META_ITEMS.map((item) => (
             <div key={item.label}>
-              <span className="block text-[10px] font-mono font-medium text-content-faint uppercase tracking-[0.1em] mb-1">
+              <span className="block text-[10px] font-mono font-medium text-content-faint uppercase tracking-widest mb-1">
                 {item.label}
               </span>
               <span className="block text-sm text-content-secondary">
@@ -70,48 +47,52 @@ const Hero = memo(() => (
           </span>
         </div>
 
-        {/* Headline */}
-        <div className="max-w-[16ch]">
-          <h1 className="font-heading font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,7.5vw,6rem)] text-content">
-            Building fast,
-            <br />
-            accessible &
-            <br />
-            <span className="text-lime">beautiful</span> web
-            apps.
-          </h1>
-        </div>
+        {/* Wide layout: left headline, right copy+CTAs */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 xl:gap-12 items-start">
+          {/* LEFT */}
+          <div className="xl:col-span-7">
+            <h1 className="font-heading font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.6rem,5vw,5.2rem)] text-content">
+  Engineering fast,
+  <br />
+  accessible &
+  <br />
+  <span className="text-lime">scalable</span> web systems.
+</h1>
 
-        {/* Identity line */}
-        <p className="mt-10 text-lg text-content-secondary max-w-xl leading-relaxed">
-          <span className="text-content font-medium">
-            Mats Gustafsson
-          </span>{" "}
-          — Full-Stack Developer crafting high-performance
-          applications with precision and lasting quality.
-        </p>
+          </div>
 
-        {/* CTAs */}
-        <div className="mt-10 flex flex-wrap gap-3">
-          <a href="#work" className="btn-lime">
-            View projects
-            <ArrowUpRight
-              size={14}
-              strokeWidth={1.8}
-              aria-hidden="true"
-            />
-          </a>
-          <a href="#contact" className="btn-outline">
-            Get in touch
-          </a>
-          <a
-            href="/cv-en.pdf"
-            className="btn-ghost"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Download CV ↓
-          </a>
+          {/* RIGHT */}
+          <div className="xl:col-span-5 xl:pt-4">
+            <p className="text-lg text-content-secondary leading-relaxed max-w-md">
+              <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer
+              building modern products with clean architecture, strong UX, and performance-first delivery.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a href="#work" className="btn-lime">
+                See recent work
+                <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
+              </a>
+
+              <a href="#contact" className="btn-ghost text-sm">
+                Get in touch →
+              </a>
+
+              <a
+                href="/cv-en.pdf"
+                className="btn-ghost text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download résumé (PDF)
+              </a>
+            </div>
+
+            {/* Optional micro-proof line */}
+            <p className="mt-6 text-[12px] text-content-faint">
+              Performance budgets. WCAG AA. Secure CI/CD. Clean handover.
+            </p>
+          </div>
         </div>
       </div>
     </div>

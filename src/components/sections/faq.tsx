@@ -3,26 +3,31 @@ import { Plus, X } from "lucide-react";
 
 const FAQ_ITEMS = [
   {
-    q: "What's your typical project timeline?",
-    a: "Most projects take 2–6 weeks depending on scope. I deliver in iterations so you see progress early and often.",
+    q: "What do you need from me to start?",
+    a: "A clear goal, existing links/assets (if any), and one point of contact for feedback. I’ll help shape scope into an actionable plan.",
   },
   {
-    q: "What stack do you use?",
-    a: "Django/DRF or FastAPI on the backend, React with TypeScript on the frontend. Docker, CI/CD, and cloud deployment included.",
+    q: "How do pricing and milestones work?",
+    a: "Either fixed-scope milestones or hourly for open-ended work. I propose milestones upfront so you always know what’s next and what it costs.",
   },
   {
-    q: "Can you work with existing codebases?",
-    a: "Absolutely. I regularly audit, refactor, and extend existing applications. Clean integration is part of the process.",
+    q: "Can you improve an existing site instead of rebuilding?",
+    a: "Yes. I can audit performance, accessibility, and code quality—then refactor or rebuild only the parts that create friction.",
   },
   {
-    q: "How do you handle accessibility and performance?",
-    a: "Both are built in from day one — not bolted on at the end. I test with Lighthouse, axe, and screen readers throughout development.",
+    q: "How do you measure performance and accessibility?",
+    a: "I use Lighthouse/Core Web Vitals targets, real device checks, keyboard navigation, and screen reader testing. The goal is measurable improvements, not guesses.",
   },
   {
-    q: "Do you work with startups or established teams?",
-    a: "Both. I've worked with solo founders building MVPs and with established teams extending production systems.",
+    q: "What happens after launch?",
+    a: "You get a clean handover, documentation, and optional support. I can also monitor performance and fix issues quickly after release.",
+  },
+  {
+    q: "Do you work with startups, agencies, or in-house teams?",
+    a: "All of the above. I can ship solo, collaborate with teams, or plug into an existing workflow and repo without slowing things down.",
   },
 ] as const;
+
 
 const FaqItem = memo<{
   q: string;

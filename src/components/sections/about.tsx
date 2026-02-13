@@ -1,35 +1,27 @@
 import { memo } from "react";
-import {
-  Code2,
-  Server,
-  Globe,
-  Download,
-} from "lucide-react";
-import {
-  FRONTEND_SKILLS,
-  BACKEND_SKILLS,
-} from "@/data/skills";
+import { Code2, Server, Globe, Download } from "lucide-react";
+import { FRONTEND_SKILLS, BACKEND_SKILLS } from "@/data/skills";
 
 const OFFERS = [
   {
     num: "01",
-    title: "Web Applications",
-    desc: "Full-stack apps with Django, React, and TypeScript — built for scale.",
+    title: "Product Engineering",
+    desc: "Full-stack builds with Django, React, and TypeScript — designed for scale and maintainability.",
   },
   {
     num: "02",
-    title: "Performance & Core Web Vitals",
-    desc: "Sub-second loads, optimized bundles, and measurable speed gains.",
+    title: "Performance & CWV",
+    desc: "Sub-second loads, optimized bundles, and measurable Core Web Vitals improvements.",
   },
   {
     num: "03",
     title: "Accessibility (WCAG AA)",
-    desc: "Inclusive interfaces tested with screen readers and keyboard navigation.",
+    desc: "Inclusive interfaces tested with keyboard navigation and screen readers.",
   },
   {
     num: "04",
-    title: "Secure DevOps & CI",
-    desc: "Hardened deployments, automated pipelines, and dependency scanning.",
+    title: "Secure CI/CD",
+    desc: "Hardened delivery pipelines with automated checks, scanning, and safe deploys.",
   },
 ] as const;
 
@@ -49,16 +41,13 @@ const About = memo(() => (
             the web
           </h2>
         </div>
+
         <div className="flex flex-col justify-end">
           <p className="text-lg text-content-secondary leading-relaxed max-w-md">
-            <span className="text-content font-medium">
-              Mats Gustafsson
-            </span>{" "}
-            — Graduate of Code Institute (2024). Based in
-            Sweden & France, available globally. Focused on
-            removing friction between user intent and system
-            response.
+            <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer (Code Institute, 2024).
+            I build fast, accessible products with clean architecture and secure delivery pipelines.
           </p>
+
           <a
             href="/cv-en.pdf"
             className="inline-flex items-center gap-2 mt-5 text-sm font-medium text-content hover:text-lime transition-colors group"
@@ -69,7 +58,7 @@ const About = memo(() => (
               className="group-hover:text-lime transition-colors"
               aria-hidden="true"
             />
-            Download resume
+            Download résumé (PDF)
           </a>
         </div>
       </div>
@@ -79,10 +68,11 @@ const About = memo(() => (
         <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em] mb-3">
           What I Offer
         </h3>
+
         <p className="text-base font-heading font-semibold text-content mb-8 max-w-lg">
-          I ship fast systems with measurable performance and
-          accessibility.
+          Practical engineering that improves speed, usability, and reliability — without overcomplicating the stack.
         </p>
+
         <div className="border-t border-edge">
           {OFFERS.map((offer) => (
             <div
@@ -108,25 +98,15 @@ const About = memo(() => (
         {/* Frontend */}
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
-            <Globe
-              size={16}
-              strokeWidth={1.6}
-              className="text-content-faint"
-              aria-hidden="true"
-            />
+            <Globe size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
             <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
               Frontend
             </h3>
           </div>
           <ul className="space-y-3">
             {FRONTEND_SKILLS.map((skill) => (
-              <li
-                key={skill}
-                className="flex items-center justify-between text-sm group/item"
-              >
-                <span className="text-content font-medium">
-                  {skill}
-                </span>
+              <li key={skill} className="flex items-center justify-between text-sm group/item">
+                <span className="text-content font-medium">{skill}</span>
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-edge-subtle group-hover/item:bg-lime transition-colors"
                   aria-hidden="true"
@@ -139,25 +119,15 @@ const About = memo(() => (
         {/* Backend */}
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
-            <Server
-              size={16}
-              strokeWidth={1.6}
-              className="text-content-faint"
-              aria-hidden="true"
-            />
+            <Server size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
             <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
               Backend
             </h3>
           </div>
           <ul className="space-y-3">
             {BACKEND_SKILLS.map((skill) => (
-              <li
-                key={skill}
-                className="flex items-center justify-between text-sm group/item"
-              >
-                <span className="text-content font-medium">
-                  {skill}
-                </span>
+              <li key={skill} className="flex items-center justify-between text-sm group/item">
+                <span className="text-content font-medium">{skill}</span>
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-edge-subtle group-hover/item:bg-lime transition-colors"
                   aria-hidden="true"
@@ -171,12 +141,7 @@ const About = memo(() => (
         <div className="card p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2.5 mb-5">
-              <Code2
-                size={16}
-                strokeWidth={1.6}
-                className="text-content-faint"
-                aria-hidden="true"
-              />
+              <Code2 size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
               <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
                 Approach
               </h3>

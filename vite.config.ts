@@ -96,23 +96,4 @@ export default defineConfig({
     drop: ["debugger"],
     legalComments: "none",
   },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    setupFiles: ["./tests/setup.ts"],
-    include: [
-      "src/**/*.test.{ts,tsx}",
-      "tests/**/*.test.{ts,tsx}",
-    ],
-    css: true,
-    coverage: {
-      provider: "v8",
-      include: ["src/**/*.{ts,tsx}"],
-      exclude: [
-        "src/app/route-tree.gen.ts",
-        "src/**/*.d.ts",
-        "src/main.tsx",
-      ],
-    },
-  },
 });
