@@ -1,63 +1,77 @@
-import { memo } from 'react'
-import { ArrowUpRight } from '@/components/icons'
+import { memo } from "react";
+import { Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
+import { useCookieConsent } from "@/features/cookies/hooks/use-cookie-consent";
 
-interface FooterProps {
-  overlay?: boolean
-  onOpenPrivacy?: () => void
-  onOpenTerms?: () => void
-  onCookieSettings?: () => void
-}
+const Footer = memo(() => {
+  const { showPreferencesPanel } = useCookieConsent();
 
-const Footer = memo<FooterProps>(({ onOpenPrivacy, onOpenTerms, onCookieSettings }) => {
   return (
-    <footer className="w-full bg-bg-main border-t border-border-main relative z-10">
-      <div className="container mx-auto px-4">
-        <div className="py-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-          
-          <div className="flex flex-col gap-4">
+    <footer className="w-full bg-surface border-t border-edge">
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+        <div className="py-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+          <div className="flex flex-col gap-2.5">
             <div className="flex items-center gap-2">
-              <span className="w-4 h-4 bg-text-main" />
-              <span className="text-xl font-black tracking-tighter leading-none">NCW_Nordic code works</span>
+              <span className="status-dot" />
+              <span className="text-sm font-heading font-bold tracking-tight text-content">
+                Nordic Code Works
+              </span>
             </div>
-            <div className="font-mono text-xs text-text-muted uppercase tracking-widest flex flex-col sm:flex-row gap-2 sm:gap-4 font-bold">
-              <span>© {new Date().getFullYear()} NORDIC CODE WORKS</span>
-              <span className="hidden sm:inline text-border-main">|</span>
-              <span>STOCKHOLM, SE</span>
+            <div className="text-xs text-content-faint flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <span>
+                © {new Date().getFullYear()} Nordic Code Works
+              </span>
+              <span className="hidden sm:inline text-edge">
+                ·
+              </span>
+              <span>Sweden & France</span>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-widest font-bold">
-            <button 
-              onClick={onOpenPrivacy} 
-              aria-label="Open Privacy Policy"
-              className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-content-faint">
+            <Link
+              to="/privacy-policy"
+              className="hover:text-content transition-colors flex items-center gap-1 group"
             >
-              PRIVACY
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-            </button>
-            <button 
-              onClick={onOpenTerms} 
-              aria-label="Open Terms of Service"
-              className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
+              Privacy
+              <ArrowUpRight
+                size={10}
+                strokeWidth={1.6}
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              />
+            </Link>
+            <Link
+              to="/terms-of-service"
+              className="hover:text-content transition-colors flex items-center gap-1 group"
             >
-              TERMS
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-            </button>
-            <button 
-              onClick={onCookieSettings} 
-              aria-label="Open Cookie Settings"
-              className="text-text-muted hover:text-text-main transition-colors flex items-center gap-1 group"
+              Terms
+              <ArrowUpRight
+                size={10}
+                strokeWidth={1.6}
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              />
+            </Link>
+            <button
+              onClick={showPreferencesPanel}
+              aria-label="Open cookie settings"
+              className="hover:text-content transition-colors flex items-center gap-1 group"
             >
-              COOKIES
-              <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+              Cookies
+              <ArrowUpRight
+                size={10}
+                strokeWidth={1.6}
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              />
             </button>
           </div>
-
         </div>
       </div>
     </footer>
-  )
-})
+  );
+});
 
-Footer.displayName = 'Footer'
-export default Footer
+Footer.displayName = "Footer";
+export default Footer;

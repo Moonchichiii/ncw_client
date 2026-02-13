@@ -1,82 +1,148 @@
-import { memo, useState, useEffect, useRef } from 'react'
-import { Menu, X } from '@/components/icons'
-import ThemeToggle from '@/components/layout/ThemeToggle'
-import MenuOverlay from '@/components/layout/MenuOverlay'
+import { memo, useState, useEffect, useCallback } from "react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+
+const NAV_LINKS = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Process", href: "#process" },
+  { label: "FAQ", href: "#faq" },
+] as const;
 
 const Navbar = memo(() => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset'
-  }, [isMenuOpen])
+    document.body.style.overflow = isMobileOpen
+      ? "hidden"
+      : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
+
+  const closeMobile = useCallback(
+    () => setIsMobileOpen(false),
+    [],
+  );
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
-          isScrolled
-            ? 'bg-bg-main/95 backdrop-blur-md border-border-main'
-            : 'bg-transparent border-transparent'
-        }`}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-20">
-            
-            {/* LOGO */}
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="group flex flex-col items-start focus:outline-none"
-              aria-label="Scroll to top"
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-4 h-4 bg-text-main group-hover:bg-accent transition-colors duration-300" />
-                <span className="text-xl font-black tracking-tighter leading-none text-text-main group-hover:text-accent transition-colors duration-300">
-                  NCW
-                </span>
-              </div>
-              <span className="font-mono text-[9px] text-text-muted tracking-widest pl-7 pt-1 group-hover:text-text-main transition-colors duration-300">
-                SYSTEM_V2.5
-              </span>
-            </button>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-surface/70 backdrop-blur-md border-b border-edge"
+          : "bg-transparent border-b border-transparent"
+      }`}
+      aria-label="Main navigation"
+    >
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+        <div className="flex items-center justify-between h-[72px]">
+          {/* Logo */}
+          <a
+            href="#hero"
+            className="flex items-center gap-2.5 group"
+          >
+            <span className="status-dot" />
+            <span className="text-sm font-heading font-bold tracking-tight text-content group-hover:text-lime transition-colors">
+              NCW
+            </span>
+          </a>
 
-            {/* CONTROLS */}
-            <div className="flex items-center gap-4 sm:gap-6">
-              <ThemeToggle />
-              
-              <button
-                ref={menuButtonRef}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center gap-3 text-text-main hover:text-accent transition-colors focus:outline-none group"
-                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isMenuOpen}
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-8">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-[13px] font-medium text-content-faint hover:text-content transition-colors"
               >
-                <span className="font-mono text-[10px] tracking-widest hidden md:block group-hover:text-accent font-bold uppercase">
-                  {isMenuOpen ? 'Close' : 'Menu'}
-                </span>
-                <div className="w-9 h-9 flex items-center justify-center border border-border-main bg-bg-sub group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
-                  {isMenuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
-                </div>
-              </button>
-            </div>
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#contact"
+              className="btn-lime !h-9 !px-4 !text-[12px] !gap-1.5"
+            >
+              Let's talk
+              <ArrowUpRight
+                size={13}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </a>
+
+            {/* Mobile toggle */}
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="md:hidden w-9 h-9 flex items-center justify-center border border-edge rounded-md text-content hover:bg-surface-elevated transition-colors"
+              aria-label={
+                isMobileOpen ? "Close menu" : "Open menu"
+              }
+              aria-expanded={isMobileOpen}
+            >
+              {isMobileOpen ? (
+                <X
+                  size={16}
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+              ) : (
+                <Menu
+                  size={16}
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+              )}
+            </button>
           </div>
         </div>
-      </nav>
+      </div>
 
-      <MenuOverlay 
-        isOpen={isMenuOpen} 
-        onClose={() => setIsMenuOpen(false)} 
-      />
-    </>
-  )
-})
+      {/* Mobile dropdown */}
+      {isMobileOpen && (
+        <div className="md:hidden border-t border-edge bg-surface/95 backdrop-blur-md">
+          <div className="mx-auto max-w-[1200px] px-5 py-6 flex flex-col gap-4">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={closeMobile}
+                className="text-lg font-heading font-semibold text-content hover:text-lime transition-colors py-1"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="divider mt-2" />
+            <a
+              href="#contact"
+              onClick={closeMobile}
+              className="btn-lime w-fit mt-2 !h-9 !px-4 !text-[12px]"
+            >
+              Let's talk
+              <ArrowUpRight
+                size={13}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+});
 
-Navbar.displayName = 'Navbar'
-export default Navbar
+Navbar.displayName = "Navbar";
+export default Navbar;
