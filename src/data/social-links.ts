@@ -1,5 +1,4 @@
-import { Github, Linkedin } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Github, Linkedin, type LucideIcon } from "lucide-react";
 
 export interface SocialLinkData {
   icon: LucideIcon;

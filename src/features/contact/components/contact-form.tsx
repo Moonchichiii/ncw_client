@@ -1,88 +1,55 @@
-import { memo, useState, useCallback } from "react";
+import { memo } from "react";
 import { CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
+import { useContactForm } from "../hooks/use-contact-form";
 
+const INPUT_CLASS =
+  "w-full bg-transparent border border-edge rounded-lg px-4 py-3 text-sm text-content placeholder:text-content-faint/60 focus:border-lime focus:outline-none focus:ring-1 focus:ring-lime/30 transition-all";
 
-interface FormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
+/* ─── Extracted helpers ─── */
+
+function FieldError({ message }: { message?: string | undefined }) {
+  if (!message) {return null;}
+  return (
+    <p className="mt-1 text-xs text-red-400">{message}</p>
+  );
 }
 
-interface FormStatus {
+function StatusBanner({
+  type,
+  message,
+  hasFieldErrors,
+}: {
   type: "idle" | "submitting" | "success" | "error";
-  message?: string;
+  message?: string | undefined;
+  hasFieldErrors: boolean;
+}) {
+  if (!message || hasFieldErrors) {return null;}
+
+  const isSuccess = type === "success";
+
+  return (
+    <div
+      className={`flex items-center gap-3 p-3.5 rounded-lg text-sm ${
+        isSuccess
+          ? "bg-lime/10 border border-lime/20 text-lime"
+          : "bg-red-500/10 border border-red-500/20 text-red-400"
+      }`}
+    >
+      {isSuccess ? (
+        <CheckCircle2 size={16} />
+      ) : (
+        <AlertCircle size={16} />
+      )}
+      <span className="font-medium">{message}</span>
+    </div>
+  );
 }
+
+/* ─── Main component ─── */
 
 const ContactForm = memo(() => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [status, setStatus] = useState<FormStatus>({
-    type: "idle",
-  });
-
-  const handleChange = useCallback(
-    (
-      e: React.ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement
-      >,
-    ) => {
-      const { name, value } = e.target;
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    },
-    [],
-  );
-
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      setStatus({ type: "submitting" });
-
-      try {
-        const body = new URLSearchParams({
-          "form-name": "contact",
-          ...formData,
-        }).toString();
-
-        const response = await fetch("/", {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/x-www-form-urlencoded",
-          },
-          body,
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        setStatus({
-          type: "success",
-          message: "Message sent successfully.",
-        });
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      } catch {
-        setStatus({
-          type: "error",
-          message: "Failed to send. Please try again.",
-        });
-      }
-    },
-    [formData],
-  );
-
-  const inputClasses =
-    "w-full bg-transparent border border-edge rounded-lg px-4 py-3 text-sm text-content placeholder:text-content-faint/60 focus:border-lime focus:outline-none focus:ring-1 focus:ring-lime/30 transition-all";
+  const { formData, status, handleChange, handleSubmit } =
+    useContactForm();
 
   return (
     <form
@@ -90,6 +57,7 @@ const ContactForm = memo(() => {
       method="POST"
       onSubmit={handleSubmit}
       className="space-y-6"
+      noValidate
     >
       <input
         type="hidden"
@@ -119,9 +87,10 @@ const ContactForm = memo(() => {
             autoComplete="name"
             value={formData.name}
             onChange={handleChange}
-            className={inputClasses}
+            className={INPUT_CLASS}
             placeholder="Your name"
           />
+          <FieldError message={status.fieldErrors?.name} />
         </div>
         <div>
           <label
@@ -138,9 +107,10 @@ const ContactForm = memo(() => {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
-            className={inputClasses}
+            className={INPUT_CLASS}
             placeholder="you@example.com"
           />
+          <FieldError message={status.fieldErrors?.email} />
         </div>
       </div>
 
@@ -159,8 +129,11 @@ const ContactForm = memo(() => {
           autoComplete="off"
           value={formData.subject}
           onChange={handleChange}
-          className={inputClasses}
+          className={INPUT_CLASS}
           placeholder="Project type or inquiry"
+        />
+        <FieldError
+          message={status.fieldErrors?.subject}
         />
       </div>
 
@@ -178,29 +151,19 @@ const ContactForm = memo(() => {
           rows={4}
           value={formData.message}
           onChange={handleChange}
-          className={`${inputClasses} resize-none`}
+          className={`${INPUT_CLASS} resize-none`}
           placeholder="Tell me about your project..."
+        />
+        <FieldError
+          message={status.fieldErrors?.message}
         />
       </div>
 
-      {status.message && (
-        <div
-          className={`flex items-center gap-3 p-3.5 rounded-lg text-sm ${
-            status.type === "success"
-              ? "bg-lime/10 border border-lime/20 text-lime"
-              : "bg-red-500/10 border border-red-500/20 text-red-400"
-          }`}
-        >
-          {status.type === "success" ? (
-            <CheckCircle2 size={16} />
-          ) : (
-            <AlertCircle size={16} />
-          )}
-          <span className="font-medium">
-            {status.message}
-          </span>
-        </div>
-      )}
+      <StatusBanner
+        type={status.type}
+        message={status.message}
+        hasFieldErrors={Boolean(status.fieldErrors)}
+      />
 
       <button
         type="submit"
@@ -213,11 +176,10 @@ const ContactForm = memo(() => {
           <>
             Send message
             <ArrowRight
-  size={14}
-  className="group-hover:translate-x-0.5 transition-transform"
-  aria-hidden="true"
-/>
-
+              size={14}
+              className="group-hover:translate-x-0.5 transition-transform"
+              aria-hidden="true"
+            />
           </>
         )}
       </button>

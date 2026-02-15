@@ -8,7 +8,7 @@ const Footer = memo(() => {
 
   return (
     <footer className="w-full bg-surface border-t border-edge">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+      <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="py-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="flex flex-col gap-2.5">
             <div className="flex items-center gap-2">

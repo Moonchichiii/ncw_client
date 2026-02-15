@@ -43,8 +43,8 @@ const Navbar = memo(() => {
       }`}
       aria-label="Main navigation"
     >
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <div className="flex items-center justify-between h-[72px]">
+      <div className="mx-auto max-w-300 px-5 sm:px-8">
+        <div className="flex items-center justify-between h-18">
           {/* Logo */}
           <a
             href="#hero"
@@ -73,9 +73,9 @@ const Navbar = memo(() => {
           <div className="flex items-center gap-3">
             <a
               href="#contact"
-              className="btn-lime !h-9 !px-4 !text-[12px] !gap-1.5"
+              className="btn-lime h-9! px-4! text-[12px]! gap-1.5!"
             >
-              Let's talk
+              Let&apos;s talk
               <ArrowUpRight
                 size={13}
                 strokeWidth={1.8}
@@ -113,7 +113,7 @@ const Navbar = memo(() => {
       {/* Mobile dropdown */}
       {isMobileOpen && (
         <div className="md:hidden border-t border-edge bg-surface/95 backdrop-blur-md">
-          <div className="mx-auto max-w-[1200px] px-5 py-6 flex flex-col gap-4">
+          <div className="mx-auto max-w-300 px-5 py-6 flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
@@ -128,9 +128,9 @@ const Navbar = memo(() => {
             <a
               href="#contact"
               onClick={closeMobile}
-              className="btn-lime w-fit mt-2 !h-9 !px-4 !text-[12px]"
+              className="btn-lime w-fit mt-2 h-9! px-4! text-[12px]!"
             >
-              Let's talk
+              Let&apos;s talk
               <ArrowUpRight
                 size={13}
                 strokeWidth={1.8}

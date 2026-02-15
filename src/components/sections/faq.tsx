@@ -90,7 +90,7 @@ const Faq = memo(() => {
       id="faq"
       className="py-24 sm:py-32 bg-surface-alt border-t border-edge"
     >
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+      <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left */}
           <div className="lg:col-span-4">
@@ -106,6 +106,7 @@ const Faq = memo(() => {
           <div className="lg:col-span-8 border-t border-edge">
             {FAQ_ITEMS.map((item, i) => (
               <FaqItem
+                // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 q={item.q}
                 a={item.a}

@@ -32,7 +32,7 @@ const Process = memo(() => (
     id="process"
     className="py-24 sm:py-32 bg-surface border-t border-edge"
   >
-    <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+    <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
         <div>

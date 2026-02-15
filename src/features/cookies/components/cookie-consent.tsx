@@ -66,7 +66,7 @@ const CookieConsent = memo<CookieConsentProps>((props) => {
       {/* BANNER */}
       {showBanner && (
         <div
-          className={`fixed bottom-0 right-0 z-[2000] w-full max-w-md p-4 transition-transform duration-500 ${
+          className={`fixed bottom-0 right-0 z-2000 w-full max-w-md p-4 transition-transform duration-500 ${
             isVisible ? "translate-y-0" : "translate-y-full"
           }`}
         >
@@ -122,7 +122,7 @@ const CookieConsent = memo<CookieConsentProps>((props) => {
 
       {/* PREFERENCES MODAL */}
       {showPreferences && (
-        <div className="fixed inset-0 z-[2001] bg-surface/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-2001 bg-surface/90 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-2xl card shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
             {/* Header */}
             <div className="p-6 border-b border-edge flex justify-between items-center bg-surface-alt">

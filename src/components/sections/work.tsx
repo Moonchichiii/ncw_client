@@ -9,13 +9,13 @@ const ProjectCard = memo<{
   featured?: boolean;
 }>(({ project, featured = false }) => (
   <article
-    className={`group overflow-hidden flex flex-col bg-surface-elevated rounded-[var(--radius-lg)] border-transparent border hover:border-lime/15 hover:shadow-[0_4px_24px_rgba(0,0,0,0.2)] transition-all duration-200 ${
+    className={`group overflow-hidden flex flex-col bg-surface-elevated rounded-lg border-transparent border hover:border-lime/15 hover:shadow-[0_4px_24px_rgba(0,0,0,0.2)] transition-all duration-200 ${
       featured ? "md:col-span-1" : ""
     }`}
   >
     {/* Image */}
     <div className="relative aspect-video w-full overflow-hidden bg-surface-alt">
-      <div className="w-full h-full grayscale-[30%] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-[1.03]">
+      <div className="w-full h-full grayscale-30 group-hover:grayscale-0 transition-all duration-500 group-hover:scale-[1.03]">
         <CloudinaryImg
           publicId={project.image}
           alt={`Screenshot of ${project.title}`}
@@ -47,7 +47,7 @@ const ProjectCard = memo<{
         {project.tech.map((t) => (
           <span
             key={t}
-            className="tag !text-[10px] !text-content-faint !bg-surface-accent !border-transparent"
+            className="tag text-[10px]! text-content-faint! bg-surface-accent! border-transparent!"
           >
             {t}
           </span>
@@ -102,7 +102,7 @@ const Work = memo(() => {
       id="work"
       className="py-24 sm:py-32 bg-surface border-t border-edge"
     >
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+      <div className="mx-auto max-w-300 px-5 sm:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>

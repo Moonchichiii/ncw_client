@@ -63,10 +63,10 @@ const Hero = memo(() => (
 
           {/* RIGHT */}
           <div className="xl:col-span-5 xl:pt-4">
-            <p className="text-lg text-content-secondary leading-relaxed max-w-md">
-              <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer
-              building modern products with clean architecture, strong UX, and performance-first delivery.
-            </p>
+            <p className="mt-10 text-lg text-content-secondary max-w-md leading-relaxed">
+  <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer focused on performance, clean architecture, and secure delivery pipelines.
+</p>
+
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a href="#work" className="btn-lime">

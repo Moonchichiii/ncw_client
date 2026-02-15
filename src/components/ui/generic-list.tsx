@@ -20,7 +20,7 @@ export function GenericList<T>({
 }: GenericListProps<T>): ReactNode {
   if (items.length === 0) {
     return (
-      <p className="font-mono text-xs text-text-muted uppercase tracking-widest">
+      <p className="font-mono text-xs text-content-faint uppercase tracking-widest">
         {emptyMessage}
       </p>
     );

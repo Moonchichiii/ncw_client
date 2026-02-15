@@ -8,17 +8,16 @@ interface CloudinaryImgProps {
 }
 
 const CloudinaryImg = memo<CloudinaryImgProps>(({ publicId, alt, className, priority = false }) => {
-  // Access environment variable directly now that types are fixed
   const cloudName = import.meta.env.VITE_CLOUD_NAME
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   
   if (!cloudName) {
     return (
-      <div className={`flex items-center justify-center bg-bg-acc border border-border-main ${className}`}>
+      <div className={`flex items-center justify-center bg-surface-accent border border-edge ${className}`}>
         <div className="text-center px-4">
           <p className="font-mono text-[10px] text-red-500 uppercase tracking-widest">CONFIG_ERR</p>
-          <p className="font-mono text-[9px] text-text-muted">MISSING_ENV</p>
+          <p className="font-mono text-[9px] text-content-faint">MISSING_ENV</p>
         </div>
       </div>
     )
@@ -26,8 +25,8 @@ const CloudinaryImg = memo<CloudinaryImgProps>(({ publicId, alt, className, prio
 
   if (hasError) {
     return (
-      <div className={`flex items-center justify-center bg-bg-acc border border-border-main ${className}`}>
-        <p className="font-mono text-[10px] text-text-muted uppercase tracking-widest">ASSET_OFFLINE</p>
+      <div className={`flex items-center justify-center bg-surface-accent border border-edge ${className}`}>
+        <p className="font-mono text-[10px] text-content-faint uppercase tracking-widest">ASSET_OFFLINE</p>
       </div>
     )
   }
@@ -41,9 +40,9 @@ const CloudinaryImg = memo<CloudinaryImgProps>(({ publicId, alt, className, prio
   `
 
   return (
-    <div className={`relative overflow-hidden bg-bg-acc ${className}`}>
+    <div className={`relative overflow-hidden bg-surface-accent ${className}`}>
       {!isLoaded && (
-        <div className="absolute inset-0 bg-bg-acc animate-pulse z-0" />
+        <div className="absolute inset-0 bg-surface-accent animate-pulse z-0" />
       )}
       
       <img

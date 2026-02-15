@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { AlertTriangle, RefreshCw, Home } from "@/components/ui/icons";
+import { AlertTriangle, RefreshCw, Home } from "lucide-react";
 import type { FallbackProps } from "react-error-boundary";
 
 export const ErrorFallback = memo<FallbackProps>(
@@ -10,7 +10,7 @@ export const ErrorFallback = memo<FallbackProps>(
 
     return (
       <div
-        className="min-h-screen bg-bg-main flex items-center justify-center px-6 transition-colors duration-300"
+        className="min-h-screen bg-surface flex items-center justify-center px-6 transition-colors duration-300"
         role="alert"
         aria-labelledby="error-title"
       >
@@ -30,18 +30,20 @@ export const ErrorFallback = memo<FallbackProps>(
             Something Went Wrong
           </h1>
 
-          <p className="text-xl text-text-muted mb-8 leading-relaxed transition-colors duration-300">
+          <p className="text-xl text-content-faint mb-8 leading-relaxed transition-colors duration-300">
             We apologize for the inconvenience. The application encountered
             an unexpected error.
           </p>
 
           {import.meta.env.DEV && (
             <details className="mb-8 text-left">
-              <summary className="cursor-pointer text-text-muted mb-2 hover:text-text-main transition-colors duration-200">
+              <summary className="cursor-pointer text-content-faint mb-2 hover:text-content transition-colors duration-200">
                 Error Details (Development)
               </summary>
-              <pre className="bg-bg-sub border border-border-main p-4 rounded-lg text-sm overflow-auto text-text-main">
-                {error.message}
+              <pre className="bg-surface-alt border border-edge p-4 rounded-lg text-sm overflow-auto text-content">
+                {typeof error === "object" && error && "message" in error
+                  ? (error as { message?: string }).message
+                  : String(error)}
               </pre>
             </details>
           )}
@@ -59,7 +61,7 @@ export const ErrorFallback = memo<FallbackProps>(
 
             <button
               onClick={handleGoHome}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-bg-sub hover:bg-bg-acc border border-border-main hover:border-accent text-text-main font-semibold rounded-xl transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-accent/50 focus:ring-offset-2"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-surface-alt hover:bg-surface-accent border border-edge hover:border-lime/40 text-content font-semibold rounded-xl transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-accent/50 focus:ring-offset-2"
               type="button"
               aria-label="Navigate to home page"
             >

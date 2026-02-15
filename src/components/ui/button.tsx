@@ -36,7 +36,7 @@ const Button = memo<ButtonProps>(
     className,
     ...props
   }) => {
-    const isDisabled = disabled || isLoading;
+    const isDisabled = disabled ?? isLoading;
 
     return (
       <button

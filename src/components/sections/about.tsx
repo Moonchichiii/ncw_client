@@ -30,7 +30,7 @@ const About = memo(() => (
     id="about"
     className="py-24 sm:py-32 bg-surface-alt border-t border-edge"
   >
-    <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+    <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Intro */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
         <div>
@@ -65,7 +65,7 @@ const About = memo(() => (
 
       {/* What I Offer */}
       <div className="mb-20">
-        <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em] mb-3">
+        <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest mb-3">
           What I Offer
         </h3>
 
@@ -99,7 +99,7 @@ const About = memo(() => (
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
             <Globe size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
-            <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
+            <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
               Frontend
             </h3>
           </div>
@@ -120,7 +120,7 @@ const About = memo(() => (
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
             <Server size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
-            <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
+            <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
               Backend
             </h3>
           </div>
@@ -142,7 +142,7 @@ const About = memo(() => (
           <div>
             <div className="flex items-center gap-2.5 mb-5">
               <Code2 size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
-              <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-[0.1em]">
+              <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
                 Approach
               </h3>
             </div>
