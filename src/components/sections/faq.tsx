@@ -4,11 +4,11 @@ import { Plus, X } from "@/icons/lucide";
 const FAQ_ITEMS = [
   {
     q: "What do you need from me to start?",
-    a: "A clear goal, existing links/assets (if any), and one point of contact for feedback. I’ll help shape scope into an actionable plan.",
+    a: "A clear goal, existing links/assets (if any), and one point of contact for feedback. I'll help shape scope into an actionable plan.",
   },
   {
     q: "How do pricing and milestones work?",
-    a: "Either fixed-scope milestones or hourly for open-ended work. I propose milestones upfront so you always know what’s next and what it costs.",
+    a: "Either fixed-scope milestones or hourly for open-ended work. I propose milestones upfront so you always know what's next and what it costs.",
   },
   {
     q: "Can you improve an existing site instead of rebuilding?",
@@ -28,7 +28,6 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
-
 const FaqItem = memo<{
   q: string;
   a: string;
@@ -38,10 +37,10 @@ const FaqItem = memo<{
   <div className="border-b border-edge">
     <button
       onClick={onToggle}
-      className="w-full flex items-center justify-between py-6 text-left group hover:bg-surface-accent/20 -mx-3 px-3 rounded-sm transition-colors"
+      className="w-full flex items-center justify-between py-7 text-left group hover:bg-surface-accent/20 -mx-3 px-3 rounded-sm transition-colors"
       aria-expanded={isOpen}
     >
-      <span className="text-[15px] font-medium text-content group-hover:text-lime transition-colors pr-4">
+      <span className="font-medium text-content group-hover:text-lime transition-colors pr-4 text-[clamp(0.98rem,0.95rem+0.2vw,1.06rem)] leading-snug">
         {q}
       </span>
       <span className="shrink-0 text-content-faint">
@@ -64,10 +63,10 @@ const FaqItem = memo<{
     </button>
     <div
       className={`overflow-hidden transition-all duration-300 ${
-        isOpen ? "max-h-40 pb-6" : "max-h-0"
+        isOpen ? "max-h-44 pb-7" : "max-h-0"
       }`}
     >
-      <p className="text-sm text-content-secondary leading-relaxed max-w-2xl px-3 -mx-3">
+      <p className="text-content-secondary leading-relaxed max-w-[65ch] px-3 -mx-3 text-[clamp(0.95rem,0.92rem+0.2vw,1.03rem)]">
         {a}
       </p>
     </div>
@@ -77,9 +76,7 @@ const FaqItem = memo<{
 FaqItem.displayName = "FaqItem";
 
 const Faq = memo(() => {
-  const [openIndex, setOpenIndex] = useState<number | null>(
-    null,
-  );
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = useCallback((index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -88,14 +85,14 @@ const Faq = memo(() => {
   return (
     <section
       id="faq"
-      className="py-24 sm:py-32 bg-surface-alt border-t border-edge"
+      className="py-[var(--space-section)] bg-surface-alt border-t border-edge"
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left */}
           <div className="lg:col-span-4">
             <p className="section-label mb-4">FAQ</p>
-            <h2 className="text-4xl font-heading font-bold tracking-tighter leading-[0.95] text-content">
+            <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
               Common
               <br />
               questions
@@ -106,7 +103,6 @@ const Faq = memo(() => {
           <div className="lg:col-span-8 border-t border-edge">
             {FAQ_ITEMS.map((item, i) => (
               <FaqItem
-                // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 q={item.q}
                 a={item.a}

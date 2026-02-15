@@ -1,5 +1,5 @@
 import { memo, useState, useEffect, useCallback } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "@/icons/lucide";
 
 const NAV_LINKS = [
   { label: "Work", href: "#work" },
@@ -62,7 +62,7 @@ const Navbar = memo(() => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-[13px] font-medium text-content-faint hover:text-content transition-colors"
+                className="text-[clamp(0.9rem,0.86rem+0.15vw,0.98rem)] font-medium text-content-faint hover:text-content transition-colors tracking-[-0.01em]"
               >
                 {link.label}
               </a>

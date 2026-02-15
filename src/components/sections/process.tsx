@@ -30,20 +30,20 @@ const STEPS = [
 const Process = memo(() => (
   <section
     id="process"
-    className="py-24 sm:py-32 bg-surface border-t border-edge"
+    className="py-[var(--space-section)] bg-surface border-t border-edge"
   >
     <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
         <div>
           <p className="section-label mb-4">Process</p>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tighter leading-[0.95] text-content">
+          <h2 className="font-heading font-bold tracking-[-0.035em] leading-[1.02] text-content">
             How I Work
           </h2>
         </div>
-        <p className="text-content-secondary text-sm max-w-sm leading-relaxed">
-          A clear, repeatable process that keeps projects on
-          track and outcomes predictable.
+        <p className="text-[clamp(0.95rem,0.9rem+0.2vw,1.05rem)] text-content-secondary leading-relaxed max-w-[50ch]">
+          A clear, repeatable process that keeps projects on track and
+          outcomes predictable.
         </p>
       </div>
 
@@ -55,17 +55,17 @@ const Process = memo(() => (
             className="card p-8 group hover:border-lime/20 transition-colors"
           >
             <div className="flex items-center justify-between mb-5">
-              <span className="text-xs font-mono font-medium text-lime">
+              <span className="font-mono text-[var(--text-label)] text-lime tracking-[0.08em]">
                 {step.num}
               </span>
-              <span className="text-[11px] font-mono text-content-faint">
+              <span className="font-mono text-[var(--text-label)] text-content-faint tracking-[0.08em]">
                 {step.duration}
               </span>
             </div>
-            <h3 className="text-2xl font-heading font-bold text-content mb-3 tracking-tight group-hover:text-lime transition-colors">
+            <h3 className="text-[clamp(1.25rem,1.15rem+0.4vw,1.5rem)] font-heading font-bold tracking-[-0.02em] text-content mb-3 group-hover:text-lime transition-colors">
               {step.title}
             </h3>
-            <p className="text-sm text-content-secondary leading-relaxed line-clamp-2">
+            <p className="text-[0.95rem] text-content-secondary leading-relaxed max-w-[55ch] line-clamp-2">
               {step.desc}
             </p>
           </div>

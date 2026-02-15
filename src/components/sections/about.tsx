@@ -28,14 +28,14 @@ const OFFERS = [
 const About = memo(() => (
   <section
     id="about"
-    className="py-24 sm:py-32 bg-surface-alt border-t border-edge"
+    className="py-[var(--space-section)] bg-surface-alt border-t border-edge"
   >
     <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Intro */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
         <div>
           <p className="section-label mb-4">About</p>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tighter leading-[0.95] text-content">
+          <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
             Building for
             <br />
             the web
@@ -43,9 +43,13 @@ const About = memo(() => (
         </div>
 
         <div className="flex flex-col justify-end">
-          <p className="text-lg text-content-secondary leading-relaxed max-w-md">
-            <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer (Code Institute, 2024).
-            I build fast, accessible products with clean architecture and secure delivery pipelines.
+          <p className="text-content-secondary leading-relaxed max-w-[52ch] text-[clamp(1rem,0.95rem+0.35vw,1.125rem)]">
+            <span className="text-content font-medium">
+              Mats Gustafsson
+            </span>{" "}
+            — Full-stack developer (Code Institute, 2024). I build
+            fast, accessible products with clean architecture and
+            secure delivery pipelines.
           </p>
 
           <a
@@ -69,25 +73,30 @@ const About = memo(() => (
           What I Offer
         </h3>
 
-        <p className="text-base font-heading font-semibold text-content mb-8 max-w-lg">
-          Practical engineering that improves speed, usability, and reliability — without overcomplicating the stack.
+        <p className="font-heading font-semibold text-content mb-8 max-w-[60ch] text-[clamp(1.05rem,1rem+0.35vw,1.25rem)] leading-snug">
+          Practical engineering that improves speed, usability, and
+          reliability — without overcomplicating the stack.
         </p>
 
         <div className="border-t border-edge">
           {OFFERS.map((offer) => (
             <div
               key={offer.num}
-              className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8 py-6 border-b border-edge group hover:bg-surface-accent/30 transition-colors px-2 -mx-2 rounded-sm"
+              className="group -mx-2 rounded-md px-2 py-6 border-b border-edge transition-colors hover:bg-surface-accent/30"
             >
-              <span className="text-xs font-mono text-content-faint w-8 shrink-0">
-                {offer.num}
-              </span>
-              <span className="text-lg font-heading font-semibold text-content flex-1 group-hover:text-lime transition-colors">
-                {offer.title}
-              </span>
-              <span className="text-sm text-content-secondary max-w-sm">
-                {offer.desc}
-              </span>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-8">
+                <span className="text-[var(--text-label)] font-mono text-content-faint w-10 shrink-0">
+                  {offer.num}
+                </span>
+
+                <span className="text-[clamp(1.05rem,1rem+0.3vw,1.25rem)] font-heading font-semibold text-content flex-1 group-hover:text-lime transition-colors leading-snug">
+                  {offer.title}
+                </span>
+
+                <span className="text-sm text-content-secondary max-w-[48ch] leading-relaxed">
+                  {offer.desc}
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -98,15 +107,25 @@ const About = memo(() => (
         {/* Frontend */}
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
-            <Globe size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
+            <Globe
+              size={16}
+              strokeWidth={1.6}
+              className="text-content-faint"
+              aria-hidden="true"
+            />
             <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
               Frontend
             </h3>
           </div>
           <ul className="space-y-3">
             {FRONTEND_SKILLS.map((skill) => (
-              <li key={skill} className="flex items-center justify-between text-sm group/item">
-                <span className="text-content font-medium">{skill}</span>
+              <li
+                key={skill}
+                className="flex items-center justify-between group/item text-[clamp(0.875rem,0.86rem+0.1vw,1rem)]"
+              >
+                <span className="text-content font-medium">
+                  {skill}
+                </span>
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-edge-subtle group-hover/item:bg-lime transition-colors"
                   aria-hidden="true"
@@ -119,15 +138,25 @@ const About = memo(() => (
         {/* Backend */}
         <div className="card p-6">
           <div className="flex items-center gap-2.5 mb-5">
-            <Server size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
+            <Server
+              size={16}
+              strokeWidth={1.6}
+              className="text-content-faint"
+              aria-hidden="true"
+            />
             <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
               Backend
             </h3>
           </div>
           <ul className="space-y-3">
             {BACKEND_SKILLS.map((skill) => (
-              <li key={skill} className="flex items-center justify-between text-sm group/item">
-                <span className="text-content font-medium">{skill}</span>
+              <li
+                key={skill}
+                className="flex items-center justify-between group/item text-[clamp(0.875rem,0.86rem+0.1vw,1rem)]"
+              >
+                <span className="text-content font-medium">
+                  {skill}
+                </span>
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-edge-subtle group-hover/item:bg-lime transition-colors"
                   aria-hidden="true"
@@ -141,12 +170,17 @@ const About = memo(() => (
         <div className="card p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2.5 mb-5">
-              <Code2 size={16} strokeWidth={1.6} className="text-content-faint" aria-hidden="true" />
+              <Code2
+                size={16}
+                strokeWidth={1.6}
+                className="text-content-faint"
+                aria-hidden="true"
+              />
               <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest">
                 Approach
               </h3>
             </div>
-            <ul className="space-y-3 text-sm text-content-secondary leading-relaxed">
+            <ul className="space-y-3 text-content-secondary leading-relaxed text-[clamp(0.875rem,0.86rem+0.1vw,1rem)]">
               <li>Type-safe from API to UI</li>
               <li>Performance budgets on every build</li>
               <li>Accessibility tested, not assumed</li>

@@ -1,7 +1,11 @@
 import { memo, useState } from "react";
 import { Mail, ArrowUpRight, Copy } from "@/icons/lucide";
 import ContactForm from "@/features/contact/components/contact-form";
-import { SOCIAL_LINKS, CONTACT_EMAIL, type SocialLinkData } from "@/data/social-links";
+import {
+  SOCIAL_LINKS,
+  CONTACT_EMAIL,
+  type SocialLinkData,
+} from "@/data/social-links";
 import type { IconComponent } from "@/types";
 
 const SocialRow = memo<{
@@ -27,7 +31,9 @@ const SocialRow = memo<{
         <span className="text-[10px] font-mono text-content-faint block">
           {label}
         </span>
-        <span className="text-sm font-medium text-content">{title}</span>
+        <span className="font-medium text-content text-[clamp(0.95rem,0.92rem+0.2vw,1.02rem)]">
+          {title}
+        </span>
       </div>
     </div>
     <ArrowUpRight
@@ -53,22 +59,23 @@ const Contact = memo(() => {
   return (
     <section
       id="contact"
-      className="py-24 sm:py-32 bg-surface border-t border-edge"
+      className="py-[var(--space-section)] bg-surface border-t border-edge"
       aria-label="Contact"
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-[var(--space-block)]">
           <div>
             <p className="section-label mb-4">Contact</p>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tighter leading-[0.95] text-content">
+            <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
               Let&apos;s build
               <br />
               something great
             </h2>
           </div>
           <div className="flex flex-col justify-end">
-            <p className="text-content-secondary leading-relaxed max-w-sm">
-              Currently open for new opportunities and collaborations. Reach out and let&apos;s talk about
+            <p className="text-content-secondary leading-relaxed max-w-[52ch] text-[clamp(0.95rem,0.92rem+0.2vw,1.05rem)]">
+              Currently open for new opportunities and
+              collaborations. Reach out and let&apos;s talk about
               your project.
             </p>
           </div>
@@ -77,7 +84,9 @@ const Contact = memo(() => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-8 card p-8 md:p-10">
             <ContactForm />
-            <p className="mt-4 text-xs text-content-faint">Reply within 24–48h</p>
+            <p className="mt-4 text-content-faint text-[var(--text-label)]">
+              Reply within 24–48h
+            </p>
           </div>
 
           <div className="lg:col-span-4 flex flex-col gap-6">
@@ -111,7 +120,7 @@ const Contact = memo(() => {
                     <span className="text-[10px] font-mono text-content-faint block">
                       {copied ? "Copied!" : "Email"}
                     </span>
-                    <span className="text-sm font-medium text-content truncate block max-w-50">
+                    <span className="font-medium text-content truncate block max-w-50 text-[clamp(0.95rem,0.92rem+0.2vw,1.02rem)]">
                       {CONTACT_EMAIL}
                     </span>
                   </div>
@@ -132,8 +141,9 @@ const Contact = memo(() => {
                   Available
                 </span>
               </div>
-              <p className="text-sm text-content-secondary leading-relaxed">
-                Open for freelance & contract work. Based in Sweden & France, working globally.
+              <p className="text-content-secondary leading-relaxed text-[clamp(0.95rem,0.92rem+0.2vw,1.03rem)]">
+                Open for freelance & contract work. Based in
+                Sweden & France, working globally.
               </p>
             </div>
           </div>

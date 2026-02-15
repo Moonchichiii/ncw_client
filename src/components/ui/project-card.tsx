@@ -52,11 +52,11 @@ const ProjectCard = memo<ProjectCardProps>(
 
       {/* Content */}
       <div className="px-6 pb-6 pt-5 md:py-7 md:px-8 flex flex-col">
-        <h3 className="text-lg md:text-xl font-heading font-bold text-content tracking-[-0.02em] group-hover:text-lime transition-colors duration-200 leading-snug line-clamp-1 mb-2.5">
+        <h3 className="text-[clamp(1.05rem,1rem+0.35vw,1.35rem)] font-heading font-bold text-content tracking-[-0.02em] group-hover:text-lime transition-colors duration-200 leading-snug line-clamp-1 mb-2.5">
           {project.title}
         </h3>
 
-        <p className="text-[13.5px] text-content-muted leading-relaxed mb-5 line-clamp-2 md:line-clamp-3">
+        <p className="text-content-muted leading-relaxed mb-5 line-clamp-2 md:line-clamp-3 text-[clamp(0.9rem,0.88rem+0.15vw,0.98rem)]">
           {project.description}
         </p>
 
@@ -66,7 +66,7 @@ const ProjectCard = memo<ProjectCardProps>(
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="inline-flex items-center px-2.5 py-1 font-mono text-[10.5px] font-semibold tracking-[0.04em] uppercase text-accent/80 bg-accent/[0.07] rounded-full"
+                className="inline-flex items-center px-2.5 py-1 font-mono text-[clamp(0.62rem,0.6rem+0.1vw,0.7rem)] font-semibold tracking-[0.04em] uppercase text-accent/80 bg-accent/[0.07] rounded-full"
               >
                 {t}
               </span>

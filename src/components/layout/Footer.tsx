@@ -9,7 +9,7 @@ const Footer = memo(() => {
   return (
     <footer className="w-full bg-surface border-t border-edge">
       <div className="mx-auto max-w-300 px-5 sm:px-8">
-        <div className="py-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div className="py-[var(--space-block)] flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="flex flex-col gap-2.5">
             <div className="flex items-center gap-2">
               <span className="status-dot" />
@@ -17,7 +17,7 @@ const Footer = memo(() => {
                 Nordic Code Works
               </span>
             </div>
-            <div className="text-xs text-content-faint flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="text-[var(--text-label)] text-content-faint flex flex-col sm:flex-row gap-2 sm:gap-3">
               <span>
                 © {new Date().getFullYear()} Nordic Code Works
               </span>
@@ -28,10 +28,10 @@ const Footer = memo(() => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-content-faint">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[var(--text-label)] text-content-faint">
             <Link
               to="/privacy-policy"
-              className="hover:text-content transition-colors flex items-center gap-1 group"
+              className="hover:text-content transition-colors flex items-center gap-1 group tracking-[0.02em]"
             >
               Privacy
               <ArrowUpRight
@@ -43,7 +43,7 @@ const Footer = memo(() => {
             </Link>
             <Link
               to="/terms-of-service"
-              className="hover:text-content transition-colors flex items-center gap-1 group"
+              className="hover:text-content transition-colors flex items-center gap-1 group tracking-[0.02em]"
             >
               Terms
               <ArrowUpRight
@@ -56,7 +56,7 @@ const Footer = memo(() => {
             <button
               onClick={showPreferencesPanel}
               aria-label="Open cookie settings"
-              className="hover:text-content transition-colors flex items-center gap-1 group"
+              className="hover:text-content transition-colors flex items-center gap-1 group tracking-[0.02em]"
             >
               Cookies
               <ArrowUpRight
