@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/icons/lucide";
 import { useCookieConsent } from "@/features/cookies/hooks/use-cookie-consent";
 
 const Footer = memo(() => {

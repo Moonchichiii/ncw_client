@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Code2, Server, Globe, Download } from "lucide-react";
+import { Code2, Server, Globe, Download } from "@/icons/lucide";
 import { FRONTEND_SKILLS, BACKEND_SKILLS } from "@/data/skills";
 
 const OFFERS = [

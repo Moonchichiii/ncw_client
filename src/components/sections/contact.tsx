@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { Mail, ArrowUpRight, Copy } from "lucide-react";
+import { Mail, ArrowUpRight, Copy } from "@/icons/lucide";
 import ContactForm from "@/features/contact/components/contact-form";
 import { SOCIAL_LINKS, CONTACT_EMAIL, type SocialLinkData } from "@/data/social-links";
 import type { IconComponent } from "@/types";

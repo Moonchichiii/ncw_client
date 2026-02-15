@@ -1,6 +1,7 @@
-import { memo, type ReactNode } from "react";
+import { memo, type ReactNode, lazy, Suspense } from "react";
 import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+
+const Footer = lazy(() => import("@/components/layout/footer"));
 
 interface LayoutProps {
   children: ReactNode;
@@ -21,7 +22,9 @@ const Layout = memo<LayoutProps>(({ children }) => (
       {children}
     </main>
 
-    <Footer />
+    <Suspense fallback={null}>
+      <Footer />
+    </Suspense>
   </div>
 ));
 

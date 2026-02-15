@@ -1,5 +1,5 @@
 import { memo, useState, useCallback } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X } from "@/icons/lucide";
 
 const FAQ_ITEMS = [
   {

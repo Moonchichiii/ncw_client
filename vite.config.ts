@@ -2,15 +2,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import { resolve } from "path";
+import type { PreRenderedAsset } from "rollup";
 
 export default defineConfig({
   plugins: [
-    TanStackRouterVite({
+    tanstackRouter({
       routesDirectory: "./src/routes",
       generatedRouteTree: "./src/app/route-tree.gen.ts",
       quoteStyle: "double",
+      autoCodeSplitting: true,
     }),
     react(),
     tailwindcss(),
@@ -38,26 +40,24 @@ export default defineConfig({
       output: {
         compact: true,
         manualChunks: {
-          "react-vendor": ["react", "react-dom"],
           router: ["@tanstack/react-router"],
-          query: ["@tanstack/react-query"],
-          utils: ["clsx", "zod"],
-          "error-vendor": ["react-error-boundary"],
+          "error-vendor": ["react-error-boundary"],          
+          "form-validation": ["zod"],
         },
         chunkFileNames: "js/[name]-[hash].js",
         entryFileNames: "js/[name]-[hash].js",
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split(".") ?? [];
-          const ext = info[info.length - 1];
-          if (
-            /png|jpe?g|svg|gif|webp|avif|tiff|bmp|ico/i.test(ext ?? "")
-          ) {
-            return `images/[name]-[hash][extname]`;
+        assetFileNames: (assetInfo: PreRenderedAsset) => {
+          const name = assetInfo.name ?? "";
+          const info = name.split(".");
+          const ext = info[info.length - 1] ?? "";
+
+          if (/png|jpe?g|svg|gif|webp|avif|tiff|bmp|ico/i.test(ext)) {
+            return "images/[name]-[hash][extname]";
           }
-          if (/woff2?|eot|ttf|otf/i.test(ext ?? "")) {
-            return `fonts/[name]-[hash][extname]`;
+          if (/woff2?|eot|ttf|otf/i.test(ext)) {
+            return "fonts/[name]-[hash][extname]";
           }
-          return `assets/[name]-[hash][extname]`;
+          return "assets/[name]-[hash][extname]";
         },
       },
     },
@@ -79,12 +79,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: [
-      "react",
-      "react-dom",
-      "clsx",
-      "@tanstack/react-router",
-    ],
+    include: ["react", "react-dom", "clsx", "@tanstack/react-router"],
     exclude: [],
   },
   esbuild: {

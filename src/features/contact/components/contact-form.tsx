@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
+import { CheckCircle2, AlertCircle, ArrowRight } from "@/icons/lucide";
 import { useContactForm } from "../hooks/use-contact-form";
 
 const INPUT_CLASS =

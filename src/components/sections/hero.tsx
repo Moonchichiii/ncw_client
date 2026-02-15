@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/icons/lucide";
 
 const META_ITEMS = [
   { label: "Role", value: "Full-Stack Developer" },
@@ -51,7 +51,10 @@ const Hero = memo(() => (
         <div className="grid grid-cols-1 xl:grid-cols-12 xl:gap-12 items-start">
           {/* LEFT */}
           <div className="xl:col-span-7">
-            <h1 className="font-heading font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.6rem,5vw,5.2rem)] text-content">
+            <h1
+  className="font-heading font-extrabold tracking-[-0.045em] text-content
+             text-[var(--text-h1)] leading-[0.98] md:leading-[0.92]"
+>
   Engineering fast,
   <br />
   accessible &
@@ -63,7 +66,10 @@ const Hero = memo(() => (
 
           {/* RIGHT */}
           <div className="xl:col-span-5 xl:pt-4">
-            <p className="mt-10 text-lg text-content-secondary max-w-md leading-relaxed">
+            <p
+  className="mt-10 text-content-secondary leading-relaxed max-w-[46ch]
+             text-[var(--text-body-lg)]"
+>
   <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer focused on performance, clean architecture, and secure delivery pipelines.
 </p>
 
@@ -89,7 +95,7 @@ const Hero = memo(() => (
             </div>
 
             {/* Optional micro-proof line */}
-            <p className="mt-6 text-[12px] text-content-faint">
+            <p className="mt-6 text-content-faint text-[var(--text-label)]">
               Performance budgets. WCAG AA. Secure CI/CD. Clean handover.
             </p>
           </div>

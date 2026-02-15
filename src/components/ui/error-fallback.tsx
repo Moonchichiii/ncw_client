@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+import { AlertTriangle, RefreshCw, Home } from "@/icons/lucide";
 import type { FallbackProps } from "react-error-boundary";
 
 export const ErrorFallback = memo<FallbackProps>(

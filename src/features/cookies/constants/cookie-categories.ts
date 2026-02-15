@@ -1,4 +1,4 @@
-import { Shield, User, BarChart3, Target, type LucideIcon } from "lucide-react";
+import { Shield, User, BarChart3, Target, type LucideIcon } from "@/icons/lucide";
 import type { CookieCategory } from "@/features/cookies/hooks/use-cookie-consent";
 
 export interface CookieCategoryConfig {

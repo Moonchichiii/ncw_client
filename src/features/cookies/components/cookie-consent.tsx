@@ -1,5 +1,5 @@
 import { memo, useEffect, useState, useCallback } from "react";
-import { X, Settings } from "lucide-react";
+import { X, Settings } from "@/icons/lucide";
 import type {
   CookieCategory,
   CookiePreferences,
