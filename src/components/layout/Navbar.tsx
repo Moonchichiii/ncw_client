@@ -60,12 +60,22 @@ const Navbar = memo(() => {
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
-                key={link.label}
-                href={link.href}
-                className="text-[clamp(0.9rem,0.86rem+0.15vw,0.98rem)] font-medium text-content-faint hover:text-content transition-colors tracking-[-0.01em]"
-              >
-                {link.label}
-              </a>
+  key={link.label}
+  href={link.href}
+  className={[
+    "relative inline-flex items-center py-2",
+    "text-[clamp(0.9rem,0.86rem+0.15vw,0.98rem)] font-medium tracking-[-0.01em]",
+    "text-content-faint hover:text-content transition-colors",
+    "after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full",
+    "after:bg-lime after:origin-left after:scale-x-0 after:opacity-0",
+    "after:transition after:duration-200 after:ease-out",
+    "hover:after:scale-x-100 hover:after:opacity-100",
+    "focus-visible:after:scale-x-100 focus-visible:after:opacity-100",
+  ].join(" ")}
+>
+  {link.label}
+</a>
+
             ))}
           </div>
 

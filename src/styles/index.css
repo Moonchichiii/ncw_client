@@ -300,6 +300,25 @@
     color: var(--accent);
   }
 
+
+  .lime-hover {
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.lime-hover:hover {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-color: rgba(0, 0, 0, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+
+}
   /* ── Tags ── */
 
   .tag {

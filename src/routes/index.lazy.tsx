@@ -3,6 +3,7 @@ import Hero from "@/components/sections/hero";
 import Work from "@/components/sections/work";
 import About from "@/components/sections/about";
 import Process from "@/components/sections/process";
+import PaperBreak from "@/components/sections/paper-break";
 import Faq from "@/components/sections/faq";
 import Contact from "@/components/sections/contact";
 
@@ -14,10 +15,23 @@ function HomePage() {
   return (
     <>
       <Hero />
+
+      <PaperBreak variant="glow" />
+
       <Work />
+
+      <PaperBreak variant="wave" />
+
       <About />
+
+      <PaperBreak variant="glow" />
+
       <Process />
+
       <Faq />
+
+      <PaperBreak variant="paper" />
+
       <Contact />
     </>
   );
