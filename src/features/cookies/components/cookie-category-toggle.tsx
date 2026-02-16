@@ -3,9 +3,9 @@ import clsx from "clsx";
 import type { CookieCategoryConfig } from "@/features/cookies/constants/cookie-categories";
 import type { CookieCategory } from "@/features/cookies/hooks/use-cookie-consent";
 
-/* ------------------------------------------------------------------ */
-/*  Types                                                              */
-/* ------------------------------------------------------------------ */
+
+/*  Types  */
+
 
 interface CookieCategoryToggleProps {
   category: CookieCategoryConfig;
@@ -14,9 +14,7 @@ interface CookieCategoryToggleProps {
   disabled?: boolean;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Toggle switch                                                      */
-/* ------------------------------------------------------------------ */
+/*  Toggle switch */
 
 function ToggleSwitch({
   enabled,
@@ -59,9 +57,8 @@ function ToggleSwitch({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Category toggle                                                    */
-/* ------------------------------------------------------------------ */
+/*  Category toggle  */
+
 
 const CookieCategoryToggle = memo<CookieCategoryToggleProps>(
   ({ category, enabled, onChange, disabled = false }) => {

@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+
 import {
   createContext,
   useCallback,
@@ -7,9 +9,9 @@ import {
   type ReactNode,
 } from "react";
 
-/* ------------------------------------------------------------------ */
-/*  Types                                                              */
-/* ------------------------------------------------------------------ */
+
+/*  Types */
+
 
 export type CookieCategory =
   | "necessary"
@@ -52,9 +54,9 @@ interface CookieConsentActions {
 type CookieConsentContextValue = CookieConsentState &
   CookieConsentActions;
 
-/* ------------------------------------------------------------------ */
-/*  Constants                                                          */
-/* ------------------------------------------------------------------ */
+
+/*  Constants */
+
 
 const STORAGE_KEY = "ncw-cookie-consent";
 const CONSENT_VERSION = "1.0";
@@ -74,9 +76,9 @@ const DEFAULT_STATE: CookieConsentState = {
   showPreferences: false,
 };
 
-/* ------------------------------------------------------------------ */
-/*  Lazy initializer — synchronous, zero flicker, SSR-safe             */
-/* ------------------------------------------------------------------ */
+
+/*  Lazy initializer — synchronous, zero flicker, SSR-safe */
+
 
 function getInitialState(): CookieConsentState {
   if (typeof window === "undefined") {return DEFAULT_STATE;}
@@ -109,9 +111,7 @@ function getInitialState(): CookieConsentState {
   return DEFAULT_STATE;
 }
 
-/* ------------------------------------------------------------------ */
 /*  Persist helper — pure function, no hook overhead                   */
-/* ------------------------------------------------------------------ */
 
 function persistConsent(preferences: CookiePreferences): void {
   try {
@@ -127,17 +127,13 @@ function persistConsent(preferences: CookiePreferences): void {
     /* ignore */
   }
 }
-
-/* ------------------------------------------------------------------ */
-/*  Context                                                            */
-/* ------------------------------------------------------------------ */
+/*  Context */
 
 const CookieConsentContext =
   createContext<CookieConsentContextValue | null>(null);
 
-/* ------------------------------------------------------------------ */
-/*  Provider                                                           */
-/* ------------------------------------------------------------------ */
+  /*  Provider  */
+
 
 export function CookieConsentProvider({
   children,
@@ -278,10 +274,7 @@ export function CookieConsentProvider({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Hook                                                               */
-/* ------------------------------------------------------------------ */
-
+/*  Hook  */
 export function useCookieConsent(): CookieConsentContextValue {
   const ctx = useContext(CookieConsentContext);
   if (!ctx) {
