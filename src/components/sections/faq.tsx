@@ -85,14 +85,14 @@ const Faq = memo(() => {
   return (
     <section
       id="faq"
-      className="py-[var(--space-section)] bg-surface-alt border-t border-edge"
+      className="py-(--space-section) bg-surface-alt border-t border-edge"
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left */}
           <div className="lg:col-span-4">
             <p className="section-label mb-4">FAQ</p>
-            <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
+            <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-(--text-h2)">
               Common
               <br />
               questions
@@ -103,7 +103,7 @@ const Faq = memo(() => {
           <div className="lg:col-span-8 border-t border-edge">
             {FAQ_ITEMS.map((item, i) => (
               <FaqItem
-                key={i}
+                key={item.q}
                 q={item.q}
                 a={item.a}
                 isOpen={openIndex === i}

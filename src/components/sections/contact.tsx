@@ -59,11 +59,11 @@ const Contact = memo(() => {
   return (
     <section
       id="contact"
-      className="py-[var(--space-section)] bg-surface border-t border-edge"
+      className="py-(--space-section) bg-surface border-t border-edge"
       aria-label="Contact"
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-[var(--space-block)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-(--space-block)">
           <div>
             <p className="section-label mb-4">Contact</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
@@ -84,16 +84,12 @@ const Contact = memo(() => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-8 card p-8 md:p-10">
             <ContactForm />
-            <p className="mt-4 text-content-faint text-[var(--text-label)]">
-              Reply within 24–48h
-            </p>
+            <p className="mt-4 ui-label">Reply within 24–48h</p>
           </div>
 
           <div className="lg:col-span-4 flex flex-col gap-6">
             <div className="card p-6">
-              <h3 className="text-xs font-mono font-medium text-content-faint uppercase tracking-widest mb-4">
-                Connect
-              </h3>
+              <p className="ui-label mb-4">Connect</p>
               {SOCIAL_LINKS.map((link: SocialLinkData) => (
                 <SocialRow
                   key={link.title}
@@ -137,9 +133,7 @@ const Contact = memo(() => {
             <div className="card p-6 bg-surface-accent/40">
               <div className="flex items-center gap-2 mb-3">
                 <span className="status-dot" />
-                <span className="text-xs font-mono font-medium text-lime uppercase tracking-wide">
-                  Available
-                </span>
+                <span className="ui-label text-lime">Available</span>
               </div>
               <p className="text-content-secondary leading-relaxed text-[clamp(0.95rem,0.92rem+0.2vw,1.03rem)]">
                 Open for freelance & contract work. Based in

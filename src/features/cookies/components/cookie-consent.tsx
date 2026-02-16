@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { X, Settings, Cookie } from "@/icons/lucide";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Cookie, Settings, X } from "@/icons/lucide";
 import { COOKIE_CATEGORIES } from "@/features/cookies/constants/cookie-categories";
 import CookieCategoryToggle from "@/features/cookies/components/cookie-category-toggle";
 import {
   useCookieConsent,
-  type CookiePreferences,
   type CookieCategory,
+  type CookiePreferences,
 } from "@/features/cookies/hooks/use-cookie-consent";
 
 function useScrollLock(locked: boolean) {
@@ -19,10 +19,10 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 
-function getFocusableElements(container: HTMLElement) {
+function getFocusable(container: HTMLElement) {
   return Array.from(
     container.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      'a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])',
     ),
   ).filter(
     (el) =>
@@ -44,22 +44,20 @@ export default function CookieConsent() {
   } = useCookieConsent();
 
   const modalRef = useRef<HTMLDivElement>(null);
-  const previousActiveRef = useRef<HTMLElement | null>(null);
+  const prevActiveRef = useRef<HTMLElement | null>(null);
 
-  const [isVisible, setIsVisible] = useState(false);
-  const [localPreferences, setLocalPreferences] =
+  const [visible, setVisible] = useState(false);
+  const [localPrefs, setLocalPrefs] =
     useState<CookiePreferences>(preferences);
 
-  useEffect(() => {
-    setLocalPreferences(preferences);
-  }, [preferences]);
+  useEffect(() => setLocalPrefs(preferences), [preferences]);
 
   useEffect(() => {
     if (!showBanner) {
-      setIsVisible(false);
+      setVisible(false);
       return;
     }
-    const frame = requestAnimationFrame(() => setIsVisible(true));
+    const frame = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(frame);
   }, [showBanner]);
 
@@ -67,25 +65,24 @@ export default function CookieConsent() {
 
   useEffect(() => {
     if (!showPreferences) {return;}
-    previousActiveRef.current =
-      document.activeElement as HTMLElement | null;
+
+    prevActiveRef.current = document.activeElement as HTMLElement | null;
+
     const modal = modalRef.current;
     if (!modal) {return;}
-    const focusable = getFocusableElements(modal);
-    const firstFocusable = focusable[0] ?? modal;
-    firstFocusable.focus();
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        hideModals();
-        return;
-      }
-      if (e.key !== "Tab") {return;}
-      const items = getFocusableElements(modal);
+    const focusable = getFocusable(modal);
+    (focusable[0] ?? modal).focus();
+
+    function handleTabKey(e: KeyboardEvent, modal: HTMLElement) {
+      const items = getFocusable(modal);
       if (items.length === 0) {return;}
+
       const first = items[0];
       const last = items[items.length - 1];
-      const active = document.activeElement as HTMLElement;
+      const active = document.activeElement as HTMLElement | null;
+      if (!active) {return;}
+
       if (e.shiftKey && active === first) {
         e.preventDefault();
         if (last) {
@@ -97,24 +94,29 @@ export default function CookieConsent() {
           first.focus();
         }
       }
+    }
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        hideModals();
+        return;
+      }
+      if (e.key === "Tab") {
+        handleTabKey(e, modal);
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      const prev = previousActiveRef.current;
-      if (prev && typeof prev.focus === "function") {
-        prev.focus();
-      }
+      const prev = prevActiveRef.current;
+      if (prev && typeof prev.focus === "function") {prev.focus();}
     };
   }, [showPreferences, hideModals]);
 
-  const handleCategoryChange = useCallback(
-    (id: CookieCategory, enabled: boolean) => {
-      setLocalPreferences((prev) => ({ ...prev, [id]: enabled }));
-    },
-    [],
-  );
+  const onToggle = useCallback((id: CookieCategory, enabled: boolean) => {
+    setLocalPrefs((p) => ({ ...p, [id]: enabled }));
+  }, []);
 
   if (!showBanner && !showPreferences) {return null;}
 
@@ -126,9 +128,7 @@ export default function CookieConsent() {
             "fixed bottom-4 left-4 z-2000",
             "w-[min(420px,calc(100vw-2rem))]",
             "transition-all duration-300 ease-out",
-            isVisible
-              ? "translate-y-0 opacity-100"
-              : "translate-y-4 opacity-0",
+            visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
           ].join(" ")}
           aria-live="polite"
         >
@@ -145,41 +145,31 @@ export default function CookieConsent() {
                 </div>
                 <div>
                   <p className="section-label mb-0!">Privacy</p>
-                  <p className="text-xs text-content-faint mt-0.5">
+                  <p className="text-[11px] text-content-faint mt-1">
                     Cookies &amp; preferences
                   </p>
                 </div>
               </div>
+
               <button
                 onClick={hideModals}
                 className="text-content-faint hover:text-content transition-colors p-1"
                 aria-label="Dismiss cookie banner"
                 type="button"
               >
-                <X
-                  size={18}
-                  strokeWidth={1.6}
-                  aria-hidden="true"
-                />
+                <X size={18} strokeWidth={1.6} aria-hidden="true" />
               </button>
             </div>
+
             <p className="mt-4 text-sm text-content-secondary leading-relaxed">
-              We use cookies to improve performance and understand
-              traffic. Choose what you allow.
+              We use cookies to improve performance and understand traffic. Choose what you allow.
             </p>
+
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <button
-                onClick={rejectAll}
-                className="btn-outline h-10 text-xs"
-                type="button"
-              >
+              <button onClick={rejectAll} className="btn-outline h-10 text-xs" type="button">
                 Reject all
               </button>
-              <button
-                onClick={acceptAll}
-                className="btn-lime h-10 text-xs"
-                type="button"
-              >
+              <button onClick={acceptAll} className="btn-lime h-10 text-xs" type="button">
                 Accept all
               </button>
               <button
@@ -187,17 +177,14 @@ export default function CookieConsent() {
                 className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-content-faint hover:text-content transition-colors"
                 type="button"
               >
-                <Settings
-                  size={12}
-                  strokeWidth={1.6}
-                  aria-hidden="true"
-                />
+                <Settings size={12} strokeWidth={1.6} aria-hidden="true" />
                 Preferences
               </button>
             </div>
           </div>
         </div>
       )}
+
       {showPreferences && (
         <div
           className="fixed inset-0 z-2001 bg-surface/90 backdrop-blur-sm flex items-center justify-center p-4"
@@ -211,48 +198,37 @@ export default function CookieConsent() {
             className="w-full max-w-2xl card shadow-2xl flex flex-col max-h-[85vh] overflow-hidden bg-surface outline-none"
           >
             <div className="p-6 border-b border-edge flex justify-between items-center bg-surface-alt">
-              <div>
-                <p className="section-label mb-0!">Privacy</p>
-                <h2 className="mt-1 text-lg font-heading font-bold text-content tracking-tight">
-                  Cookie preferences
-                </h2>
-              </div>
+              <h2 className="text-lg font-heading font-bold text-content tracking-tight">
+                Cookie preferences
+              </h2>
               <button
                 onClick={hideModals}
                 className="text-content-faint hover:text-content transition-colors p-1"
                 aria-label="Close preferences"
                 type="button"
               >
-                <X
-                  size={18}
-                  strokeWidth={1.6}
-                  aria-hidden="true"
-                />
+                <X size={18} strokeWidth={1.6} aria-hidden="true" />
               </button>
             </div>
+
             <div className="p-6 overflow-y-auto space-y-3">
               {COOKIE_CATEGORIES.map((category) => (
                 <CookieCategoryToggle
                   key={category.id}
                   category={category}
-                  enabled={localPreferences[category.id]}
-                  onChange={handleCategoryChange}
+                  enabled={localPrefs[category.id]}
+                  onChange={onToggle}
                   disabled={category.required}
                 />
               ))}
             </div>
+
             <div className="p-6 border-t border-edge bg-surface-alt flex items-center justify-between gap-3">
-              <button
-                onClick={rejectAll}
-                className="btn-outline h-10 text-xs"
-                type="button"
-              >
+              <button onClick={rejectAll} className="btn-outline h-10 text-xs" type="button">
                 Reject all
               </button>
               <button
-                onClick={() =>
-                  saveCustomPreferences(localPreferences)
-                }
+                onClick={() => saveCustomPreferences(localPrefs)}
                 className="btn-lime h-10 text-xs"
                 type="button"
               >

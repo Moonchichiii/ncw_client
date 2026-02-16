@@ -18,14 +18,14 @@ const Footer = memo(() => {
               </span>
             </div>
 
-            <div className="text-(--text-label) flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="ui-label flex flex-col sm:flex-row gap-2 sm:gap-3">
               <span>© {new Date().getFullYear()} Nordic Code Works</span>
               <span className="hidden sm:inline text-edge">·</span>
               <span>Sweden & France</span>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-(--text-label)">
+          <div className="ui-label flex flex-wrap gap-x-6 gap-y-2">
             <Link
               to="/privacy-policy"
               className="hover:text-content transition-colors flex items-center gap-1 group tracking-[0.02em]"

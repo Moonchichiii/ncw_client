@@ -26,7 +26,7 @@ const Hero = memo(() => (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           {META_ITEMS.map((item) => (
             <div key={item.label}>
-              <span className="block text-[10px] font-mono font-medium text-content-faint uppercase tracking-widest mb-1">
+              <span className="ui-label text-[10px] mb-1">
                 {item.label}
               </span>
               <span className="block text-sm text-content-secondary">
@@ -52,27 +52,25 @@ const Hero = memo(() => (
           {/* LEFT */}
           <div className="xl:col-span-7">
             <h1
-  className="font-heading font-extrabold tracking-[-0.045em] text-content
-             text-[var(--text-h1)] leading-[0.98] md:leading-[0.92]"
->
-  Engineering fast,
-  <br />
-  accessible &
-  <br />
-  <span className="text-lime">scalable</span> web systems.
-</h1>
-
+              className="font-heading font-extrabold tracking-[-0.045em] leading-[0.98] md:leading-[0.92]"
+              style={{ fontSize: "var(--text-h1)" }}
+            >
+              Engineering fast,
+              <br />
+              accessible &amp;
+              <br />
+              <span className="text-lime">scalable</span> web systems.
+            </h1>
           </div>
 
           {/* RIGHT */}
           <div className="xl:col-span-5 xl:pt-4">
             <p
-  className="mt-10 text-content-secondary leading-relaxed max-w-[46ch]
-             text-[var(--text-body-lg)]"
->
-  <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer focused on performance, clean architecture, and secure delivery pipelines.
-</p>
-
+              className="mt-10 text-content-secondary leading-relaxed max-w-[46ch]"
+              style={{ fontSize: "var(--text-body-lg)" }}
+            >
+              <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer focused on performance, clean architecture, and secure delivery pipelines.
+            </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a href="#work" className="btn-lime">
@@ -95,7 +93,7 @@ const Hero = memo(() => (
             </div>
 
             {/* Optional micro-proof line */}
-            <p className="mt-6 text-content-faint">
+            <p className="mt-6 ui-label text-content-faint normal-case tracking-normal">
               Performance budgets. WCAG AA. Secure CI/CD. Clean handover.
             </p>
           </div>
