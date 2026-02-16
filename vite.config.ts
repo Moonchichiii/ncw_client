@@ -14,8 +14,9 @@ export default defineConfig({
       quoteStyle: "double",
       autoCodeSplitting: true,
     }),
-    react(),
-    tailwindcss(),
+      react(),
+      tailwindcss(),
+    
   ],
   resolve: {
     alias: {
