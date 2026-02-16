@@ -31,3 +31,4 @@ export { default as ArrowRight } from "lucide-react/dist/esm/icons/arrow-right";
 export { default as AlertTriangle } from "lucide-react/dist/esm/icons/alert-triangle";
 export { default as RefreshCw } from "lucide-react/dist/esm/icons/refresh-cw";
 export { default as Home } from "lucide-react/dist/esm/icons/home";
+export { Cookie } from "lucide-react";

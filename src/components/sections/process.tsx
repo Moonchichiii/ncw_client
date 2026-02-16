@@ -30,7 +30,7 @@ const STEPS = [
 const Process = memo(() => (
   <section
     id="process"
-    className="py-[var(--space-section)] bg-surface border-t border-edge"
+    className="py-(--space-section) bg-surface border-t border-edge"
   >
     <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Header */}
@@ -55,10 +55,10 @@ const Process = memo(() => (
             className="card p-8 group hover:border-lime/20 transition-colors"
           >
             <div className="flex items-center justify-between mb-5">
-              <span className="font-mono text-[var(--text-label)] text-lime tracking-[0.08em]">
+              <span className="font-mono text-(--text-label) tracking-[0.08em]">
                 {step.num}
               </span>
-              <span className="font-mono text-[var(--text-label)] text-content-faint tracking-[0.08em]">
+              <span className="font-mono text-content-faint tracking-[0.08em]">
                 {step.duration}
               </span>
             </div>

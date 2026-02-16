@@ -95,7 +95,7 @@ const Hero = memo(() => (
             </div>
 
             {/* Optional micro-proof line */}
-            <p className="mt-6 text-content-faint text-[var(--text-label)]">
+            <p className="mt-6 text-content-faint">
               Performance budgets. WCAG AA. Secure CI/CD. Clean handover.
             </p>
           </div>
