@@ -40,7 +40,7 @@ const FaqItem = memo<{
       className="w-full flex items-center justify-between py-7 text-left group hover:bg-surface-accent/20 -mx-3 px-3 rounded-sm transition-colors"
       aria-expanded={isOpen}
     >
-      <span className="font-medium text-content group-hover:text-lime transition-colors pr-4 text-[clamp(0.98rem,0.95rem+0.2vw,1.06rem)] leading-snug">
+      <span className="font-medium text-content group-hover:text-accent transition-colors pr-4 text-[clamp(0.98rem,0.95rem+0.2vw,1.06rem)] leading-snug">
         {q}
       </span>
       <span className="shrink-0 text-content-faint">
@@ -85,7 +85,7 @@ const Faq = memo(() => {
   return (
     <section
       id="faq"
-      className="py-(--space-section) bg-surface-alt border-t border-edge"
+      className="py-(--space-section) section-light border-t border-edge"
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -93,10 +93,10 @@ const Faq = memo(() => {
           <div className="lg:col-span-4">
             <p className="section-label mb-4">FAQ</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-(--text-h2)">
-  Things clients
-  <br />
-  usually ask
-</h2>
+              Things clients
+              <br />
+              usually ask
+            </h2>
           </div>
 
           {/* Right */}

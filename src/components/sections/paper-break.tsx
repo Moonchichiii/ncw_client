@@ -3,52 +3,42 @@ import clsx from "clsx";
 
 interface PaperBreakProps {
   className?: string;
-  variant?: "line" | "glow" | "space" | "marquee";
+  variant?: "line" | "glow" | "space" | "stats";
   flip?: boolean;
 }
 
-const MARQUEE_ITEMS = [
-  { id: "crafting", text: "Crafting", style: "filled" },
-  { id: "experiences", text: "Experiences", style: "outline" },
-  { id: "engineering", text: "Engineering", style: "filled" },
-  { id: "performance", text: "Performance", style: "outline" },
-  { id: "building", text: "Building", style: "filled" },
-  { id: "quality", text: "Quality", style: "outline" },
+const STATS = [
+  { value: "<1s", label: "Target load time" },
+  { value: "AA+", label: "Accessibility standard" },
+  { value: "0", label: "Deployment anxiety" },
 ] as const;
-
-const MARQUEE_TRACKS = ["track-a", "track-b"] as const;
 
 const PaperBreak = memo<PaperBreakProps>(
   ({ className, variant = "line", flip = false }) => {
     const base = "w-full overflow-hidden";
 
-    if (variant === "marquee") {
+    if (variant === "stats") {
       return (
         <div
-          className={clsx(base, "bg-surface py-16 md:py-24", className)}
-          aria-hidden="true"
+          className={clsx(
+            base,
+            "section-light border-y border-edge",
+            className,
+          )}
         >
-          <div className="flex items-center gap-[clamp(2.5rem,6vw,5rem)] whitespace-nowrap select-none">
-            {MARQUEE_TRACKS.map((track) => (
-              <div
-                key={track}
-                className="flex items-center gap-[clamp(2.5rem,6vw,5rem)] shrink-0 animate-[scroll_18s_linear_infinite]"
-              >
-                {MARQUEE_ITEMS.map((item) => (
-                  <span
-                    key={item.id}
-                    className={clsx(
-                      "text-[clamp(4rem,10vw,9rem)] font-heading font-[900] tracking-[-0.05em] leading-none uppercase",
-                      item.style === "filled"
-                        ? "text-white"
-                        : "text-transparent [-webkit-text-stroke:2px_rgba(255,255,255,0.12)]",
-                    )}
-                  >
-                    {item.text}
-                  </span>
-                ))}
-              </div>
-            ))}
+          <div className="mx-auto max-w-300">
+            <div className="stat-strip">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="stat-strip-item">
+                  <div className="stat-strip-value">
+                    {stat.value}
+                  </div>
+                  <div className="stat-strip-label">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       );
@@ -82,22 +72,22 @@ const PaperBreak = memo<PaperBreakProps>(
     if (variant === "space") {
       return (
         <div
-          className={clsx(base, "bg-surface h-16 md:h-24", className)}
+          className={clsx(
+            base,
+            "bg-surface h-16 md:h-24",
+            className,
+          )}
           aria-hidden="true"
         />
       );
     }
-    
+
     return (
       <div
-        className={clsx(
-          base,
-          "bg-surface",
-          className,
-        )}
+        className={clsx(base, "bg-surface", className)}
         aria-hidden="true"
       >
-        <div className="mx-auto max-w-[var(--max-width)] px-6">
+        <div className="mx-auto max-w-(--max-width) px-6">
           <div className="h-px bg-edge-subtle" />
         </div>
       </div>

@@ -88,8 +88,8 @@
     --text-body-lg: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
     --text-label: clamp(0.78rem, 0.74rem + 0.12vw, 0.85rem);
 
-    --space-section: clamp(5rem, 12vw, 9rem);
-    --space-block: clamp(2.5rem, 6vw, 4.5rem);
+    --space-section: clamp(4rem, 10vw, 7rem);
+    --space-block: clamp(2rem, 5vw, 3.5rem);
     --max-width: 1200px;
 
     color-scheme: dark;
@@ -205,6 +205,8 @@
 /* ── Component Classes ── */
 
 @layer components {
+  /* ── Buttons ── */
+
   .btn-lime {
     display: inline-flex;
     align-items: center;
@@ -222,7 +224,10 @@
     border-radius: var(--radius-full);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     cursor: pointer;
-    transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
+    transition:
+      transform 150ms ease,
+      filter 150ms ease,
+      box-shadow 150ms ease;
   }
   .btn-lime:hover {
     filter: brightness(1.04);
@@ -249,7 +254,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition: background-color 150ms ease, border-color 150ms ease;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
   }
   .btn-outline:hover {
     background-color: rgba(255, 255, 255, 0.04);
@@ -272,6 +279,8 @@
   .btn-ghost:hover {
     color: var(--accent);
   }
+
+  /* ── Tags & Labels ── */
 
   .tag {
     display: inline-flex;
@@ -327,11 +336,15 @@
     flex-shrink: 0;
   }
 
+  /* ── Cards & Dividers ── */
+
   .card {
     background-color: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
   .card:hover {
     border-color: rgba(207, 234, 99, 0.15);
@@ -343,6 +356,8 @@
     height: 1px;
     background-color: var(--border-subtle);
   }
+
+  /* ── Section Variants ── */
 
   .section-paper {
     background: #f3f1ea;
@@ -356,6 +371,165 @@
   .section-paper .paper-faint {
     color: rgba(15, 19, 22, 0.55);
   }
+
+  /* ── Warm-dark break ── */
+
+  .section-warm {
+    --bg-local: #1a1d17;
+    background-color: var(--bg-local);
+    background-image: linear-gradient(
+      170deg,
+      rgba(207, 234, 99, 0.025) 0%,
+      transparent 50%
+    );
+  }
+
+  .section-warm .card {
+    background-color: #22261e;
+    border-color: rgba(207, 234, 99, 0.08);
+  }
+
+  /* ── LIGHT SECTIONS ── */
+  /*
+   * Overrides every design-token CSS variable in scope.
+   * All Tailwind utilities (text-content, bg-surface, border-edge…)
+   * automatically pick up the light values — zero component changes.
+   */
+
+  .section-light {
+    --bg-primary: #f4f2ec;
+    --bg-secondary: #eae7de;
+    --bg-elevated: #ffffff;
+    --bg-accent: rgba(68, 100, 22, 0.06);
+
+    --text-primary: #1a1d20;
+    --text-secondary: #4e5564;
+    --text-faint: #7b8394;
+
+    --accent: #3d6b14;
+    --accent-hover: #4d7b24;
+    --accent-text: #ffffff;
+    --accent-soft: rgba(61, 107, 20, 0.1);
+
+    --border: rgba(0, 0, 0, 0.1);
+    --border-subtle: rgba(0, 0, 0, 0.06);
+
+    --focus-ring: rgba(61, 107, 20, 0.7);
+
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  .section-light .card {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  }
+  .section-light .card:hover {
+    border-color: rgba(61, 107, 20, 0.25);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+  }
+
+  .section-light .status-dot {
+    background-color: #3d6b14;
+    box-shadow: 0 0 14px rgba(61, 107, 20, 0.3);
+  }
+
+  .section-light .btn-lime {
+    background-color: #3d6b14;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+  .section-light .btn-lime:hover {
+    background-color: #4d7b24;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+  }
+
+  .section-light .btn-outline {
+    color: var(--text-primary);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+  .section-light .btn-outline:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: rgba(61, 107, 20, 0.4);
+  }
+
+  .section-light .tag {
+    color: #3d6b14;
+    background-color: rgba(61, 107, 20, 0.08);
+    border-color: rgba(61, 107, 20, 0.18);
+  }
+
+  .section-light .lime-hover {
+    border-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: var(--text-faint);
+  }
+  .section-light .lime-hover:hover {
+    background-color: #3d6b14;
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  .section-light .divider {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* ── Bold divider between major chapters ── */
+
+  .chapter-break {
+    width: 100%;
+    padding: 0 clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .chapter-break-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--accent) 50%,
+      transparent 100%
+    );
+    opacity: 0.25;
+  }
+
+  /* ── Stat strip — LIGHT variant ── */
+
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .stat-strip-item {
+    background-color: var(--bg-primary);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+    text-align: center;
+  }
+
+  .stat-strip-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .stat-strip-label {
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ── Interactive hover pills ── */
 
   .lime-hover {
     display: inline-flex;

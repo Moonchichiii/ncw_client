@@ -10,10 +10,12 @@ export interface Project {
   description: string;
   tech: string[];
   image: string;
+  gallery?: string[];
   status: string;
+  metric?: string;
   links: {
-    demo: string | null;
-    repo: string | null;
+    demo?: string | null;
+    repo?: string | null;
   };
 }
 

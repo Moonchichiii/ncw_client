@@ -13,13 +13,11 @@ export const Route = createLazyFileRoute("/")({
 
 function HomePage() {
   return (
-   <>
+     <>
       <Hero />
-      <PaperBreak variant="marquee" />
+      <PaperBreak variant="stats" />
       <Work />
-      <PaperBreak variant="glow" flip />
       <About />
-      <PaperBreak variant="paper" />
       <Process />
       <Faq />
       <Contact />
