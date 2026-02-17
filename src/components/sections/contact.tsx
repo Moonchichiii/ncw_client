@@ -15,16 +15,17 @@ const Contact = memo(() => {
           <div>
             <p className="section-label mb-4">Contact</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
-              Let&apos;s build
+              Got a project
               <br />
-              something great
+              in mind?
             </h2>
           </div>
 
           <div className="flex flex-col justify-end">
             <p className="text-content-secondary leading-relaxed max-w-[52ch] text-[clamp(0.95rem,0.92rem+0.2vw,1.05rem)]">
-              Currently open for new opportunities and collaborations.
-              Reach out and let&apos;s talk about your project.
+              Open for freelance and contract work — based in Sweden
+              and France, working globally. Tell me what you&apos;re
+              building.
             </p>
           </div>
         </div>

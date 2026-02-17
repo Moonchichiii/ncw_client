@@ -1,15 +1,11 @@
 import { memo } from "react";
 import { ArrowUpRight } from "@/icons/lucide";
 
-const META_ITEMS = [
-  { label: "Role", value: "Full-Stack Developer" },
-  { label: "Location", value: "Sweden · France" },
-  { label: "Focus", value: "Performance · A11y · Security" },
-  { label: "Stack", value: "Django · React · TypeScript" },
-] as const;
-
 const Hero = memo(() => (
-  <section id="hero" className="relative min-h-svh bg-surface overflow-hidden">
+  <section
+    id="hero"
+    className="relative min-h-svh bg-surface overflow-hidden"
+  >
     {/* Radial glow (keep) */}
     <div
       className="absolute top-0 left-0 w-250 h-150 pointer-events-none"
@@ -21,23 +17,17 @@ const Hero = memo(() => (
     />
 
     <div className="relative z-10 mx-auto w-full max-w-300 xl:max-w-360 2xl:max-w-400 px-5 sm:px-8 2xl:px-12">
-      {/* Meta rail */}
+      {/* Simpler meta — just enough context, not a spec sheet */}
       <div className="pt-28 sm:pt-36 pb-6 border-b border-edge-subtle">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-          {META_ITEMS.map((item) => (
-            <div key={item.label}>
-              <span className="ui-label text-[10px] mb-1">
-                {item.label}
-              </span>
-              <span className="block text-sm text-content-secondary">
-                {item.value}
-              </span>
-            </div>
-          ))}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-content-secondary">
+          <span>Full-Stack Developer</span>
+          <span className="text-edge-subtle">·</span>
+          <span>Sweden & France</span>
+          <span className="text-edge-subtle">·</span>
+          <span>Django · React · TypeScript</span>
         </div>
       </div>
 
-      {/* Main hero content */}
       <div className="pt-16 sm:pt-24 pb-20 sm:pb-32">
         {/* Availability badge */}
         <div className="flex items-center gap-2.5 mb-10">
@@ -47,7 +37,6 @@ const Hero = memo(() => (
           </span>
         </div>
 
-        {/* Wide layout: left headline, right copy+CTAs */}
         <div className="grid grid-cols-1 xl:grid-cols-12 xl:gap-12 items-start">
           {/* LEFT */}
           <div className="xl:col-span-7">
@@ -55,11 +44,12 @@ const Hero = memo(() => (
               className="font-heading font-extrabold tracking-[-0.045em] leading-[0.98] md:leading-[0.92]"
               style={{ fontSize: "var(--text-h1)" }}
             >
-              Engineering fast,
+              Web systems that
               <br />
-              accessible &amp;
+              perform — fast,
               <br />
-              <span className="text-lime">scalable</span> web systems.
+              accessible &amp;{" "}
+              <span className="text-lime">built to scale.</span>
             </h1>
           </div>
 
@@ -69,33 +59,28 @@ const Hero = memo(() => (
               className="mt-10 text-content-secondary leading-relaxed max-w-[46ch]"
               style={{ fontSize: "var(--text-body-lg)" }}
             >
-              <span className="text-content font-medium">Mats Gustafsson</span> — Full-stack developer focused on performance, clean architecture, and secure delivery pipelines.
+              <span className="text-content font-medium">
+                Mats Gustafsson
+              </span>{" "}
+              — I ship performant, well-architected web products with
+              secure delivery pipelines. From first commit to
+              production.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-12 flex flex-wrap items-center gap-4">
               <a href="#work" className="btn-lime">
-                See recent work
-                <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
+                See the work
+                <ArrowUpRight
+                  size={14}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
               </a>
 
               <a href="#contact" className="btn-ghost text-sm">
-                Get in touch →
-              </a>
-
-              <a
-                href="/cv-en.pdf"
-                className="btn-ghost text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download résumé (PDF)
+                Start a project →
               </a>
             </div>
-
-            {/* Optional micro-proof line */}
-            <p className="mt-6 ui-label text-content-faint normal-case tracking-normal">
-              Performance budgets. WCAG AA. Secure CI/CD. Clean handover.
-            </p>
           </div>
         </div>
       </div>

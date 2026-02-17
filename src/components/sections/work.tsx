@@ -10,19 +10,24 @@ const Work = memo(() => (
         <div>
           <p className="section-label mb-4">Work</p>
           <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
-            Recent Works
+            Selected Projects
           </h2>
         </div>
 
         <p className="text-content-secondary leading-relaxed max-w-[44ch] text-[clamp(0.95rem,0.92rem+0.2vw,1.05rem)]">
-          A selection of projects focused on performance, accessibility, and clean architecture.
+          Real builds — measured by load times, accessibility scores,
+          and clean handover.
         </p>
       </div>
 
       {/* Cards */}
       <div className="space-y-6">
         {PROJECTS.map((project, index) => (
-          <ProjectCard key={project.id} project={project} featured={index < 2} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            featured={index < 2}
+          />
         ))}
       </div>
     </div>

@@ -5,7 +5,7 @@ const STEPS = [
     num: "01",
     title: "Discovery",
     duration: "1–2 days",
-    desc: "Clarify scope, outcomes, and constraints. Define what success looks like before writing code.",
+    desc: "Clarify scope, success criteria, and constraints — so nothing gets built on assumptions.",
   },
   {
     num: "02",
@@ -17,13 +17,13 @@ const STEPS = [
     num: "03",
     title: "Polish",
     duration: "3–5 days",
-    desc: "Performance tuning, accessibility audit, and UX refinement. Every detail matters.",
+    desc: "Accessibility audit, performance pass, and UI refinement. This is what clients actually see.",
   },
   {
     num: "04",
     title: "Deploy",
     duration: "1–2 days",
-    desc: "CI/CD pipelines, security scanning, monitoring setup. Ship with confidence.",
+    desc: "CI/CD pipelines, security scanning, monitoring setup. Ship with confidence, not crossed fingers.",
   },
 ] as const;
 

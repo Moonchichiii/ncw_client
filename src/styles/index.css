@@ -19,93 +19,75 @@
   font-family: "JetBrains Mono";
   font-weight: 400 700;
   font-display: swap;
-  src: url("/fonts/jetbrains-mono-v24-latin-regular.woff2")
-    format("woff2");
+  src: url("/fonts/jetbrains-mono-v24-latin-regular.woff2") format("woff2");
 }
 
 /* ── Design Tokens ── */
 
 @theme {
-  /* Surfaces */
   --color-surface: var(--bg-primary);
   --color-surface-alt: var(--bg-secondary);
   --color-surface-elevated: var(--bg-elevated);
   --color-surface-accent: var(--bg-accent);
 
-  /* Content */
   --color-content: var(--text-primary);
   --color-content-secondary: var(--text-secondary);
   --color-content-muted: var(--text-secondary);
   --color-content-faint: var(--text-faint);
 
-  /* Accent (lime) */
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-contrast: var(--accent-text);
 
-  /* Lime alias for direct use */
   --color-lime: var(--accent);
 
-  /* Edges */
   --color-edge: var(--border);
   --color-edge-subtle: var(--border-subtle);
 
-  /* Focus */
   --color-focus-ring: var(--focus-ring);
 
-  /* Fonts */
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-heading: "Outfit", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 20px;
   --radius-full: 999px;
 
-  /* Animations */
-  --animate-reveal: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)
-    forwards;
+  --animate-reveal: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* ── Color Tokens ── */
 
 @layer base {
   :root {
-    /* Surfaces — deepened for more depth separation */
     --bg-primary: #0f1316;
     --bg-secondary: #151a1f;
     --bg-elevated: #1b2127;
     --bg-accent: rgba(207, 234, 99, 0.06);
 
-    /* Text — WCAG AA compliant on all surfaces */
     --text-primary: #ffffff;
-    --text-secondary: #cbd5e1;
+    --text-secondary: #d6dde6;
     --text-faint: #94a3b8;
 
-    /* Accent */
     --accent: #cfea63;
     --accent-hover: #d8ee7e;
     --accent-text: #111315;
     --accent-soft: rgba(207, 234, 99, 0.12);
 
-    /* Borders */
     --border: #2e3740;
     --border-subtle: #252c33;
 
-    /* Focus */
     --focus-ring: rgba(207, 234, 99, 0.75);
 
-    /* Fluid type scale */
     --text-h1: clamp(2.4rem, 1.8rem + 2.8vw, 4.8rem);
     --text-h2: clamp(1.85rem, 1.45rem + 1.35vw, 2.75rem);
     --text-body: clamp(0.98rem, 0.94rem + 0.25vw, 1.05rem);
     --text-body-lg: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
     --text-label: clamp(0.78rem, 0.74rem + 0.12vw, 0.85rem);
 
-    /* Spacing scale */
     --space-section: clamp(5rem, 12vw, 9rem);
     --space-block: clamp(2.5rem, 6vw, 4.5rem);
     --max-width: 1200px;
@@ -155,7 +137,6 @@
     color: var(--text-primary);
   }
 
-  /* Shared heading defaults */
   h1,
   h2,
   h3,
@@ -169,7 +150,6 @@
     color: var(--text-primary);
   }
 
-  /* Fluid heading overrides */
   h1 {
     font-size: var(--text-h1);
     font-weight: 800;
@@ -225,8 +205,6 @@
 /* ── Component Classes ── */
 
 @layer components {
-  /* ── Buttons ── */
-
   .btn-lime {
     display: inline-flex;
     align-items: center;
@@ -244,10 +222,7 @@
     border-radius: var(--radius-full);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     cursor: pointer;
-    transition:
-      transform 150ms ease,
-      filter 150ms ease,
-      box-shadow 150ms ease;
+    transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
   }
   .btn-lime:hover {
     filter: brightness(1.04);
@@ -274,9 +249,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition:
-      background-color 150ms ease,
-      border-color 150ms ease;
+    transition: background-color 150ms ease, border-color 150ms ease;
   }
   .btn-outline:hover {
     background-color: rgba(255, 255, 255, 0.04);
@@ -300,27 +273,6 @@
     color: var(--accent);
   }
 
-
-  .lime-hover {
-  transition:
-    background-color 150ms ease,
-    color 150ms ease,
-    border-color 150ms ease,
-    transform 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.lime-hover:hover {
-  background-color: var(--accent);
-  color: var(--accent-text);
-  border-color: rgba(0, 0, 0, 0.18);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  transform: translateY(-1px);
-  filter: brightness(1.02);
-
-}
-  /* ── Tags ── */
-
   .tag {
     display: inline-flex;
     align-items: center;
@@ -335,8 +287,6 @@
     border: 1px solid rgba(207, 234, 99, 0.22);
     border-radius: var(--radius-sm);
   }
-
-  /* ── Section label ── */
 
   .section-label {
     display: inline-flex;
@@ -359,8 +309,6 @@
     border-radius: 2px;
   }
 
-  /* ── UI label (reusable mono metadata) ── */
-
   .ui-label {
     font-family: var(--font-mono);
     font-size: var(--text-label);
@@ -369,8 +317,6 @@
     text-transform: uppercase;
     color: var(--text-faint);
   }
-
-  /* ── Status dot ── */
 
   .status-dot {
     width: 8px;
@@ -381,22 +327,16 @@
     flex-shrink: 0;
   }
 
-  /* ── Card ── */
-
   .card {
     background-color: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .card:hover {
     border-color: rgba(207, 234, 99, 0.15);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
   }
-
-  /* ── Divider ── */
 
   .divider {
     width: 100%;
@@ -416,9 +356,39 @@
   .section-paper .paper-faint {
     color: rgba(15, 19, 22, 0.55);
   }
-}
 
-/* ── Utilities ── */
+  .lime-hover {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    background-color: rgba(27, 33, 39, 0.4);
+    color: var(--text-faint);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease,
+      box-shadow 150ms ease,
+      filter 150ms ease;
+    will-change: transform;
+  }
+
+  .lime-hover .ui-label {
+    color: currentColor;
+  }
+
+  .lime-hover:hover {
+    background-color: var(--accent);
+    color: var(--accent-text);
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+}
 
 @utility hide-scrollbar {
   -ms-overflow-style: none;
@@ -438,5 +408,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 }

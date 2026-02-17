@@ -93,10 +93,10 @@ const Faq = memo(() => {
           <div className="lg:col-span-4">
             <p className="section-label mb-4">FAQ</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-(--text-h2)">
-              Common
-              <br />
-              questions
-            </h2>
+  Things clients
+  <br />
+  usually ask
+</h2>
           </div>
 
           {/* Right */}

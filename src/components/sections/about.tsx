@@ -6,22 +6,22 @@ const OFFERS = [
   {
     num: "01",
     title: "Product Engineering",
-    desc: "Full-stack builds with Django, React, and TypeScript — designed for scale and maintainability.",
+    desc: "Full-stack builds in Django, React, and TypeScript — built for maintainability, so your team can iterate without tech debt.",
   },
   {
     num: "02",
     title: "Performance & CWV",
-    desc: "Sub-second loads, optimized bundles, and measurable Core Web Vitals improvements.",
+    desc: "Sub-second loads and optimized bundles — so users stay engaged and search rankings improve.",
   },
   {
     num: "03",
     title: "Accessibility (WCAG AA)",
-    desc: "Inclusive interfaces tested with keyboard navigation and screen readers.",
+    desc: "Inclusive interfaces tested with keyboard navigation and screen readers — so everyone can use your product.",
   },
   {
     num: "04",
     title: "Secure CI/CD",
-    desc: "Hardened delivery pipelines with automated checks, scanning, and safe deploys.",
+    desc: "Hardened delivery pipelines with automated checks and safe deploys — so you can ship confidently, any time.",
   },
 ] as const;
 
@@ -35,8 +35,6 @@ const About = memo(() => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
         <div>
           <p className="section-label mb-4">About</p>
-
-          {/* One real heading. Color comes from base h2 styles. */}
           <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-(--text-h2)">
             Building for
             <br />
@@ -46,12 +44,14 @@ const About = memo(() => (
 
         <div className="flex flex-col justify-end">
           <p className="text-content-secondary leading-relaxed max-w-[52ch]">
-            <span className="text-content font-medium">
-              Mats Gustafsson
-            </span>{" "}
-            — Full-stack developer (Code Institute, 2024). I build
-            fast, accessible products with clean architecture and
-            secure delivery pipelines.
+            I help teams and businesses ship web products that are fast
+            by default, accessible out of the box, and backed by
+            infrastructure that doesn&apos;t break at 2&nbsp;AM.
+          </p>
+
+          <p className="mt-4 text-content-faint leading-relaxed max-w-[52ch] text-sm">
+            Trained at Code Institute — sharpened through real-world
+            delivery.
           </p>
 
           <a
@@ -71,12 +71,11 @@ const About = memo(() => (
 
       {/* What I Offer */}
       <div className="mb-20">
-        {/* This is not a “heading hierarchy”, it’s a label. Keep it small and consistent. */}
         <p className="ui-label mb-3">What I offer</p>
 
         <p className="font-heading font-semibold text-content mb-8 max-w-[60ch] text-[clamp(1.05rem,1rem+0.35vw,1.25rem)] leading-snug">
-          Practical engineering that improves speed, usability, and
-          reliability — without overcomplicating the stack.
+          Engineering that improves speed, usability, and reliability —
+          without overcomplicating the stack.
         </p>
 
         <div className="border-t border-edge">
@@ -103,7 +102,7 @@ const About = memo(() => (
         </div>
       </div>
 
-      {/* Skills grid */}
+      {/* Skills grid stays the same */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* Frontend */}
         <div className="card p-6">
