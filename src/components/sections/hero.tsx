@@ -72,12 +72,12 @@ const Hero = memo(() => {
         </div>
 
         <h1
-          className="font-heading font-extrabold tracking-[-0.045em] leading-[0.92] md:leading-[0.88] max-w-[18ch]"
+          className="font-heading font-extrabold tracking-[-0.045em] leading-[0.92] md:leading-[0.88] max-w-[20ch]"
           style={{ fontSize: "var(--text-h1)" }}
         >
-          I build web systems
+          I build fast, resilient
           <br />
-          that don&apos;t compromise
+          web systems
           <span className="text-lime">.</span>
         </h1>
 
