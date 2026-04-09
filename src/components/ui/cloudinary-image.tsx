@@ -3,76 +3,107 @@ import { memo, useState } from "react";
 interface CloudinaryImgProps {
   publicId: string;
   alt: string;
-  className?: string;
-  priority?: boolean;
+  className?: string | undefined;
+  priority?: boolean | undefined;
+  sizes?: string | undefined;
+}
+
+const WIDTHS = [240, 400, 640, 828, 1080, 1280];
+const FALLBACK_WIDTH = WIDTHS[WIDTHS.length - 1];
+const TRANSFORMS = "f_auto,q_auto:eco,c_fill";
+
+function imgAttrs(priority: boolean) {
+  return priority
+    ? ({ loading: "eager", decoding: "sync", fetchPriority: "high" } as const)
+    : ({
+        loading: "lazy",
+        decoding: "async",
+        fetchPriority: "auto",
+      } as const);
+}
+
+function Placeholder({
+  className,
+  label,
+  sublabel,
+}: {
+  className?: string | undefined;
+  label: string;
+  sublabel?: string | undefined;
+}) {
+  return (
+    <div
+      className={`flex items-center justify-center border border-edge bg-surface-accent ${className}`}
+    >
+      <div className="px-4 text-center">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-content-faint">
+          {label}
+        </p>
+        {sublabel && (
+          <p className="font-mono text-[9px] text-content-faint">
+            {sublabel}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 const CloudinaryImg = memo<CloudinaryImgProps>(
-  ({ publicId, alt, className, priority = false }) => {
+  ({
+    publicId,
+    alt,
+    className,
+    priority = false,
+    sizes = "(max-width: 768px) 100vw, 360px",
+  }) => {
     const cloudName = import.meta.env.VITE_CLOUD_NAME;
     const [isLoaded, setIsLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     if (!cloudName) {
       return (
-        <div
-          className={`flex items-center justify-center bg-surface-accent border border-edge ${className}`}
-        >
-          <div className="text-center px-4">
-            <p className="font-mono text-[10px] text-red-500 uppercase tracking-widest">
-              CONFIG_ERR
-            </p>
-            <p className="font-mono text-[9px] text-content-faint">
-              MISSING_ENV
-            </p>
-          </div>
-        </div>
+        <Placeholder
+          className={className}
+          label="CONFIG_ERR"
+          sublabel="MISSING_ENV"
+        />
       );
     }
 
     if (hasError) {
       return (
-        <div
-          className={`flex items-center justify-center bg-surface-accent border border-edge ${className}`}
-        >
-          <p className="font-mono text-[10px] text-content-faint uppercase tracking-widest">
-            ASSET_OFFLINE
-          </p>
-        </div>
+        <Placeholder className={className} label="ASSET_OFFLINE" />
       );
     }
 
-    const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,c_limit`;
+    const base = `https://res.cloudinary.com/${cloudName}/image/upload`;
 
-    const srcSet = `
-      ${baseUrl},w_640/${publicId} 640w,
-      ${baseUrl},w_960/${publicId} 960w,
-      ${baseUrl},w_1280/${publicId} 1280w
-    `;
+    const srcSet = WIDTHS.map(
+      (w) => `${base}/${TRANSFORMS},w_${w}/${publicId} ${w}w`,
+    ).join(", ");
 
     return (
       <div
         className={`relative overflow-hidden bg-surface-accent ${className}`}
       >
         {!isLoaded && (
-          <div className="absolute inset-0 bg-surface-accent animate-pulse z-0" />
+          <div className="absolute inset-0 z-0 animate-pulse bg-surface-accent" />
         )}
 
         <img
-          src={`${baseUrl},w_1280/${publicId}`}
+          src={`${base}/${TRANSFORMS},w_${FALLBACK_WIDTH}/${publicId}`}
           srcSet={srcSet}
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 280px, 360px"
+          sizes={sizes}
           alt={alt}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          fetchPriority={priority ? "high" : "auto"}
+          {...imgAttrs(priority)}
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}
-          className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out z-10 relative ${
+          className={`relative z-10 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
-          width="1280"
-          height="720"
+          width={FALLBACK_WIDTH}
+          height={720}
         />
       </div>
     );

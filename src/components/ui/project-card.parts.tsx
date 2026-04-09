@@ -3,7 +3,6 @@ import { Github, ArrowUpRight } from "@/icons/lucide";
 import CloudinaryImg from "@/components/ui/cloudinary-image";
 import type { Project } from "@/types";
 import {
-  TAG_CLASS,
   PANEL_CLASS,
   OBJECT_POS_CLASS,
 } from "@/components/ui/project-card.constants";
@@ -65,7 +64,13 @@ export function MetricPill({ metric }: { metric: string }) {
   );
 }
 
-export function ProjectLinks({ links }: { links: Project["links"] }) {
+export function ProjectLinks({
+  links,
+  title,
+}: {
+  links: Project["links"];
+  title: string;
+}) {
   return (
     <div className="flex items-center gap-5">
       {links.demo && (
@@ -73,6 +78,7 @@ export function ProjectLinks({ links }: { links: Project["links"] }) {
           href={links.demo}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label={`Live site — ${title}`}
           className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-content transition-colors hover:text-lime"
         >
           Live site
@@ -89,6 +95,7 @@ export function ProjectLinks({ links }: { links: Project["links"] }) {
           href={links.repo}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label={`Source code — ${title}`}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-content-faint transition-colors hover:text-content-secondary"
         >
           Source
@@ -105,12 +112,14 @@ export function MediaPanel({
   objectPos = "topCenter",
   className = "",
   priority = false,
+  sizes,
 }: {
   publicId: string;
   alt: string;
   objectPos?: keyof typeof OBJECT_POS_CLASS;
   className?: string;
   priority?: boolean;
+  sizes?: string;
 }) {
   if (!publicId) {
     return (
@@ -132,6 +141,7 @@ export function MediaPanel({
       <CloudinaryImg
         publicId={publicId}
         alt={alt}
+        sizes={sizes}
         className={[
           "h-full w-full object-cover",
           OBJECT_POS_CLASS[objectPos],

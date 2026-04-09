@@ -26,6 +26,9 @@
     />
     <meta name="theme-color" content="#121518" />
 
+    <link rel="preconnect" href="https://res.cloudinary.com" />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
     <link
       rel="preload"
       href="/fonts/outfit-v15-latin-regular.woff2"
@@ -85,7 +88,96 @@
       <textarea name="message"></textarea>
     </form>
 
-    <div id="root"></div>
+    <div id="root">
+      <div
+        style="
+          min-height: 100svh;
+          display: flex;
+          align-items: flex-end;
+          overflow: hidden;
+          background-color: #121518;
+        "
+        aria-hidden="true"
+      >
+        <div
+          style="
+            width: 100%;
+            max-width: 75rem;
+            margin: 0 auto;
+            padding: 4rem 1.25rem 4rem;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.625rem;
+              margin-bottom: 3rem;
+            "
+          >
+            <span
+              style="
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #cfea63;
+                flex-shrink: 0;
+              "
+            ></span>
+            <span
+              style="
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                font-weight: 500;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #cfea63;
+              "
+            >
+              Available for work
+            </span>
+          </div>
+
+          <h1
+            style="
+              font-family: 'Outfit', sans-serif;
+              font-weight: 800;
+              letter-spacing: -0.045em;
+              line-height: 0.92;
+              color: #f2f5f4;
+              margin: 0;
+              font-size: clamp(2.4rem, 5vw, 4.5rem);
+              max-width: 18ch;
+            "
+          >
+            I build web systems<br />
+            that don&apos;t compromise<span style="color: #cfea63"
+              >.</span
+            >
+          </h1>
+
+          <div style="margin-top: 2.5rem">
+            <p
+              style="
+                font-family: 'Inter', sans-serif;
+                font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.125rem);
+                line-height: 1.7;
+                color: #94a3b0;
+                max-width: 42ch;
+                margin: 0;
+              "
+            >
+              <span style="color: #f2f5f4; font-weight: 500"
+                >Mats Gustafsson</span
+              >
+              — full-stack developer shipping performant, accessible
+              products from first commit to production. Based in
+              Sweden&nbsp;&amp;&nbsp;France.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

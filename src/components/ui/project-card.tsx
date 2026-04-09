@@ -1,11 +1,7 @@
 import { memo } from "react";
 import type { Project } from "@/types";
-import {
-  CardShell,
-  CompactCard,
-  HeroCard,
-  WideCard,
-} from "@/components/ui/project-card.parts";
+import { CardShell } from "@/components/ui/project-card.parts";
+import { HeroCard, WideCard, CompactCard } from "@/components/ui/project-card.variants";
 
 interface ProjectCardProps {
   project: Project;

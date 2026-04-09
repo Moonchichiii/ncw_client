@@ -1,12 +1,15 @@
 import type { Project } from "@/types";
-import { TAG_CLASS, safePublicId } from "@/components/ui/project-card.constants";
+import {
+  TAG_CLASS,
+  safePublicId,
+} from "@/components/ui/project-card.constants";
 import {
   ProjectNumber,
   StatusBadge,
   MetricPill,
   ProjectLinks,
   MediaPanel,
-} from "./project-card.parts";
+} from "@/components/ui/project-card.parts";
 
 export function HeroCard({
   project,
@@ -38,6 +41,7 @@ export function HeroCard({
               objectPos="topCenter"
               className="h-full w-full"
               priority
+              sizes="(max-width: 480px) 88vw, (max-width: 768px) 92vw, (max-width: 1280px) 75vw, 900px"
             />
           </div>
 
@@ -47,6 +51,7 @@ export function HeroCard({
               alt={`Detail of ${project.title}`}
               objectPos="bottomRight"
               className="h-full w-full"
+              sizes="(max-width: 768px) 26vw, 220px"
             />
           </div>
 
@@ -56,6 +61,7 @@ export function HeroCard({
               alt={`Detail of ${project.title}`}
               objectPos="center"
               className="h-full w-full"
+              sizes="(max-width: 768px) 17vw, 150px"
             />
           </div>
 
@@ -89,7 +95,7 @@ export function HeroCard({
               </span>
             ))}
           </div>
-          <ProjectLinks links={project.links} />
+          <ProjectLinks links={project.links} title={project.title} />
         </div>
       </div>
     </>
@@ -121,6 +127,7 @@ export function WideCard({
               alt={`Screenshot of ${project.title}`}
               objectPos="topCenter"
               className="h-full w-full"
+              sizes="(max-width: 768px) 90vw, 44vw"
             />
           </div>
 
@@ -130,6 +137,7 @@ export function WideCard({
               alt={`Detail of ${project.title}`}
               objectPos="bottomCenter"
               className="h-full w-full"
+              sizes="(max-width: 768px) 28vw, 150px"
             />
           </div>
 
@@ -165,7 +173,7 @@ export function WideCard({
         </div>
 
         <div className="mt-auto">
-          <ProjectLinks links={project.links} />
+          <ProjectLinks links={project.links} title={project.title} />
         </div>
       </div>
     </>
@@ -197,6 +205,7 @@ export function CompactCard({
               alt={`Screenshot of ${project.title}`}
               objectPos="topCenter"
               className="h-full w-full"
+              sizes="(max-width: 768px) 90vw, (max-width: 1280px) 44vw, 380px"
             />
           </div>
 
@@ -206,6 +215,7 @@ export function CompactCard({
               alt={`Detail of ${project.title}`}
               objectPos="bottomRight"
               className="h-full w-full"
+              sizes="(max-width: 768px) 36vw, 150px"
             />
           </div>
 
@@ -243,7 +253,7 @@ export function CompactCard({
         </div>
 
         <div className="mt-auto">
-          <ProjectLinks links={project.links} />
+          <ProjectLinks links={project.links} title={project.title} />
         </div>
       </div>
     </>

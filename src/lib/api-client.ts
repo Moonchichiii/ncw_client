@@ -9,10 +9,6 @@ export class ApiError extends Error {
   }
 }
 
-/**
- * POST form data to Netlify Forms.
- * Matches the hidden `<form name="contact">` in index.html.
- */
 export async function submitNetlifyForm(
   formName: string,
   data: Record<string, string>,

@@ -29,18 +29,18 @@ export const PROJECTS: Project[] = [
       repo: null,
     },
   },
-  {
-    id: "03",
-    title: "COMMERCE SKELETON ENGINE",
-    description:
-      "Django + Wagtail + HTMX architecture scaffold. Built-in marketing modules, sales flows, flash-sale logic, CMS-driven landing pages, and admin automation.",
-    tech: ["Django", "Wagtail", "HTMX", "PostgreSQL", "Docker"],
-    image: "projects/commerce-skeleton",
-    metric: "Zero-downtime deploys",
-    status: "SYSTEM_ARCHITECTURE",
-    links: {
-      demo: null,
-      repo: null,
-    },
-  }, 
+  // {
+  //   id: "03",
+  //   title: "COMMERCE SKELETON ENGINE",
+  //   description:
+  //     "Django + Wagtail + HTMX architecture scaffold. Built-in marketing modules, sales flows, flash-sale logic, CMS-driven landing pages, and admin automation.",
+  //   tech: ["Django", "Wagtail", "HTMX", "PostgreSQL", "Docker"],
+  //   image: "projects/commerce-skeleton",
+  //   metric: "Zero-downtime deploys",
+  //   status: "SYSTEM_ARCHITECTURE",
+  //   links: {
+  //     demo: null,
+  //     repo: null,
+  //   },
+  // }, 
 ];

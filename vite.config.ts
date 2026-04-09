@@ -19,7 +19,7 @@ export default defineConfig({
     tailwindcss(),
     visualizer({
       filename: "dist/bundle-stats.html",
-      open: true,
+      open: false,
       gzipSize: true,
       brotliSize: true,
     }),
@@ -34,21 +34,23 @@ export default defineConfig({
     minify: "esbuild",
     sourcemap: false,
     modulePreload: {
-      polyfill: true,
+      polyfill: false,
     },
     assetsInlineLimit: 2048,
     cssCodeSplit: true,
     rollupOptions: {
       treeshake: {
-        moduleSideEffects: false,
         propertyReadSideEffects: false,
         tryCatchDeoptimization: false,
       },
       output: {
         compact: true,
         manualChunks: {
+          framework: ["react", "react-dom"],
           router: ["@tanstack/react-router"],
-          "error-vendor": ["react-error-boundary"],          
+          query: ["@tanstack/react-query"],
+          gsap: ["gsap"],
+          "error-vendor": ["react-error-boundary"],
           "form-validation": ["zod"],
         },
         chunkFileNames: "js/[name]-[hash].js",
@@ -86,8 +88,14 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "clsx", "@tanstack/react-router"],
-    exclude: [],
+    include: [
+      "react",
+      "react-dom",
+      "clsx",
+      "@tanstack/react-router",
+      "@tanstack/react-query",
+      "gsap",
+    ],
   },
   esbuild: {
     target: "esnext",
@@ -95,7 +103,7 @@ export default defineConfig({
     minifyIdentifiers: true,
     minifySyntax: true,
     minifyWhitespace: true,
-    drop: ["debugger"],
+    drop: ["debugger", "console"],
     legalComments: "none",
   },
 });
