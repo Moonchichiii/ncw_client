@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import CookieConsent from "@/features/cookies/components/cookie-consent";
 
 interface RootLayoutProps {
