@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Outlet } from "@tanstack/react-router";
 import Hero from "@/components/sections/hero";
 import Work from "@/components/sections/work";
 import About from "@/components/sections/about";
@@ -7,13 +7,13 @@ import PaperBreak from "@/components/sections/paper-break";
 import Faq from "@/components/sections/faq";
 import Contact from "@/components/sections/contact";
 
-export const Route = createLazyFileRoute("/")({
-  component: HomePage,
+export const Route = createLazyFileRoute("/_home")({
+  component: HomeLayout,
 });
 
-function HomePage() {
+function HomeLayout() {
   return (
-     <>
+    <>
       <Hero />
       <PaperBreak variant="stats" />
       <Work />
@@ -21,6 +21,7 @@ function HomePage() {
       <Process />
       <Faq />
       <Contact />
+      <Outlet />
     </>
   );
 }

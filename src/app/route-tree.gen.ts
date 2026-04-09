@@ -9,86 +9,118 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./../routes/__root"
-import { Route as TermsOfServiceRouteImport } from "./../routes/terms-of-service"
-import { Route as PrivacyPolicyRouteImport } from "./../routes/privacy-policy"
-import { Route as IndexRouteImport } from "./../routes/index"
+import { Route as HomeRouteImport } from "./../routes/_home"
+import { Route as HomeIndexRouteImport } from "./../routes/_home.index"
+import { Route as HomeTermsOfServiceRouteImport } from "./../routes/_home.terms-of-service"
+import { Route as HomePrivacyPolicyRouteImport } from "./../routes/_home.privacy-policy"
 
-const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
-  id: "/terms-of-service",
-  path: "/terms-of-service",
+const HomeRoute = HomeRouteImport.update({
+  id: "/_home",
   getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
-  id: "/privacy-policy",
-  path: "/privacy-policy",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+} as any).lazy(() => import("./../routes/_home.lazy").then((d) => d.Route))
+const HomeIndexRoute = HomeIndexRouteImport.update({
   id: "/",
   path: "/",
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import("./../routes/index.lazy").then((d) => d.Route))
+  getParentRoute: () => HomeRoute,
+} as any)
+const HomeTermsOfServiceRoute = HomeTermsOfServiceRouteImport.update({
+  id: "/terms-of-service",
+  path: "/terms-of-service",
+  getParentRoute: () => HomeRoute,
+} as any).lazy(() =>
+  import("./../routes/_home.terms-of-service.lazy").then((d) => d.Route),
+)
+const HomePrivacyPolicyRoute = HomePrivacyPolicyRouteImport.update({
+  id: "/privacy-policy",
+  path: "/privacy-policy",
+  getParentRoute: () => HomeRoute,
+} as any).lazy(() =>
+  import("./../routes/_home.privacy-policy.lazy").then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute
-  "/privacy-policy": typeof PrivacyPolicyRoute
-  "/terms-of-service": typeof TermsOfServiceRoute
+  "/": typeof HomeIndexRoute
+  "/privacy-policy": typeof HomePrivacyPolicyRoute
+  "/terms-of-service": typeof HomeTermsOfServiceRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute
-  "/privacy-policy": typeof PrivacyPolicyRoute
-  "/terms-of-service": typeof TermsOfServiceRoute
+  "/privacy-policy": typeof HomePrivacyPolicyRoute
+  "/terms-of-service": typeof HomeTermsOfServiceRoute
+  "/": typeof HomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  "/": typeof IndexRoute
-  "/privacy-policy": typeof PrivacyPolicyRoute
-  "/terms-of-service": typeof TermsOfServiceRoute
+  "/_home": typeof HomeRouteWithChildren
+  "/_home/privacy-policy": typeof HomePrivacyPolicyRoute
+  "/_home/terms-of-service": typeof HomeTermsOfServiceRoute
+  "/_home/": typeof HomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: "/" | "/privacy-policy" | "/terms-of-service"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/privacy-policy" | "/terms-of-service"
-  id: "__root__" | "/" | "/privacy-policy" | "/terms-of-service"
+  to: "/privacy-policy" | "/terms-of-service" | "/"
+  id:
+    | "__root__"
+    | "/_home"
+    | "/_home/privacy-policy"
+    | "/_home/terms-of-service"
+    | "/_home/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
-  TermsOfServiceRoute: typeof TermsOfServiceRoute
+  HomeRoute: typeof HomeRouteWithChildren
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    "/terms-of-service": {
-      id: "/terms-of-service"
-      path: "/terms-of-service"
-      fullPath: "/terms-of-service"
-      preLoaderRoute: typeof TermsOfServiceRouteImport
+    "/_home": {
+      id: "/_home"
+      path: ""
+      fullPath: "/"
+      preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/privacy-policy": {
-      id: "/privacy-policy"
-      path: "/privacy-policy"
-      fullPath: "/privacy-policy"
-      preLoaderRoute: typeof PrivacyPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/": {
-      id: "/"
+    "/_home/": {
+      id: "/_home/"
       path: "/"
       fullPath: "/"
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    "/_home/terms-of-service": {
+      id: "/_home/terms-of-service"
+      path: "/terms-of-service"
+      fullPath: "/terms-of-service"
+      preLoaderRoute: typeof HomeTermsOfServiceRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    "/_home/privacy-policy": {
+      id: "/_home/privacy-policy"
+      path: "/privacy-policy"
+      fullPath: "/privacy-policy"
+      preLoaderRoute: typeof HomePrivacyPolicyRouteImport
+      parentRoute: typeof HomeRoute
     }
   }
 }
 
+interface HomeRouteChildren {
+  HomePrivacyPolicyRoute: typeof HomePrivacyPolicyRoute
+  HomeTermsOfServiceRoute: typeof HomeTermsOfServiceRoute
+  HomeIndexRoute: typeof HomeIndexRoute
+}
+
+const HomeRouteChildren: HomeRouteChildren = {
+  HomePrivacyPolicyRoute: HomePrivacyPolicyRoute,
+  HomeTermsOfServiceRoute: HomeTermsOfServiceRoute,
+  HomeIndexRoute: HomeIndexRoute,
+}
+
+const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  PrivacyPolicyRoute: PrivacyPolicyRoute,
-  TermsOfServiceRoute: TermsOfServiceRoute,
+  HomeRoute: HomeRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

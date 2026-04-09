@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import { visualizer } from "rollup-plugin-visualizer";
 import { resolve } from "path";
 import type { PreRenderedAsset } from "rollup";
 
@@ -14,9 +15,14 @@ export default defineConfig({
       quoteStyle: "double",
       autoCodeSplitting: true,
     }),
-      react(),
-      tailwindcss(),
-    
+    react(),
+    tailwindcss(),
+    visualizer({
+      filename: "dist/bundle-stats.html",
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
   ],
   resolve: {
     alias: {

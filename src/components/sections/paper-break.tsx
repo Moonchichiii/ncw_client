@@ -8,9 +8,9 @@ interface PaperBreakProps {
 }
 
 const STATS = [
-  { value: "<1s", label: "Target load time" },
-  { value: "AA+", label: "Accessibility standard" },
-  { value: "0", label: "Deployment anxiety" },
+  { value: "<3s", label: "LCP load time" },
+  { value: "WCAG AA", label: "Accessibility spec" },
+  { value: "100%", label: "CI/CD automation" },
 ] as const;
 
 const PaperBreak = memo<PaperBreakProps>(

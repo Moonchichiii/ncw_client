@@ -10,7 +10,9 @@ import {
 
 function useScrollLock(locked: boolean) {
   useEffect(() => {
-    if (!locked) {return;}
+    if (!locked) {
+      return;
+    }
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -26,8 +28,7 @@ function getFocusable(container: HTMLElement) {
     ),
   ).filter(
     (el) =>
-      !el.hasAttribute("disabled") &&
-      el.getAttribute("aria-hidden") !== "true",
+      !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true",
   );
 }
 
@@ -47,10 +48,7 @@ export default function CookieConsent() {
   const prevActiveRef = useRef<HTMLElement | null>(null);
 
   const [visible, setVisible] = useState(false);
-  const [localPrefs, setLocalPrefs] =
-    useState<CookiePreferences>(preferences);
-
-  useEffect(() => setLocalPrefs(preferences), [preferences]);
+  const [localPrefs, setLocalPrefs] = useState<CookiePreferences>(preferences);
 
   useEffect(() => {
     if (!showBanner) {
@@ -64,24 +62,35 @@ export default function CookieConsent() {
   useScrollLock(showPreferences);
 
   useEffect(() => {
-    if (!showPreferences) {return;}
+    if (!showPreferences) {
+      return;
+    }
+
+    // Reset local preferences when the modal opens
+    setLocalPrefs(preferences);
 
     prevActiveRef.current = document.activeElement as HTMLElement | null;
 
     const modal = modalRef.current;
-    if (!modal) {return;}
+    if (!modal) {
+      return;
+    }
 
     const focusable = getFocusable(modal);
     (focusable[0] ?? modal).focus();
 
     function handleTabKey(e: KeyboardEvent, modal: HTMLElement) {
       const items = getFocusable(modal);
-      if (items.length === 0) {return;}
+      if (items.length === 0) {
+        return;
+      }
 
       const first = items[0];
       const last = items[items.length - 1];
       const active = document.activeElement as HTMLElement | null;
-      if (!active) {return;}
+      if (!active) {
+        return;
+      }
 
       if (e.shiftKey && active === first) {
         e.preventDefault();
@@ -110,15 +119,19 @@ export default function CookieConsent() {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       const prev = prevActiveRef.current;
-      if (prev && typeof prev.focus === "function") {prev.focus();}
+      if (prev && typeof prev.focus === "function") {
+        prev.focus();
+      }
     };
-  }, [showPreferences, hideModals]);
+  }, [showPreferences, preferences, hideModals]);
 
   const onToggle = useCallback((id: CookieCategory, enabled: boolean) => {
     setLocalPrefs((p) => ({ ...p, [id]: enabled }));
   }, []);
 
-  if (!showBanner && !showPreferences) {return null;}
+  if (!showBanner && !showPreferences) {
+    return null;
+  }
 
   return (
     <>
@@ -132,10 +145,10 @@ export default function CookieConsent() {
           ].join(" ")}
           aria-live="polite"
         >
-          <div className="card p-5 md:p-6 shadow-2xl bg-surface-elevated/85 backdrop-blur-md">
+          <div className="card bg-surface-elevated/85 shadow-2xl backdrop-blur-md p-5 md:p-6">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full border border-edge bg-surface/60 flex items-center justify-center">
+                <div className="border-edge bg-surface/60 flex h-9 w-9 items-center justify-center rounded-full border">
                   <Cookie
                     size={16}
                     strokeWidth={1.8}
@@ -145,7 +158,7 @@ export default function CookieConsent() {
                 </div>
                 <div>
                   <p className="section-label mb-0!">Privacy</p>
-                  <p className="text-[11px] text-content-faint mt-1">
+                  <p className="text-content-faint mt-1 text-[11px]">
                     Cookies &amp; preferences
                   </p>
                 </div>
@@ -153,7 +166,7 @@ export default function CookieConsent() {
 
               <button
                 onClick={hideModals}
-                className="text-content-faint hover:text-content transition-colors p-1"
+                className="text-content-faint hover:text-content p-1 transition-colors"
                 aria-label="Dismiss cookie banner"
                 type="button"
               >
@@ -161,20 +174,29 @@ export default function CookieConsent() {
               </button>
             </div>
 
-            <p className="mt-4 text-sm text-content-secondary leading-relaxed">
-              We use cookies to improve performance and understand traffic. Choose what you allow.
+            <p className="text-content-secondary mt-4 text-sm leading-relaxed">
+              We use cookies to improve performance and understand traffic.
+              Choose what you allow.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <button onClick={rejectAll} className="btn-outline h-10 text-xs" type="button">
+              <button
+                onClick={rejectAll}
+                className="btn-outline h-10 text-xs"
+                type="button"
+              >
                 Reject all
               </button>
-              <button onClick={acceptAll} className="btn-lime h-10 text-xs" type="button">
+              <button
+                onClick={acceptAll}
+                className="btn-lime h-10 text-xs"
+                type="button"
+              >
                 Accept all
               </button>
               <button
                 onClick={showPreferencesPanel}
-                className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-content-faint hover:text-content transition-colors"
+                className="text-content-faint hover:text-content ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium transition-colors"
                 type="button"
               >
                 <Settings size={12} strokeWidth={1.6} aria-hidden="true" />
@@ -187,7 +209,7 @@ export default function CookieConsent() {
 
       {showPreferences && (
         <div
-          className="fixed inset-0 z-2001 bg-surface/90 backdrop-blur-sm flex items-center justify-center p-4"
+          className="bg-surface/90 fixed inset-0 z-2001 flex items-center justify-center p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="Cookie preferences"
@@ -195,15 +217,15 @@ export default function CookieConsent() {
           <div
             ref={modalRef}
             tabIndex={-1}
-            className="w-full max-w-2xl card shadow-2xl flex flex-col max-h-[85vh] overflow-hidden bg-surface outline-none"
+            className="card bg-surface flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden shadow-2xl outline-none"
           >
-            <div className="p-6 border-b border-edge flex justify-between items-center bg-surface-alt">
-              <h2 className="text-lg font-heading font-bold text-content tracking-tight">
+            <div className="border-edge bg-surface-alt flex items-center justify-between border-b p-6">
+              <h2 className="font-heading text-content text-lg font-bold tracking-tight">
                 Cookie preferences
               </h2>
               <button
                 onClick={hideModals}
-                className="text-content-faint hover:text-content transition-colors p-1"
+                className="text-content-faint hover:text-content p-1 transition-colors"
                 aria-label="Close preferences"
                 type="button"
               >
@@ -211,7 +233,7 @@ export default function CookieConsent() {
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-3">
+            <div className="space-y-3 overflow-y-auto p-6">
               {COOKIE_CATEGORIES.map((category) => (
                 <CookieCategoryToggle
                   key={category.id}
@@ -223,8 +245,12 @@ export default function CookieConsent() {
               ))}
             </div>
 
-            <div className="p-6 border-t border-edge bg-surface-alt flex items-center justify-between gap-3">
-              <button onClick={rejectAll} className="btn-outline h-10 text-xs" type="button">
+            <div className="border-edge bg-surface-alt flex items-center justify-between gap-3 border-t p-6">
+              <button
+                onClick={rejectAll}
+                className="btn-outline h-10 text-xs"
+                type="button"
+              >
                 Reject all
               </button>
               <button

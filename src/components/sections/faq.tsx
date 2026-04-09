@@ -3,28 +3,28 @@ import { Plus, X } from "@/icons/lucide";
 
 const FAQ_ITEMS = [
   {
-    q: "What do you need from me to start?",
-    a: "A clear goal, existing links/assets (if any), and one point of contact for feedback. I'll help shape scope into an actionable plan.",
+    q: "What do you need from me to get started?",
+    a: "A clear problem statement, access to your existing repo or assets, and a single decision-maker. I handle the architecture and execution; I just need to understand your business constraints.",
   },
   {
     q: "How do pricing and milestones work?",
-    a: "Either fixed-scope milestones or hourly for open-ended work. I propose milestones upfront so you always know what's next and what it costs.",
+    a: "I map out the technical architecture and deliverables upfront. For most projects, we agree on fixed-cost milestones based on shipped features, not estimated hours. No surprise billing.",
   },
   {
-    q: "Can you improve an existing site instead of rebuilding?",
-    a: "Yes. I can audit performance, accessibility, and code quality—then refactor or rebuild only the parts that create friction.",
+    q: "Can you rescue or refactor an existing codebase?",
+    a: "Yes. I routinely untangle legacy Django or React applications. I'll audit the codebase, establish CI/CD, add test coverage, and incrementally refactor bottlenecks without breaking production.",
   },
   {
     q: "How do you measure performance and accessibility?",
-    a: "I use Lighthouse/Core Web Vitals targets, real device checks, keyboard navigation, and screen reader testing. The goal is measurable improvements, not guesses.",
+    a: "Automated tooling. Lighthouse CI for Core Web Vitals, aXe-core for WCAG AA compliance, backed by manual screen reader testing. If it fails the pipeline, it doesn't ship.",
   },
   {
-    q: "What happens after launch?",
-    a: "You get a clean handover, documentation, and optional support. I can also monitor performance and fix issues quickly after release.",
+    q: "What happens after deployment?",
+    a: "You own 100% of the code and infrastructure. I provide clean documentation, containerized environments, and automated pipelines so your team can take over immediately.",
   },
   {
-    q: "Do you work with startups, agencies, or in-house teams?",
-    a: "All of the above. I can ship solo, collaborate with teams, or plug into an existing workflow and repo without slowing things down.",
+    q: "How do you integrate with in-house engineering teams?",
+    a: "Seamlessly. I follow standard Git flows, write clean PRs that pass your internal reviews, and adapt to your sprint cadence without needing hand-holding.",
   },
 ] as const;
 
@@ -40,7 +40,7 @@ const FaqItem = memo<{
       className="w-full flex items-center justify-between py-7 text-left group hover:bg-surface-accent/20 -mx-3 px-3 rounded-sm transition-colors"
       aria-expanded={isOpen}
     >
-      <span className="font-medium text-content group-hover:text-accent transition-colors pr-4 text-[clamp(0.98rem,0.95rem+0.2vw,1.06rem)] leading-snug">
+      <span className="font-bold text-content group-hover:text-accent transition-colors pr-4 text-[clamp(1.05rem,1rem+0.2vw,1.15rem)] leading-snug">
         {q}
       </span>
       <span className="shrink-0 text-content-faint">

@@ -17,13 +17,13 @@ const STEPS = [
     num: "03",
     title: "Polish",
     duration: "3–5 days",
-    desc: "Accessibility audit, performance pass, and UI refinement. This is what clients actually see.",
+    desc: "Accessibility audits, Core Web Vitals optimization, and UI edge-case testing. Getting the final 10% right.",
   },
   {
     num: "04",
     title: "Deploy",
     duration: "1–2 days",
-    desc: "CI/CD pipelines, security scanning, monitoring setup. Ship with confidence, not crossed fingers.",
+    desc: "Automated CI/CD pipelines, container orchestration, and monitoring. Push to main, deploy to production.",
   },
 ] as const;
 
@@ -42,8 +42,7 @@ const Process = memo(() => (
           </h2>
         </div>
         <p className="text-[clamp(0.95rem,0.9rem+0.2vw,1.05rem)] text-content-secondary leading-relaxed max-w-[50ch]">
-          A clear, repeatable process that keeps projects on track and
-          outcomes predictable.
+          No black boxes. Just a transparent, engineering-led workflow that turns requirements into robust, production-ready systems.
         </p>
       </div>
 

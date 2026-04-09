@@ -1,4 +1,3 @@
-// src/icons/lucide.ts
 export type { LucideIcon } from "lucide-react";
 
 // Import per-icon ESM modules (prevents whole-library bundling)

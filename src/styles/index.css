@@ -1,5 +1,6 @@
 @import "tailwindcss";
-/* ── Font Faces ── */
+
+/* Font Faces */
 
 @font-face {
   font-family: "Outfit";
@@ -22,44 +23,36 @@
   src: url("/fonts/jetbrains-mono-v24-latin-regular.woff2") format("woff2");
 }
 
-/* ── Design Tokens ── */
+/* Design Tokens */
 
 @theme {
   --color-surface: var(--bg-primary);
   --color-surface-alt: var(--bg-secondary);
   --color-surface-elevated: var(--bg-elevated);
   --color-surface-accent: var(--bg-accent);
-
   --color-content: var(--text-primary);
   --color-content-secondary: var(--text-secondary);
   --color-content-muted: var(--text-secondary);
   --color-content-faint: var(--text-faint);
-
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-contrast: var(--accent-text);
-
   --color-lime: var(--accent);
-
   --color-edge: var(--border);
   --color-edge-subtle: var(--border-subtle);
-
   --color-focus-ring: var(--focus-ring);
-
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-heading: "Outfit", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 20px;
   --radius-full: 999px;
-
   --animate-reveal: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* ── Color Tokens ── */
+/* Color Tokens */
 
 @layer base {
   :root {
@@ -67,36 +60,29 @@
     --bg-secondary: #151a1f;
     --bg-elevated: #1b2127;
     --bg-accent: rgba(207, 234, 99, 0.06);
-
     --text-primary: #ffffff;
     --text-secondary: #d6dde6;
     --text-faint: #94a3b8;
-
     --accent: #cfea63;
     --accent-hover: #d8ee7e;
     --accent-text: #111315;
     --accent-soft: rgba(207, 234, 99, 0.12);
-
     --border: #2e3740;
     --border-subtle: #252c33;
-
     --focus-ring: rgba(207, 234, 99, 0.75);
-
     --text-h1: clamp(2.4rem, 1.8rem + 2.8vw, 4.8rem);
     --text-h2: clamp(1.85rem, 1.45rem + 1.35vw, 2.75rem);
     --text-body: clamp(0.98rem, 0.94rem + 0.25vw, 1.05rem);
     --text-body-lg: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
     --text-label: clamp(0.78rem, 0.74rem + 0.12vw, 0.85rem);
-
     --space-section: clamp(4rem, 10vw, 7rem);
     --space-block: clamp(2rem, 5vw, 3.5rem);
     --max-width: 1200px;
-
     color-scheme: dark;
   }
 }
 
-/* ── Global Resets ── */
+/* Global Resets */
 
 @layer base {
   *,
@@ -202,10 +188,10 @@
   }
 }
 
-/* ── Component Classes ── */
+/* Component Classes */
 
 @layer components {
-  /* ── Buttons ── */
+  /* Buttons */
 
   .btn-lime {
     display: inline-flex;
@@ -224,16 +210,15 @@
     border-radius: var(--radius-full);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     cursor: pointer;
-    transition:
-      transform 150ms ease,
-      filter 150ms ease,
-      box-shadow 150ms ease;
+    transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
   }
+
   .btn-lime:hover {
     filter: brightness(1.04);
     transform: translateY(-1px);
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
   }
+
   .btn-lime:active {
     transform: translateY(0) scale(0.98);
   }
@@ -254,10 +239,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition:
-      background-color 150ms ease,
-      border-color 150ms ease;
+    transition: background-color 150ms ease, border-color 150ms ease;
   }
+
   .btn-outline:hover {
     background-color: rgba(255, 255, 255, 0.04);
     border-color: rgba(207, 234, 99, 0.35);
@@ -276,11 +260,12 @@
     cursor: pointer;
     transition: color 150ms ease;
   }
+
   .btn-ghost:hover {
     color: var(--accent);
   }
 
-  /* ── Tags & Labels ── */
+  /* Tags & Labels */
 
   .tag {
     display: inline-flex;
@@ -309,6 +294,7 @@
     text-transform: uppercase;
     margin-bottom: 0.75rem;
   }
+
   .section-label::before {
     content: "";
     display: block;
@@ -336,16 +322,15 @@
     flex-shrink: 0;
   }
 
-  /* ── Cards & Dividers ── */
+  /* Cards & Dividers */
 
   .card {
     background-color: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
+
   .card:hover {
     border-color: rgba(207, 234, 99, 0.15);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
@@ -357,7 +342,7 @@
     background-color: var(--border-subtle);
   }
 
-  /* ── Section Variants ── */
+  /* Section Variants */
 
   .section-paper {
     background: #f3f1ea;
@@ -365,23 +350,19 @@
     border-top: 1px solid rgba(15, 19, 22, 0.12);
     border-bottom: 1px solid rgba(15, 19, 22, 0.12);
   }
+
   .section-paper .paper-muted {
     color: rgba(15, 19, 22, 0.7);
   }
+
   .section-paper .paper-faint {
     color: rgba(15, 19, 22, 0.55);
   }
 
-  /* ── Warm-dark break ── */
-
   .section-warm {
     --bg-local: #1a1d17;
     background-color: var(--bg-local);
-    background-image: linear-gradient(
-      170deg,
-      rgba(207, 234, 99, 0.025) 0%,
-      transparent 50%
-    );
+    background-image: linear-gradient(170deg, rgba(207, 234, 99, 0.025) 0%, transparent 50%);
   }
 
   .section-warm .card {
@@ -389,93 +370,84 @@
     border-color: rgba(207, 234, 99, 0.08);
   }
 
-  /* ── LIGHT SECTIONS ── */
-  /*
-   * Overrides every design-token CSS variable in scope.
-   * All Tailwind utilities (text-content, bg-surface, border-edge…)
-   * automatically pick up the light values — zero component changes.
-   */
+  /* Light Sections */
 
   .section-light {
+    --text-primary: #000000;
+    --text-secondary: #3f3f46;
+    --text-faint: #52525b;
     --bg-primary: #f4f2ec;
     --bg-secondary: #eae7de;
     --bg-elevated: #ffffff;
-    --bg-accent: rgba(68, 100, 22, 0.06);
-
-    --text-primary: #1a1d20;
-    --text-secondary: #4e5564;
-    --text-faint: #7b8394;
-
-    --accent: #3d6b14;
-    --accent-hover: #4d7b24;
-    --accent-text: #ffffff;
-    --accent-soft: rgba(61, 107, 20, 0.1);
-
-    --border: rgba(0, 0, 0, 0.1);
-    --border-subtle: rgba(0, 0, 0, 0.06);
-
-    --focus-ring: rgba(61, 107, 20, 0.7);
-
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    --border: #a1a1aa;
+    --border-subtle: #d4d4d8;
+    --accent: #000000;
+    --color-surface: var(--bg-primary);
+    --color-surface-alt: var(--bg-secondary);
+    --color-surface-elevated: var(--bg-elevated);
+    --color-content: var(--text-primary);
+    --color-content-secondary: var(--text-secondary);
+    --color-content-muted: var(--text-secondary);
+    --color-content-faint: var(--text-faint);
+    --color-accent: var(--accent);
+    --color-lime: var(--accent);
+    --color-edge: var(--border);
+    --color-edge-subtle: var(--border-subtle);
+    background-color: var(--color-surface);
+    color: var(--color-content);
   }
 
   .section-light .card {
-    background-color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  }
-  .section-light .card:hover {
-    border-color: rgba(61, 107, 20, 0.25);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--color-content);
+    border-radius: 0;
+    box-shadow: 4px 4px 0px var(--color-content);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .section-light .status-dot {
-    background-color: #3d6b14;
-    box-shadow: 0 0 14px rgba(61, 107, 20, 0.3);
+  .section-light .card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--color-content);
   }
 
   .section-light .btn-lime {
-    background-color: #3d6b14;
+    background-color: var(--color-content);
     color: #ffffff;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--color-content);
+    border-radius: 0;
+    box-shadow: 4px 4px 0px var(--color-content);
   }
+
   .section-light .btn-lime:hover {
-    background-color: #4d7b24;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+    background-color: var(--text-secondary);
+    box-shadow: 6px 6px 0px var(--color-content);
   }
 
   .section-light .btn-outline {
-    color: var(--text-primary);
-    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--color-content);
+    border: 1px solid var(--color-content);
+    border-radius: 0;
+    box-shadow: 2px 2px 0px var(--color-content);
   }
+
   .section-light .btn-outline:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-    border-color: rgba(61, 107, 20, 0.4);
+    background-color: var(--color-surface-alt);
+    box-shadow: 4px 4px 0px var(--color-content);
   }
 
   .section-light .tag {
-    color: #3d6b14;
-    background-color: rgba(61, 107, 20, 0.08);
-    border-color: rgba(61, 107, 20, 0.18);
+    color: var(--color-content);
+    background-color: transparent;
+    border: 1px solid var(--color-content);
+    border-radius: 0;
   }
 
-  .section-light .lime-hover {
-    border-color: rgba(0, 0, 0, 0.08);
-    background-color: rgba(255, 255, 255, 0.6);
-    color: var(--text-faint);
-  }
-  .section-light .lime-hover:hover {
-    background-color: #3d6b14;
-    color: #ffffff;
-    border-color: transparent;
+  .section-light .status-dot {
+    background-color: var(--color-content);
+    box-shadow: none;
   }
 
-  .section-light .divider {
-    background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  /* ── Bold divider between major chapters ── */
+  /* Chapter Break */
 
   .chapter-break {
     width: 100%;
@@ -486,16 +458,11 @@
     max-width: var(--max-width);
     margin: 0 auto;
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--accent) 50%,
-      transparent 100%
-    );
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
     opacity: 0.25;
   }
 
-  /* ── Stat strip — LIGHT variant ── */
+  /* Stat Strip */
 
   .stat-strip {
     display: grid;
@@ -529,7 +496,7 @@
     color: var(--text-faint);
   }
 
-  /* ── Interactive hover pills ── */
+  /* Interactive Hover Pills */
 
   .lime-hover {
     display: inline-flex;
@@ -540,13 +507,7 @@
     border: 1px solid var(--border-subtle);
     background-color: rgba(27, 33, 39, 0.4);
     color: var(--text-faint);
-    transition:
-      background-color 150ms ease,
-      color 150ms ease,
-      border-color 150ms ease,
-      transform 150ms ease,
-      box-shadow 150ms ease,
-      filter 150ms ease;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
     will-change: transform;
   }
 
@@ -562,6 +523,51 @@
     transform: translateY(-1px);
     filter: brightness(1.02);
   }
+
+  /* Legal Content Typography */
+
+  .legal-content h3 {
+    font-size: clamp(1.1rem, 1.05rem + 0.2vw, 1.25rem);
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .legal-content h4 {
+    font-size: clamp(0.95rem, 0.92rem + 0.15vw, 1.05rem);
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .legal-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .legal-content ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .legal-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .legal-content hr {
+    border-color: var(--border-subtle);
+    margin: 2rem 0;
+  }
+
+  .legal-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
 }
 
 @utility hide-scrollbar {
@@ -572,7 +578,7 @@
   }
 }
 
-/* ── Keyframes ── */
+/* Keyframes */
 
 @keyframes reveal {
   from {
