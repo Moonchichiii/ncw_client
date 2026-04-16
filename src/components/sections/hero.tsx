@@ -106,9 +106,9 @@ const Hero = memo(() => {
         </div>
 
         <div className="mt-16 sm:mt-20 border-t border-edge-subtle pt-5">
-          <p className="text-xs font-mono text-content-faint tracking-wide">
-            Django · FastApi · React · TypeScript · HTMX · Tailwind CSS
-          </p>
+            <p className="text-xs font-mono text-content-faint tracking-wide">
+            Django · Wagtail · FastApi · React · Next.js · TypeScript · HTMX · Tailwind CSS
+            </p>
         </div>
       </div>
     </section>
