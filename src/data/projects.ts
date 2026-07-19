@@ -27,7 +27,10 @@ export const PROJECTS: Project[] = [
       "Fleet management with org-level plans, quick-add flows, and 30-day deletion cancel window",
     ],
     tech: ["Django", "PostgreSQL", "Stripe", "Expo", "Fly.io", "Cloudinary"],
-    image: "",
+    // Landing-page capture (uploaded 2026-07-19). TODO(mats): add gallery
+    // detail shots (Värdebevis/QR close-up, fleet view or Expo app) and
+    // consider re-uploading under ncw/ with a readable public ID.
+    image: "zpu3lx4k8ous36sjbdlh",
     status: "PRODUCTION_SAAS",
     links: {
       demo: "https://valunds.se",
