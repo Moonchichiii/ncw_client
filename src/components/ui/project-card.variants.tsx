@@ -9,6 +9,8 @@ import {
   MetricPill,
   ProjectLinks,
   MediaPanel,
+  HighlightsList,
+  RoleLine,
 } from "@/components/ui/project-card.parts";
 
 export function HeroCard({
@@ -79,12 +81,17 @@ export function HeroCard({
 
       <div className="flex flex-col gap-5 px-5 pb-6 md:flex-row md:items-end md:gap-10 md:px-8 md:pb-8">
         <div className="min-w-0 flex-1">
+          <RoleLine project={project} />
           <h3 className="mb-2 font-heading text-[clamp(1.25rem,1.1rem+0.8vw,1.85rem)] font-bold leading-tight tracking-[-0.03em] text-content transition-colors duration-200 group-hover:text-lime">
             {project.title}
           </h3>
           <p className="max-w-[60ch] text-[clamp(0.9rem,0.88rem+0.15vw,1rem)] leading-relaxed text-content-muted">
             {project.description}
           </p>
+          <HighlightsList
+            highlights={project.highlights}
+            className="mt-4 max-w-[64ch]"
+          />
         </div>
 
         <div className="flex shrink-0 flex-col gap-4 md:items-end">
@@ -156,13 +163,21 @@ export function WideCard({
           </div>
         )}
 
+        <RoleLine project={project} />
+
         <h3 className="mb-2.5 font-heading text-[clamp(1.1rem,1rem+0.4vw,1.4rem)] font-bold leading-snug tracking-[-0.02em] text-content transition-colors duration-200 group-hover:text-lime">
           {project.title}
         </h3>
 
-        <p className="mb-5 line-clamp-3 text-[clamp(0.88rem,0.86rem+0.12vw,0.96rem)] leading-relaxed text-content-muted">
+        <p className="mb-4 line-clamp-3 text-[clamp(0.88rem,0.86rem+0.12vw,0.96rem)] leading-relaxed text-content-muted">
           {project.description}
         </p>
+
+        <HighlightsList
+          highlights={project.highlights}
+          limit={3}
+          className="mb-5"
+        />
 
         <div className="mb-5 flex flex-wrap gap-1.5">
           {tags.map((t) => (

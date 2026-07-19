@@ -3,7 +3,8 @@ import ProjectCard from "@/components/ui/project-card";
 import { PROJECTS } from "@/data/projects";
 
 const Work = memo(() => {
-  const [hero, ...rest] = PROJECTS;
+  // Deliberate hierarchy: own SaaS products dominant, client work paired below.
+  const [hero, flagship, ...rest] = PROJECTS;
   const paired = rest.slice(0, 2);
   const remaining = rest.slice(2);
 
@@ -33,6 +34,13 @@ const Work = memo(() => {
           />
         )}
 
+        {/* Flagship wide card */}
+        {flagship && (
+          <div className="mt-4 md:mt-5">
+            <ProjectCard project={flagship} variant="wide" index={1} />
+          </div>
+        )}
+
         {/* Paired grid */}
         {paired.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-4 md:mt-5">
@@ -41,7 +49,7 @@ const Work = memo(() => {
                 key={p.id}
                 project={p}
                 variant="compact"
-                index={i + 1}
+                index={i + 2}
               />
             ))}
           </div>
@@ -53,7 +61,7 @@ const Work = memo(() => {
             <ProjectCard
               project={p}
               variant="wide"
-              index={i + 1 + paired.length}
+              index={i + 2 + paired.length}
             />
           </div>
         ))}

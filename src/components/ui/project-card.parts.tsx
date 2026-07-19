@@ -106,6 +106,49 @@ export function ProjectLinks({
   );
 }
 
+export function HighlightsList({
+  highlights,
+  limit,
+  className = "",
+}: {
+  highlights: Project["highlights"];
+  limit?: number;
+  className?: string;
+}) {
+  if (!highlights || highlights.length === 0) {
+    return null;
+  }
+  const items = limit ? highlights.slice(0, limit) : highlights;
+
+  return (
+    <ul className={["space-y-1.5", className].join(" ")}>
+      {items.map((h) => (
+        <li
+          key={h}
+          className="flex gap-2.5 text-[clamp(0.82rem,0.8rem+0.1vw,0.9rem)] leading-relaxed text-content-secondary"
+        >
+          <span
+            className="mt-[0.55em] h-1 w-2.5 shrink-0 rounded-full bg-lime/70"
+            aria-hidden="true"
+          />
+          {h}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function RoleLine({ project }: { project: Project }) {
+  if (!project.role && !project.year) {
+    return null;
+  }
+  return (
+    <p className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-content-faint">
+      {[project.role, project.year].filter(Boolean).join(" · ")}
+    </p>
+  );
+}
+
 export function MediaPanel({
   publicId,
   alt,

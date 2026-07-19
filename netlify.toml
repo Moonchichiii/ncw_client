@@ -40,9 +40,15 @@
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
-    # Optional: Referrer-Policy for privacy
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    # CSP notes:
+    # - script-src 'self': no inline scripts exist; keep it that way.
+    # - style-src needs 'unsafe-inline' for the index.html critical CSS and
+    #   React inline style attributes. Documented trade-off; do not widen further.
+    # - img-src allows Cloudinary (project screenshots) and data: (favicons).
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://res.cloudinary.com data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 # SPA Fallback
 [[redirects]]

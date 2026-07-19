@@ -27,5 +27,5 @@
     "forceConsistentCasingInFileNames": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }

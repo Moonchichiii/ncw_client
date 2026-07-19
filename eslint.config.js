@@ -142,5 +142,13 @@ export default tseslint.config(
     rules: {
       'max-lines-per-function': 'off',
     },
-  }
+  },
+
+  // Test files: long describe blocks are expected
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    rules: {
+      'max-lines-per-function': 'off',
+    },
+  },
 )

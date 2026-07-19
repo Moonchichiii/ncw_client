@@ -40,6 +40,9 @@ export default function LegalModal({ title, children }: LegalModalProps) {
   };
 
   return (
+    // Backdrop click is a mouse-only supplement: keyboard users close via
+    // Esc (native dialog `cancel` event, handled above) or the Close button.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
