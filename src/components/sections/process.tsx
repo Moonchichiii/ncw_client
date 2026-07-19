@@ -9,21 +9,33 @@ const STEPS = [
   },
   {
     num: "02",
+    title: "Architecture",
+    duration: "2–3 days",
+    desc: "Data model, service boundaries, and security posture designed before the first feature — decisions documented, not improvised.",
+  },
+  {
+    num: "03",
     title: "Build",
     duration: "1–4 weeks",
     desc: "Clean architecture, type-safe code, and test coverage. Iterative delivery with clear checkpoints.",
   },
   {
-    num: "03",
-    title: "Polish",
+    num: "04",
+    title: "Testing",
     duration: "3–5 days",
-    desc: "Accessibility audits, Core Web Vitals optimization, and UI edge-case testing. Getting the final 10% right.",
+    desc: "Accessibility audits, Core Web Vitals optimization, security checks, and edge-case testing. Getting the final 10% right.",
   },
   {
-    num: "04",
-    title: "Deploy",
+    num: "05",
+    title: "Deployment",
     duration: "1–2 days",
-    desc: "Automated CI/CD pipelines, container orchestration, and monitoring. Push to main, deploy to production.",
+    desc: "Automated CI/CD pipelines, container orchestration, and protected releases. Push to main, deploy to production.",
+  },
+  {
+    num: "06",
+    title: "Monitoring",
+    duration: "Ongoing",
+    desc: "Error tracking, backups, and dependency updates after launch — production ownership, not a handover and goodbye.",
   },
 ] as const;
 
@@ -50,10 +62,10 @@ const Process = memo(() => (
       </div>
 
       {/* Steps */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-y-10">
         {STEPS.map((step, i) => (
           <div key={step.num} className="relative group" data-reveal>
-            {i < STEPS.length - 1 && (
+            {i < STEPS.length - 1 && (i + 1) % 3 !== 0 && (
               <div
                 className="hidden md:block absolute top-5 left-[calc(50%+1.25rem)] right-0 h-px bg-edge-subtle z-0"
                 aria-hidden="true"

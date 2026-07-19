@@ -10,7 +10,7 @@ interface PaperBreakProps {
 const STATS = [
   { value: "<3s", label: "LCP load time" },
   { value: "WCAG AA", label: "Accessibility spec" },
-  { value: "100%", label: "CI/CD automation" },
+  { value: "CI/CD", label: "Automated pipelines" },
 ] as const;
 
 const PaperBreak = memo<PaperBreakProps>(

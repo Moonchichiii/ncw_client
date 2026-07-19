@@ -65,6 +65,12 @@ const Contact = memo(() => {
 
               <div className="mt-5 divider" />
 
+              <ul className="mt-5 space-y-1.5 text-sm leading-relaxed text-content-secondary">
+                <li>Remote — Europe</li>
+                <li>Hybrid — Scandinavia</li>
+                <li>Relocation for the right opportunity</li>
+              </ul>
+
               <p className="mt-5 text-content-faint text-sm leading-relaxed">
                 Maintainable codebases. Automated pipelines. Zero vendor lock-in.
               </p>

@@ -23,8 +23,8 @@ const FAQ_ITEMS = [
     a: "You own 100% of the code and infrastructure. I provide clean documentation, containerized environments, and automated pipelines so your team can take over immediately.",
   },
   {
-    q: "How do you integrate with in-house engineering teams?",
-    a: "Seamlessly. I follow standard Git flows, write clean PRs that pass your internal reviews, and adapt to your sprint cadence without needing hand-holding.",
+    q: "Can you join an existing engineering team?",
+    a: "Yes. Most of my work has involved integrating into existing products — improving architecture, shipping features, and modernising systems without disrupting ongoing development. I follow standard Git flows and write PRs that pass internal review.",
   },
 ] as const;
 
