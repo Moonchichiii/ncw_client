@@ -27,10 +27,10 @@ export const PROJECTS: Project[] = [
       "Fleet management with org-level plans, quick-add flows, and 30-day deletion cancel window",
     ],
     tech: ["Django", "PostgreSQL", "Stripe", "Expo", "Fly.io", "Cloudinary"],
-    // TODO(mats): upload the ServiceBok capture to Cloudinary and paste its
-    // public ID here; gallery detail shots (Värdebevis/QR close-up, fleet
-    // view or Expo app) upgrade the hero card further.
-    image: "",
+    // ServiceBok landing capture (uploaded 2026-07-19). TODO(mats): gallery
+    // detail shots (Värdebevis/QR close-up, fleet view or Expo app) restore
+    // the layered hero composition.
+    image: "oxh1mljszfsxvivjcfwo",
     status: "PRODUCTION_SAAS",
     links: {
       demo: "https://valunds.se",

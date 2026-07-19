@@ -29,7 +29,7 @@ const PaperBreak = memo<PaperBreakProps>(
           <div className="mx-auto max-w-300">
             <div className="stat-strip">
               {STATS.map((stat) => (
-                <div key={stat.label} className="stat-strip-item">
+                <div key={stat.label} className="stat-strip-item" data-reveal>
                   <div className="stat-strip-value">
                     {stat.value}
                   </div>

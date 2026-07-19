@@ -12,7 +12,7 @@ const Contact = memo(() => {
     >
       <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-(--space-block)">
-          <div>
+          <div data-reveal>
             <p className="section-label mb-4">Contact</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-content text-[clamp(2rem,1.4rem+2.2vw,3.2rem)]">
               Got a project
@@ -21,7 +21,7 @@ const Contact = memo(() => {
             </h2>
           </div>
 
-          <div className="flex flex-col justify-end">
+          <div className="flex flex-col justify-end" data-reveal>
             <p className="text-content-secondary leading-relaxed max-w-[52ch] text-[clamp(0.95rem,0.92rem+0.2vw,1.05rem)]">
               Looking for a full-stack engineer to architect, build, or 
               rescue your web application? Send me your technical requirements.
@@ -31,7 +31,7 @@ const Contact = memo(() => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Form */}
-          <div className="lg:col-span-8 card p-8 md:p-10">
+          <div className="lg:col-span-8 card p-8 md:p-10" data-reveal>
             <ContactForm />
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-4">

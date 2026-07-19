@@ -1,4 +1,5 @@
 import { createLazyFileRoute, Outlet } from "@tanstack/react-router";
+import { useSectionReveals } from "@/hooks/use-section-reveals";
 import Hero from "@/components/sections/hero";
 import Work from "@/components/sections/work";
 import About from "@/components/sections/about";
@@ -12,6 +13,8 @@ export const Route = createLazyFileRoute("/_home")({
 });
 
 function HomeLayout() {
+  useSectionReveals();
+
   return (
     <>
       <Hero />

@@ -90,7 +90,7 @@ const Faq = memo(() => {
       <div className="mx-auto max-w-300 px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4" data-reveal>
             <p className="section-label mb-4">FAQ</p>
             <h2 className="font-heading font-bold tracking-[-0.04em] leading-[0.98] md:leading-[0.95] text-(--text-h2)">
               Things clients
@@ -100,7 +100,7 @@ const Faq = memo(() => {
           </div>
 
           {/* Right */}
-          <div className="lg:col-span-8 border-t border-edge">
+          <div className="lg:col-span-8 border-t border-edge" data-reveal>
             {FAQ_ITEMS.map((item, i) => (
               <FaqItem
                 key={item.q}

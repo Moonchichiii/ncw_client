@@ -35,13 +35,16 @@ const Process = memo(() => (
     <div className="mx-auto max-w-300 px-5 sm:px-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-        <div>
+        <div data-reveal>
           <p className="section-label mb-4">Process</p>
           <h2 className="font-heading font-bold tracking-[-0.035em] leading-[1.02] text-(--text-h2)">
             How I Work
           </h2>
         </div>
-        <p className="text-[clamp(0.95rem,0.9rem+0.2vw,1.05rem)] text-content-secondary leading-relaxed max-w-[50ch]">
+        <p
+          className="text-[clamp(0.95rem,0.9rem+0.2vw,1.05rem)] text-content-secondary leading-relaxed max-w-[50ch]"
+          data-reveal
+        >
           No black boxes. Just a transparent, engineering-led workflow that turns requirements into robust, production-ready systems.
         </p>
       </div>
@@ -49,7 +52,7 @@ const Process = memo(() => (
       {/* Steps */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
         {STEPS.map((step, i) => (
-          <div key={step.num} className="relative group">
+          <div key={step.num} className="relative group" data-reveal>
             {i < STEPS.length - 1 && (
               <div
                 className="hidden md:block absolute top-5 left-[calc(50%+1.25rem)] right-0 h-px bg-edge-subtle z-0"
