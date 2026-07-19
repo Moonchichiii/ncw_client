@@ -45,10 +45,8 @@ export default defineConfig({
       output: {
         compact: true,
         manualChunks: {
-          framework: ["react", "react-dom"],
           router: ["@tanstack/react-router"],
           query: ["@tanstack/react-query"],
-          gsap: ["gsap"],
           "error-vendor": ["react-error-boundary"],
           "form-validation": ["zod"],
         },

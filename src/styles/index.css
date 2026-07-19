@@ -71,7 +71,7 @@
     --border-subtle: #252c33;
     --focus-ring: rgba(207, 234, 99, 0.75);
     --text-h1: clamp(2.4rem, 1.8rem + 2.8vw, 4.8rem);
-    --text-h2: clamp(1.85rem, 1.45rem + 1.35vw, 2.75rem);
+    --text-h2: clamp(1.9rem, 1.45rem + 1.5vw, 3.05rem);
     --text-body: clamp(0.98rem, 0.94rem + 0.25vw, 1.05rem);
     --text-body-lg: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
     --text-label: clamp(0.78rem, 0.74rem + 0.12vw, 0.85rem);

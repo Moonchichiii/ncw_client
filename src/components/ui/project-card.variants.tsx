@@ -21,63 +21,75 @@ export function HeroCard({
   num: string;
 }) {
   const mainId = safePublicId(project.image, "");
-  const d1 = safePublicId(project.gallery?.[0], project.image);
-  const d2 = safePublicId(
-    project.gallery?.[1],
-    project.gallery?.[0] ?? project.image,
-  );
+  // Detail panels only render for real gallery assets — duplicating the
+  // main screenshot (or stacking "Asset offline" placeholders) looks broken.
+  const d1 = safePublicId(project.gallery?.[0], "");
+  const d2 = safePublicId(project.gallery?.[1], "");
   const tags = project.tech.slice(0, 4);
 
   return (
     <>
-      <div className="p-3 md:p-5">
-        <div className="relative aspect-[2.35/1] w-full md:aspect-[2.6/1]">
-          <div className="absolute left-4 top-2 z-0 text-[clamp(4.25rem,10vw,8.5rem)] md:left-6 md:top-3">
-            <ProjectNumber num={num} />
-          </div>
-
-          <div className="absolute inset-0 z-10">
-            <MediaPanel
-              publicId={mainId}
-              alt={`Screenshot of ${project.title}`}
-              objectPos="topCenter"
-              className="h-full w-full"
-              priority
-              sizes="(max-width: 480px) 88vw, (max-width: 768px) 92vw, (max-width: 1280px) 75vw, 900px"
-            />
-          </div>
-
-          <div className="absolute right-4 top-4 z-20 h-[52%] w-[30%] md:right-6 md:top-6">
-            <MediaPanel
-              publicId={d1}
-              alt={`Detail of ${project.title}`}
-              objectPos="bottomRight"
-              className="h-full w-full"
-              sizes="(max-width: 768px) 26vw, 220px"
-            />
-          </div>
-
-          <div className="absolute bottom-4 right-4 z-30 h-[30%] w-[20%] md:bottom-6 md:right-6">
-            <MediaPanel
-              publicId={d2}
-              alt={`Detail of ${project.title}`}
-              objectPos="center"
-              className="h-full w-full"
-              sizes="(max-width: 768px) 17vw, 150px"
-            />
-          </div>
-
-          {project.metric && (
-            <div className="absolute bottom-6 left-6 z-30">
-              <MetricPill metric={project.metric} />
+      {mainId ? (
+        <div className="p-3 md:p-5">
+          <div className="relative aspect-[2.35/1] w-full md:aspect-[2.6/1]">
+            <div className="absolute left-4 top-2 z-0 text-[clamp(4.25rem,10vw,8.5rem)] md:left-6 md:top-3">
+              <ProjectNumber num={num} />
             </div>
-          )}
 
-          <div className="absolute right-3 top-3 z-40 md:right-5 md:top-5">
-            <StatusBadge status={project.status} />
+            <div className="absolute inset-0 z-10">
+              <MediaPanel
+                publicId={mainId}
+                alt={`Screenshot of ${project.title}`}
+                objectPos="topCenter"
+                className="h-full w-full"
+                priority
+                sizes="(max-width: 480px) 88vw, (max-width: 768px) 92vw, (max-width: 1280px) 75vw, 900px"
+              />
+            </div>
+
+            {d1 && (
+              <div className="absolute right-4 top-4 z-20 h-[52%] w-[30%] md:right-6 md:top-6">
+                <MediaPanel
+                  publicId={d1}
+                  alt={`Detail of ${project.title}`}
+                  objectPos="bottomRight"
+                  className="h-full w-full"
+                  sizes="(max-width: 768px) 26vw, 220px"
+                />
+              </div>
+            )}
+
+            {d2 && (
+              <div className="absolute bottom-4 right-4 z-30 h-[30%] w-[20%] md:bottom-6 md:right-6">
+                <MediaPanel
+                  publicId={d2}
+                  alt={`Detail of ${project.title}`}
+                  objectPos="center"
+                  className="h-full w-full"
+                  sizes="(max-width: 768px) 17vw, 150px"
+                />
+              </div>
+            )}
+
+            {project.metric && (
+              <div className="absolute bottom-6 left-6 z-30">
+                <MetricPill metric={project.metric} />
+              </div>
+            )}
+
+            <div className="absolute right-3 top-3 z-40 md:right-5 md:top-5">
+              <StatusBadge status={project.status} />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-start justify-between gap-4 px-5 pt-6 md:px-8 md:pt-8">
+          <div className="text-[clamp(2.75rem,6vw,4.5rem)]">
+            <ProjectNumber num={num} />
+          </div>
+          <StatusBadge status={project.status} />
+        </div>
+      )}
 
       <div className="flex flex-col gap-5 px-5 pb-6 md:flex-row md:items-end md:gap-10 md:px-8 md:pb-8">
         <div className="min-w-0 flex-1">
@@ -117,7 +129,7 @@ export function WideCard({
   num: string;
 }) {
   const mainId = safePublicId(project.image, "");
-  const d1 = safePublicId(project.gallery?.[0], project.image);
+  const d1 = safePublicId(project.gallery?.[0], "");
   const tags = project.tech.slice(0, 4);
 
   return (
@@ -138,15 +150,17 @@ export function WideCard({
             />
           </div>
 
-          <div className="absolute bottom-4 right-4 z-20 h-[44%] w-[34%]">
-            <MediaPanel
-              publicId={d1}
-              alt={`Detail of ${project.title}`}
-              objectPos="bottomCenter"
-              className="h-full w-full"
-              sizes="(max-width: 768px) 28vw, 150px"
-            />
-          </div>
+          {d1 && (
+            <div className="absolute bottom-4 right-4 z-20 h-[44%] w-[34%]">
+              <MediaPanel
+                publicId={d1}
+                alt={`Detail of ${project.title}`}
+                objectPos="bottomCenter"
+                className="h-full w-full"
+                sizes="(max-width: 768px) 28vw, 150px"
+              />
+            </div>
+          )}
 
           <div className="absolute right-3 top-3 z-30">
             <StatusBadge status={project.status} />
@@ -203,7 +217,7 @@ export function CompactCard({
   num: string;
 }) {
   const mainId = safePublicId(project.image, "");
-  const d1 = safePublicId(project.gallery?.[0], project.image);
+  const d1 = safePublicId(project.gallery?.[0], "");
   const tags = project.tech.slice(0, 4);
 
   return (
@@ -224,15 +238,17 @@ export function CompactCard({
             />
           </div>
 
-          <div className="absolute bottom-3 right-3 z-20 h-[36%] w-[42%]">
-            <MediaPanel
-              publicId={d1}
-              alt={`Detail of ${project.title}`}
-              objectPos="bottomRight"
-              className="h-full w-full"
-              sizes="(max-width: 768px) 36vw, 150px"
-            />
-          </div>
+          {d1 && (
+            <div className="absolute bottom-3 right-3 z-20 h-[36%] w-[42%]">
+              <MediaPanel
+                publicId={d1}
+                alt={`Detail of ${project.title}`}
+                objectPos="bottomRight"
+                className="h-full w-full"
+                sizes="(max-width: 768px) 36vw, 150px"
+              />
+            </div>
+          )}
 
           {project.metric && (
             <div className="absolute bottom-3 left-3 z-30">

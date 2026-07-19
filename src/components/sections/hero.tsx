@@ -21,7 +21,7 @@ const Hero = memo(() => {
   return (
     <section
       id="hero"
-      className="relative min-h-svh bg-surface overflow-hidden flex items-end"
+      className="relative min-h-[92svh] bg-surface overflow-hidden flex items-end"
     >
       {/* Ambient glow — top-left */}
       <div
@@ -33,23 +33,23 @@ const Hero = memo(() => {
         }}
       />
 
-      {/* Hero portrait — masked and blended */}
+      {/* Hero portrait — centered on mobile, right-anchored on desktop */}
       {heroSrc && (
         <div
-          className="absolute inset-0 hidden lg:block pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
         >
          <img
             src={heroSrc}
             srcSet={heroSrcSet}
-            sizes="(min-width: 1024px) 30vw, 0px"
+            sizes="(min-width: 1024px) 30vw, 70vw"
             alt=""
             width="640"
             height="960"
             loading="eager"
             decoding="async"
             fetchPriority="high"
-            className="absolute right-[27%] bottom-[30%] h-[55vh] w-auto max-w-125 object-contain object-bottom opacity-90"
+            className="absolute left-1/2 top-[10svh] h-[32svh] w-auto -translate-x-1/2 object-contain object-bottom opacity-90 lg:left-auto lg:top-auto lg:right-[27%] lg:bottom-[30%] lg:h-[55vh] lg:max-w-125 lg:translate-x-0"
             style={{            
               WebkitMaskImage:
                 "linear-gradient(to bottom, black 60%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
@@ -107,7 +107,7 @@ const Hero = memo(() => {
 
         <div className="mt-16 sm:mt-20 border-t border-edge-subtle pt-5">
             <p className="text-xs font-mono text-content-faint tracking-wide">
-            Django · Wagtail · FastApi · React · Next.js · TypeScript · HTMX · Tailwind CSS
+            Django · Wagtail · FastAPI · PostgreSQL · Rust · DuckDB · React · Next.js · TypeScript · HTMX · Tailwind CSS
             </p>
         </div>
       </div>
