@@ -92,7 +92,7 @@ export const PROJECTS: Project[] = [
     metric: "TTFB <200ms",
     status: "LIVE_SYSTEM",
     links: {
-      demo: "https://sandladanab.se",
+      demo: "https://sandladan.se",
       repo: null,
     },
   },
